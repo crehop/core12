@@ -129,9 +129,9 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        		count++;
 	        	}
 	        }
-			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 	        Lighting.endShader();
 	        modelBatch.end();
+			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 	        Console.render();
 	        Console.setLine4(debug);
 	        debug = "";
