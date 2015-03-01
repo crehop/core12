@@ -1,0 +1,205 @@
+package control;
+
+import Zomtasia.Zomtasia;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+
+public class Controls implements InputProcessor{
+	private boolean exitKey;
+	private boolean forward;
+	private boolean back;
+	private boolean strafeLeft;
+	private boolean strafeRight;
+    private boolean jump;
+	private boolean crouch;
+	private boolean speedUpCam;
+	private boolean speedDownCam;
+	private boolean menu;
+	private Zomtasia game;
+	
+	//Mouse sensitivity
+	private float mouseSensitivity = 0.04141519f;
+	private final float defaultMovementSpeed = 5.25f;
+	public float movementSpeed = defaultMovementSpeed;
+	private int mouseX = 0;
+	private int mouseY = 0;
+	private int magY = 0;
+	private int magX = 0;
+	private int resX = 0;
+	private int resY = 0;
+	
+	public Controls(Zomtasia game){
+		this.game = game;
+		this.resX = Gdx.graphics.getWidth();
+		this.resY = Gdx.graphics.getHeight();
+	}
+
+	public  void checkInput() {
+		if(exitKey){
+			game.dispose();
+			return;
+		}
+		if(forward){
+			Zomtasia.player.walkForward((float)(movementSpeed));
+		}
+		if(back){
+			Zomtasia.player.walkBackward((float)(movementSpeed));
+		}
+		if(strafeLeft){
+			Zomtasia.player.strafeLeft((float)(movementSpeed));
+		}
+		if(strafeRight){	
+			Zomtasia.player.strafeRight((float)(movementSpeed));
+		}
+		if(jump){
+			Zomtasia.player.moveUp((float)(movementSpeed));
+		}
+		if(crouch){
+			Zomtasia.player.moveDown((float)(movementSpeed));
+		}
+		if(speedUpCam){
+			movementSpeed = defaultMovementSpeed * 5;
+		}
+		else if(speedDownCam){
+			movementSpeed = defaultMovementSpeed / 100;
+		}
+		else{
+			movementSpeed = defaultMovementSpeed;
+		}
+		if(menu){
+			Gdx.app.log(Zomtasia.LOG, "CAMSNAP");
+		}
+	}
+	@Override
+	public boolean keyDown(int keycode) {
+		switch(keycode){
+			case Input.Keys.A:
+				strafeLeft = true;
+				return false;
+			case Input.Keys.S:
+				back = true;
+				return false;
+			case Input.Keys.D:
+				strafeRight = true;
+				return false;
+			case Input.Keys.W:
+				forward = true;
+				return false;
+			case Input.Keys.TAB:
+				speedUpCam = true;
+				return false;
+			case Input.Keys.CONTROL_LEFT:
+				speedDownCam = true;
+				return false;
+			case Input.Keys.SHIFT_LEFT:
+				crouch = true;
+				return false;
+			case Input.Keys.SPACE:
+				jump = true;
+				return false;
+			case Input.Keys.ESCAPE:
+				exitKey = true;
+				return false;
+			case Input.Keys.PLUS:
+				System.out.println("OFFSET +");
+				Zomtasia.getTerrain().offset(true);
+				return false;
+			case Input.Keys.MINUS:
+				System.out.println("OFFSET -");
+				Zomtasia.getTerrain().offset(false);
+				return false;
+
+		}
+		return false;
+	}
+	@Override
+	public boolean keyUp(int keycode) {
+		switch(keycode){
+			case Input.Keys.A:
+				strafeLeft = false;
+				return false;
+			case Input.Keys.S:
+				back = false;
+				return false;
+			case Input.Keys.D:
+				strafeRight = false;
+				return false;
+			case Input.Keys.W:
+				forward = false;
+				return false;
+			case Input.Keys.TAB:
+				speedUpCam = false;
+				return false;
+			case Input.Keys.CONTROL_LEFT:
+				speedDownCam = false;
+				return false;
+			case Input.Keys.SHIFT_LEFT:
+				crouch = false;
+				return false;
+			case Input.Keys.SPACE:
+				jump = false;
+				return false;
+			case Input.Keys.ESCAPE:
+				exitKey = false;
+		}
+		return false;
+		}
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+	    magX = Math.abs(mouseX - screenX);
+	    magY = Math.abs(mouseY - screenY);
+	    if (mouseX > screenX) {
+		   resX += magX;
+	    }
+
+	    if (mouseX < screenX) {
+		    resX -= magX;
+	    }
+
+	    if (mouseY < screenY) {
+	    	resY -= magY;
+	    }
+
+	    if (mouseY > screenY) {
+	    	resY += magY;
+	    }
+	    
+		//CAMERA PITCH YAW CODE =====================
+		Zomtasia.player.pitch((float)((float)resY * (float)mouseSensitivity));
+		Zomtasia.player.yaw((float)((float)resX * (float)mouseSensitivity));
+		resX = 0;
+		resY = 0;
+	    mouseX = screenX;
+	    mouseY = screenY;
+		//===========================================
+
+
+	    return false;
+	}
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}
