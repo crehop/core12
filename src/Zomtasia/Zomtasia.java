@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -119,6 +120,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 
 			count = 0;
 			Lighting.beginShader();
+			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			grass.bind();
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
@@ -127,6 +129,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        		count++;
 	        	}
 	        }
+			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 	        Lighting.endShader();
 	        modelBatch.end();
 	        Console.render();

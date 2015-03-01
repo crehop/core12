@@ -72,9 +72,9 @@ public class TerrainChunk {
 	            vertices[idx++] = Color.WHITE.toFloatBits();
 
 	            //TEXTURE
-	            idx += 2;
-	            //vertices[idx++] = ((float)1);
-	            //vertices[idx++] = ((float)1);
+	            //idx += 2;
+	            vertices[idx++] = ((float)z / height);
+	            vertices[idx++] = ((float)x / width);
 	        }
 	    }
 	}

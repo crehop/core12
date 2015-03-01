@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix3;
 
 public class Terrain {
 		private TerrainChunk chunk;
@@ -67,9 +68,11 @@ public class Terrain {
 	    			mesh.setIndices(chunk.indices);
 	    			
 	    			Model result = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
+	    			System.out.println("" + result.meshes.get(0).getManagedStatus());
 	    			ModelInstance modelInstance = new ModelInstance(result, 0,0,0);
-	    			modelInstance.model.meshes.set(0,mesh);
+	    			//modelInstance.model.meshes.set(0,mesh);
 	    		    modelInstance.transform.scl(scale);
+	    		    
 
 	    		    //Finish Chunk
 	    		    chunk.setModelInstance(modelInstance,mesh);
