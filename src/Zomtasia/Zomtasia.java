@@ -61,6 +61,9 @@ public class Zomtasia extends Game implements ApplicationListener {
 	
 	@Override
 	public void create() {
+		Thread thread = new Thread(){
+			Time time = new Time();
+		};
 		grass = new Texture("terrain/grass.png");
 		setGame(this);
 		controls = new Controls(this);
@@ -93,10 +96,6 @@ public class Zomtasia extends Game implements ApplicationListener {
        terrain.create();
 	}
 
-	public static void newModelInstance(ModelInstance modelInstance) {
-		models.add(modelInstance);
-	}
-
 	@Override
 	public void render() {
 			Console.setLine1("FPS:"+ Gdx.graphics.getFramesPerSecond());
@@ -106,22 +105,23 @@ public class Zomtasia extends Game implements ApplicationListener {
 				cameraCreated = true;
 			}
 	  	    Console.setLine10("TIME : " + (double) Math.round(Time.getTime() * 100) / 100);
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+	  	    
+	  	    //skybox===================================
+	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			controls.checkInput();
 			modelBatch.begin(cam);
 			modelBatch.render(Skybox.render());
-			
 	        modelBatch.end();
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
+	  	    //=========================================
+			
+			//Terrain==================================
 			modelBatch.begin(cam);
 			for(ModelInstance instance:models){
 				modelBatch.render(instance,env);
 			}
 
 			count = 0;
-			Lighting.beginShader();
-			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
-			grass.bind();
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getModelInstance(),env);
@@ -129,11 +129,10 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        		count++;
 	        	}
 	        }
-	        Lighting.endShader();
 	        modelBatch.end();
-			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
+	  	    //=========================================
+
 	        Console.render();
-	        Console.setLine4(debug);
 	        debug = "";
 	        Console.setLine2("Chunks being rendered:" + count);
 			Zomtasia.cam.update();	       
@@ -178,5 +177,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 
 	public static Terrain getTerrain() {
 		return terrain;
+	}
+	public static void newModelInstance(ModelInstance modelInstance) {
+		models.add(modelInstance);
 	}
 }

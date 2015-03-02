@@ -18,7 +18,7 @@ public class CameraFPS{
 	protected float pitch = 0.0f;
 	protected Location location;
 	protected Viewport viewport;
-	protected float far = 100000;
+	protected float far = 10000000;
 	protected float near = 1;
 	
 	public CameraFPS(float x, float y, float z){

@@ -5,6 +5,7 @@ import server.Location;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 public class TerrainChunk {
@@ -21,6 +22,7 @@ public class TerrainChunk {
 	private int yLoc = 0;
 	Material material;
 	private Mesh mesh;
+	private Texture texture;
 	
 	public TerrainChunk (int width, int height, int vertexSize, Pixmap map, int xLoc, int yLoc) {
 		this.xLoc = xLoc;
@@ -54,7 +56,7 @@ public class TerrainChunk {
 	public void buildVertices() {
 	    int heightPitch = height + 1;
 	    int widthPitch = width + 1;
-	    int strength = 100; //heightmap multiplier
+	    int strength = 80; //heightmap multiplier
 	    int idx = 0;
 	    int hIdx = 0;
 	    for (int z = 0; z < heightPitch; z++) {
@@ -131,7 +133,6 @@ public class TerrainChunk {
 	public void setModelInstance(ModelInstance instance, Mesh mesh){
 		this.modelInstance = instance;
 		this.modelInstance.transform.translate(location.getPosition());
-		this.mesh = mesh;
 	}
 	public ModelInstance getModelInstance(){
 		return this.modelInstance;

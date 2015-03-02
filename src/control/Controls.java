@@ -101,17 +101,9 @@ public class Controls implements InputProcessor{
 			case Input.Keys.ESCAPE:
 				exitKey = true;
 				return false;
-			case Input.Keys.PLUS:
-				System.out.println("OFFSET +");
-				Zomtasia.getTerrain().offset(true);
-				return false;
-			case Input.Keys.MINUS:
-				System.out.println("OFFSET -");
-				Zomtasia.getTerrain().offset(false);
-				return false;
-
+			default:
+				return true;
 		}
-		return false;
 	}
 	@Override
 	public boolean keyUp(int keycode) {

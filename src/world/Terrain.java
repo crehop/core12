@@ -25,33 +25,37 @@ import com.badlogic.gdx.math.Matrix3;
 public class Terrain {
 		private TerrainChunk chunk;
 		private PerspectiveCamera camera;
-		private Texture grass;
+		private Texture terrain;
 		private Texture mHeightMap;
+		private TextureRegion tRegion;
 		private TextureRegion mRegion;
 		private int chunkSize = 170;
 		private TextureRegion[][] chunkRegions;
+		private TextureRegion[][] terrainRegions;
 		public TerrainChunk[][] terrainChunks;	
 	    int chunkNum = 0;
 	    // Scale of the terrain
-		float scale = 200;
+		float scale = 500;
 		// position 3, normal 3, color 1, texture 2
 		static int vertexSize = 3 + 3 + 1 + 2;
 		public int indexOffset = 0;
 		public boolean once = true;
 		
 		public void create () {
-			grass = new Texture("terrain/grass.png");
+			terrain = new Texture("terrain/terrain.png");
 			camera = Zomtasia.cam;
-	        mHeightMap = new Texture("data/heightmap.png");
+	        mHeightMap = new Texture("terrain/heightmap.png");
 	        mRegion = new TextureRegion(mHeightMap, 0,0, mHeightMap.getWidth() ,mHeightMap.getHeight());
+	        tRegion = new TextureRegion(terrain, 0,0, terrain.getWidth() ,terrain.getHeight());
 	        chunkRegions = mRegion.split(chunkSize, chunkSize);
+	        terrainRegions = tRegion.split(chunkSize, chunkSize);
 	        terrainChunks = new TerrainChunk[chunkRegions.length][chunkRegions[0].length];
-	        Pixmap map = new Pixmap(Gdx.files.internal("data/heightmap.png"));
+	        Pixmap map = new Pixmap(Gdx.files.internal("terrain/heightmap.png"));
 
 	        for(int x = 0; x < chunkRegions.length; x++){
 	        	for(int y = 0; y < chunkRegions[x].length; y++){
 	        		Material material = new Material(ColorAttribute.createDiffuse(Color.WHITE), ColorAttribute.createSpecular(Color.WHITE),
-	        		        FloatAttribute.createShininess(119f), TextureAttribute.createDiffuse(grass));
+	        		        FloatAttribute.createShininess(119f), TextureAttribute.createDiffuse(terrainRegions[x][y]));
 	    			
 	        		//Create Chunk
 	        		chunk = new TerrainChunk(chunkSize, chunkSize, vertexSize, map, chunkRegions[x][y].getRegionX(),chunkRegions[x][y].getRegionY());
@@ -63,7 +67,7 @@ public class Terrain {
 	    			        new VertexAttribute(VertexAttributes.Usage.Position, 3, ShaderProgram.POSITION_ATTRIBUTE), 
 	    			        new VertexAttribute(VertexAttributes.Usage.Normal, 3, ShaderProgram.NORMAL_ATTRIBUTE),
 	    			        new VertexAttribute(VertexAttributes.Usage.ColorPacked, 4, ShaderProgram.COLOR_ATTRIBUTE), 
-	    			        new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2,  ShaderProgram.TEXCOORD_ATTRIBUTE));
+	    			        new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2,  ShaderProgram.TEXCOORD_ATTRIBUTE + "0", 0));
 	    			mesh.setVertices(chunk.vertices);
 	    			mesh.setIndices(chunk.indices);
 	    			
@@ -111,17 +115,6 @@ public class Terrain {
 		}
 		public TerrainChunk getTerrainChunk(int x,int y){
 			return this.terrainChunks[x][y];
-		}
-		public void offset(boolean toggle){
-			if(toggle == true){
-				indexOffset++;
-				create();
-				Console.setLine7("INDEX OFFSET = " + indexOffset);
-			}else{
-				indexOffset--;
-				create();
-				Console.setLine7("INDEX OFFSET = " + indexOffset);
-			}
 		}
 }
 
