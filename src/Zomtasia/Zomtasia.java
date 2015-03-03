@@ -28,7 +28,9 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import control.Controls;
@@ -51,10 +53,12 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static float lasttime = 0;
 	public String debug = "";
 	int count;
-	Shader shader;
 	public static boolean cameraCreated = false;
 	public boolean once = true;
 	Texture grass;
+	Vector3 xAxis = new Vector3(1,0,0);
+	Vector3 yAxis = new Vector3(0,1,0);
+	Vector3 zAxis = new Vector3(0,0,1);
 	
 	//WORLD CLASSES
 	public static Terrain terrain = new Terrain();
@@ -68,39 +72,35 @@ public class Zomtasia extends Game implements ApplicationListener {
 		setGame(this);
 		controls = new Controls(this);
         Gdx.input.setInputProcessor(controls);
-		env = new Environment();
+        env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
         env.add(new DirectionalLight().set(1f, 1f, 1f, -18f, -11.8f, -22.2f));
-		modelBatch = new ModelBatch();
-		player = new Player(29000,24600,48518,this);
-        modelBuilder = new ModelBuilder();
-        model = modelBuilder.createBox(5f, 5f, 5f, 
+        modelBatch = new ModelBatch();
+		player = new Player(0,0,10,this);
+		modelBuilder = new ModelBuilder();
+		model = modelBuilder.createBox(5f, 5f, 5f, 
             new Material(ColorAttribute.createDiffuse(Color.BLUE)),
             Usage.Position | Usage.Normal);
-        newModelInstance(new ModelInstance(model));
-        newModelInstance(new ModelInstance(model, -10,0,0));
-        newModelInstance(new ModelInstance(model, 10,0,0));
-        newModelInstance(new ModelInstance(model, 10,0,-10));
-        newModelInstance(new ModelInstance(model, -10,0,-10));
-        newModelInstance(new ModelInstance(model, 0,0,-10));
-        newModelInstance(new ModelInstance(model, 0,-20, 0));
-        newModelInstance(new ModelInstance(model, 0,20,0));
-        Gdx.graphics.setContinuousRendering(true);
-        Gdx.graphics.setVSync(true);
-        Gdx.input.setCursorCatched(true);
+		newModelInstance(new ModelInstance(model));
+		
+		
+		Gdx.graphics.setContinuousRendering(true);
+		Gdx.graphics.setVSync(true);
+		Gdx.input.setCursorCatched(true);
 		setScreen(player);
-       assets = new AssetManager();
-       assets.load("skybox/skybox.g3dj", Model.class);
-       assets.finishLoading();
-       Skybox.render();
-       terrain.create();
+		
+		assets = new AssetManager();
+		assets.load("skybox/skybox.g3dj", Model.class);
+		assets.finishLoading();
+		Skybox.render();
+		terrain.create();
 	}
 
 	@Override
 	public void render() {
-			Console.setLine1("FPS:"+ Gdx.graphics.getFramesPerSecond());
-	      if(assets.update()) {
-	  	    super.render();
+		Console.setLine1("FPS:"+ Gdx.graphics.getFramesPerSecond());
+		if(assets.update()) {
+			super.render();
 			if(cameraCreated == false){
 				cameraCreated = true;
 			}
@@ -128,8 +128,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		modelBatch.render(terrain.getTerrainChunk(x, y).getModelInstance(),env);
-	        		//terrain.getTerrainChunk(0, 1).getModelInstance().model.meshes.get(0).render(Lighting.getShader(), GL20.GL_TRIANGLES);
+	        		modelBatch.render(terrain.getTerrainChunk(x, y).getModelInstance(), Lighting.getShader());
 	        		count++;
 	        	}
 	        }
