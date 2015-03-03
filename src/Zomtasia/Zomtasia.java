@@ -64,7 +64,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Thread thread = new Thread(){
 			Time time = new Time();
 		};
-		grass = new Texture("terrain/grass.png");
+		grass = new Texture("terrain/terrain.png");
 		setGame(this);
 		controls = new Controls(this);
         Gdx.input.setInputProcessor(controls);
@@ -72,7 +72,7 @@ public class Zomtasia extends Game implements ApplicationListener {
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
         env.add(new DirectionalLight().set(1f, 1f, 1f, -18f, -11.8f, -22.2f));
 		modelBatch = new ModelBatch();
-		player = new Player(0,0,10,this);
+		player = new Player(29000,24600,48518,this);
         modelBuilder = new ModelBuilder();
         model = modelBuilder.createBox(5f, 5f, 5f, 
             new Material(ColorAttribute.createDiffuse(Color.BLUE)),
@@ -104,7 +104,10 @@ public class Zomtasia extends Game implements ApplicationListener {
 			if(cameraCreated == false){
 				cameraCreated = true;
 			}
-	  	    Console.setLine10("TIME : " + (double) Math.round(Time.getTime() * 100) / 100);
+	  	    Console.setLine9("POSITION: X:" + (double) Math.round(player.getLocation().getX() * 100) / 100
+	  	    		+ " Y:" + (double) Math.round(player.getLocation().getY() * 100) / 100
+	  	    		+ " Z:" + (double) Math.round(player.getLocation().getZ() * 100) / 100);
+	  	    Console.setLine10("TIME: " + (double) Math.round(Time.getTime() * 100) / 100);
 	  	    
 	  	    //skybox===================================
 	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -120,16 +123,19 @@ public class Zomtasia extends Game implements ApplicationListener {
 			for(ModelInstance instance:models){
 				modelBatch.render(instance,env);
 			}
-
+			Lighting.beginShader();
+			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getModelInstance(),env);
-	        		terrain.getTerrainChunk(x, y).getModelInstance().model.meshes.get(0).render(Lighting.getShader(), GL20.GL_TRIANGLES);
+	        		//terrain.getTerrainChunk(0, 1).getModelInstance().model.meshes.get(0).render(Lighting.getShader(), GL20.GL_TRIANGLES);
 	        		count++;
 	        	}
 	        }
 	        modelBatch.end();
+	        Lighting.endShader();
+			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 	  	    //=========================================
 
 	        Console.render();

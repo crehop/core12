@@ -42,7 +42,7 @@ public class Terrain {
 		public boolean once = true;
 		
 		public void create () {
-			terrain = new Texture("terrain/terrain.png");
+			terrain = new Texture("terrain/heightmap.png");
 			camera = Zomtasia.cam;
 	        mHeightMap = new Texture("terrain/heightmap.png");
 	        mRegion = new TextureRegion(mHeightMap, 0,0, mHeightMap.getWidth() ,mHeightMap.getHeight());
@@ -72,34 +72,14 @@ public class Terrain {
 	    			mesh.setIndices(chunk.indices);
 	    			
 	    			Model result = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-	    			System.out.println("" + result.meshes.get(0).getManagedStatus());
-	    			ModelInstance modelInstance = new ModelInstance(result, 0,0,0);
-	    			//modelInstance.model.meshes.set(0,mesh);
-	    		    modelInstance.transform.scl(scale);
+	    			ModelInstance modelInstance = new ModelInstance(result, 0,-100,0);
+	    			modelInstance.transform.scl(100);
+	    		    //modelInstance.model.meshes.get(0).scale(scale,scale,scale);
 	    		    
 
 	    		    //Finish Chunk
 	    		    chunk.setModelInstance(modelInstance,mesh);
 	    		    chunkNum++;
-	    		    
-	    		    if(once){
-	    		    	Mesh mesh2 = modelInstance.model.nodes.get(0).parts.get(0).meshPart.mesh;
-	    		    	float[] temp = new float[mesh.getNumVertices()];
-	    		    	mesh2.getVertices(temp);
-	    		    	int counter = 0;
-	    		    	String tempLine = "";
-		    			System.out.println("" + mesh.getNumVertices() + " :" + mesh.getNumIndices());
-	    		    	for(float temp2:temp){
-	    		    		tempLine += (temp2 + " , ");
-	    		    		counter++;
-	    		    		if(counter == 9){
-		    		    		System.out.println("DEBUG VERTEX INFO:" + tempLine);
-		    		    		tempLine = "";
-		    		    		counter = 0;
-	    		    		}
-	    		    	}
-	    		    	once = false;
-	    		    }
 	        	}
 	        }
 	        map.dispose();

@@ -22,7 +22,6 @@ public class TerrainChunk {
 	private int yLoc = 0;
 	Material material;
 	private Mesh mesh;
-	private Texture texture;
 	
 	public TerrainChunk (int width, int height, int vertexSize, Pixmap map, int xLoc, int yLoc) {
 		this.xLoc = xLoc;
@@ -74,7 +73,6 @@ public class TerrainChunk {
 	            vertices[idx++] = Color.WHITE.toFloatBits();
 
 	            //TEXTURE
-	            //idx += 2;
 	            vertices[idx++] = ((float)z / height);
 	            vertices[idx++] = ((float)x / width);
 	        }

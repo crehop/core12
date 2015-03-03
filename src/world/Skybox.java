@@ -66,14 +66,5 @@ public class Skybox {
 		sky.transform.scl(1500);
 		skyboxTexture = sky.materials.get(0);
 		initiated = true;
-		System.out.println("============================");
-		System.out.println("1:" + sky.model.meshes.size);
-		System.out.println("2:" + sky.model.nodes.size);
-		System.out.println("3:" + sky.model.nodes.first().parts.size);
-		System.out.println("4:" + sky.materials.size);
-		System.out.println("5:" + sky.animations.size);
-		System.out.println("6:" + sky.nodes.first().parts.size);
-		System.out.println("7:" + sky.materials.size);
-		System.out.println("============================");
 	}
 }

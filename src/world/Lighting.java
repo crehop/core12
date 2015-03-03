@@ -9,11 +9,11 @@ import com.badlogic.gdx.math.Vector3;
 
 
 public class Lighting {
-	private static final float[] lightPosition = { 5, 35, 5 };
-	private static final float[] ambientColor = { 0.2f, 0.2f, 0.2f, 1.0f };
-	private static final float[] diffuseColor = { 0.5f, 0.5f, 0.5f, 1.0f };
-	private static final float[] specularColor = { 0.7f, 0.7f, 0.7f, 1.0f };
-	private static final float[] fogColor = { 0.2f, 0.1f, 0.6f, 1.0f };
+	private static final float[] lightPosition = { -10, -10, 10 };
+	private static final float[] ambientColor = { 0.99f, 0.5f, 0.2f, 1.0f };
+	private static final float[] diffuseColor = { 0.99f, 0.0f, 0.0f, 1.0f };
+	private static final float[] specularColor = { 0.99f, 0.7f, 0.7f, 1.0f };
+	private static final float[] fogColor = { 0.99f, 0.1f, 0.6f, 1.0f };
 	private static Matrix4 model = new Matrix4();
 	private static Matrix4 modelView = new Matrix4();
 	private static final Matrix3 normalMatrix = new Matrix3();
@@ -28,6 +28,10 @@ public class Lighting {
 	        "uniform mat3 u_normalMatrix; \n" +
 
 	        "uniform vec3 u_lightPosition; \n" +
+	        "uniform vec4 u_ambientColor; \n" +
+	        "uniform vec4 u_diffuseColor; \n" +
+	        "uniform vec4 u_specularColor; \n" +
+
 
 	        "varying float intensity; \n" +
 	        "varying vec2 texCoords; \n" +
@@ -37,7 +41,7 @@ public class Lighting {
 	        "    vec3 normal = normalize(u_normalMatrix * a_normal); \n" +
 	        "    vec3 light = normalize(u_lightPosition); \n" +
 	        "    intensity = max( dot(normal, light) , 0.0); \n" +
-
+	        " u_lightPosition *= 10; \n"+
 	        "    v_color = a_color; \n" +
 	        "    texCoords = a_texCoord; \n" +
 
@@ -66,6 +70,8 @@ public class Lighting {
 	public static void beginShader(){
 		if(once){
 			shader = new ShaderProgram(vertexShader,fragmentShader);
+			shader.pedantic = true;
+			System.out.println(shader.isCompiled() ? "Shader compilation completed!" : shader.getLog());
 			once = false;
 		}
 	    model.setToRotation(new Vector3(0, 1, 0), 45f);
