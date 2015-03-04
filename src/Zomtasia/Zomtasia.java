@@ -3,7 +3,7 @@ package Zomtasia;
 import java.util.ArrayList;
 
 import screens.Console;
-import world.Lighting;
+//import world.Lighting;
 import world.Skybox;
 import world.Terrain;
 import world.TestShader;
@@ -123,17 +123,17 @@ public class Zomtasia extends Game implements ApplicationListener {
 			for(ModelInstance instance:models){
 				modelBatch.render(instance,env);
 			}
-			Lighting.beginShader();
+			//Lighting.beginShader();
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		modelBatch.render(terrain.getTerrainChunk(x, y).getModelInstance(), Lighting.getShader());
+	        		modelBatch.render(terrain.getTerrainChunk(x, y).getModelInstance(), env);
 	        		count++;
 	        	}
 	        }
 	        modelBatch.end();
-	        Lighting.endShader();
+	        //Lighting.endShader();
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 	  	    //=========================================
 

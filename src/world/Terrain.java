@@ -42,7 +42,7 @@ public class Terrain {
 		public boolean once = true;
 		
 		public void create () {
-			terrain = new Texture("terrain/heightmap.png");
+			terrain = new Texture("terrain/terrain.png");
 			camera = Zomtasia.cam;
 	        mHeightMap = new Texture("terrain/heightmap.png");
 	        mRegion = new TextureRegion(mHeightMap, 0,0, mHeightMap.getWidth() ,mHeightMap.getHeight());
