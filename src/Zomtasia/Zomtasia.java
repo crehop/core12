@@ -53,6 +53,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static float lasttime = 0;
 	public String debug = "";
 	int count;
+	TestShader test;
 	public static boolean cameraCreated = false;
 	public boolean once = true;
 	Texture grass;
@@ -68,6 +69,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Thread thread = new Thread(){
 			Time time = new Time();
 		};
+		test = new TestShader();
+		test.init();
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
 		controls = new Controls(this);
@@ -123,12 +126,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 			for(ModelInstance instance:models){
 				modelBatch.render(instance,env);
 			}
-			//Lighting.beginShader();
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		modelBatch.render(terrain.getTerrainChunk(x, y).getModelInstance(), env);
+	        		modelBatch.render(terrain.getTerrainChunk(x, y).getModelInstance(), test);
 	        		count++;
 	        	}
 	        }

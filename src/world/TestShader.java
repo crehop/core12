@@ -41,12 +41,15 @@ public class TestShader implements Shader {
 	
 	@Override
 	public void init() {
-        String vert = Gdx.files.internal("data/vertex.txt").readString();
-        String frag = Gdx.files.internal("data/fragment.txt").readString();
-        
+        String vert = Gdx.files.internal("shaders/vertex/terrain_vertex.vsh").readString();
+        String frag = Gdx.files.internal("shaders/fragment/terrain_fragment.fsh").readString();
         program = new ShaderProgram(vert, frag);
-        if (!program.isCompiled())
-            throw new GdxRuntimeException(program.getLog());
+        if (!program.isCompiled()){
+        	throw new GdxRuntimeException(program.getLog());
+        }else{
+        	System.out.println("COMPILED SHADER PROGRAM");
+        }
+
         u_projTrans = program.getUniformLocation("u_projTrans");
         u_worldTrans = program.getUniformLocation("u_worldTrans");
         u_color = program.getUniformLocation("u_color");
@@ -70,7 +73,6 @@ public class TestShader implements Shader {
 	@Override
 	public void render(Renderable renderable) {
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
-		System.out.println(renderable.material.get(ColorAttribute.Diffuse));
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){
 			Color color = ((ColorAttribute)renderable.material.get(ColorAttribute.Diffuse)).color;
 			program.setUniformf(u_color, color.r, color.g, color.b);
@@ -79,7 +81,6 @@ public class TestShader implements Shader {
 					renderable.meshPartOffset,
 					renderable.meshPartSize);
 		}
-
 	}
 
 	@Override
