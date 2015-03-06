@@ -9,6 +9,8 @@ varying vec2 v_texCoord0;
 
 //can set uniforms from code
 uniform mat4 u_projTrans;
+uniform mat4 u_worldTrans;
+
 uniform vec2 u_resolution;
 
 void main(void) {
@@ -17,7 +19,6 @@ void main(void) {
 	v_texCoord0 = a_texCoord0;
 
 	//gl_position is a built in variable to set the position of the vertecies
-	gl_Position = u_projTrans * vec4(a_position, 1.0);
-
-
+	//projTrans = currentprojection? worldTrans = where to put it? position = where to put the vertex?
+    gl_Position = u_projTrans * u_worldTrans * vec4(a_position, 1.0);
 }
