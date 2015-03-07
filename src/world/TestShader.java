@@ -20,9 +20,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -38,6 +40,8 @@ public class TestShader implements Shader {
 	int u_projTrans;
 	int u_worldTrans;
 	int u_color;
+	int u_tex1;
+	int u_tex2;
 	
 	@Override
 	public void init() {
@@ -53,6 +57,7 @@ public class TestShader implements Shader {
         u_projTrans = program.getUniformLocation("u_projTrans");
         u_worldTrans = program.getUniformLocation("u_worldTrans");
         u_color = program.getUniformLocation("u_color");
+
 	}
 
 	@Override
@@ -72,6 +77,11 @@ public class TestShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable) {
+		System.out.println("" + program.getUniforms().length);
+		Skybox.stars.bind(1);
+		program.setUniformi("u_texture1", 1);
+		Skybox.noon.bind(0);
+		program.setUniformi("u_texture0", 0);
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){
 			Color color = ((ColorAttribute)renderable.material.get(ColorAttribute.Diffuse)).color;

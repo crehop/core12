@@ -15,23 +15,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.TimeUtils;
 
 import control.Controls;
 import entities.Player;
@@ -57,6 +52,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static boolean cameraCreated = false;
 	public boolean once = true;
 	Texture grass;
+	float progress;
 	Vector3 xAxis = new Vector3(1,0,0);
 	Vector3 yAxis = new Vector3(0,1,0);
 	Vector3 zAxis = new Vector3(0,0,1);
@@ -66,6 +62,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	
 	@Override
 	public void create() {
+		@SuppressWarnings("unused")
 		Thread thread = new Thread(){
 			Time time = new Time();
 		};
@@ -75,11 +72,14 @@ public class Zomtasia extends Game implements ApplicationListener {
 		setGame(this);
 		controls = new Controls(this);
         Gdx.input.setInputProcessor(controls);
+       
         env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
         env.add(new DirectionalLight().set(1f, 1f, 1f, -18f, -11.8f, -22.2f));
-        modelBatch = new ModelBatch();
 		player = new Player(0,0,10,this);
+        
+		modelBatch = new ModelBatch();
+
 		modelBuilder = new ModelBuilder();
 		model = modelBuilder.createBox(5f, 5f, 5f, 
             new Material(ColorAttribute.createDiffuse(Color.BLUE)),
@@ -144,8 +144,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        Console.setLine2("Chunks being rendered:" + count);
 			Zomtasia.cam.update();	       
 	      }else{
-	       // display loading information
-	       float progress = assets.getProgress();
+	       progress = assets.getProgress();
 	  	 }
 	}
 	

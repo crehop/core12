@@ -22,13 +22,13 @@ import control.Controls;
 
 public class Skybox {
 	private static boolean initiated = false;
-    private static Texture noon = new Texture("skybox/1.png");
+	public static Texture noon = new Texture("skybox/1.png");
 	private static Texture afternoon = new Texture("skybox/2.png");
 	private static Texture dusk = new Texture("skybox/3.png");
 	private static Texture evening = new Texture("skybox/4.png");
 	private static Texture night = new Texture("skybox/5.png");
 	private static Texture midnight = new Texture("skybox/6.png");
-	private static Texture stars = new Texture("skybox/8.png");
+	public static Texture stars = new Texture("skybox/8.png");
 	public static Material skyboxTexture;
 
 	private static Model skydome;
