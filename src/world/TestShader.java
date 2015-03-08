@@ -1,21 +1,5 @@
 package world;
 
-
-/*******************************************************************************
- * Copyright 2011 See AUTHORS file.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -29,16 +13,14 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-/**
- * See: http://blog.xoppa.com/creating-a-shader-with-libgdx
- * @author Xoppa
- */
 public class TestShader implements Shader {
 	ShaderProgram program;
 	Camera camera;
 	RenderContext context;
+	
 	int u_projTrans;
 	int u_worldTrans;
 	int u_color;
@@ -46,6 +28,8 @@ public class TestShader implements Shader {
 	Texture rock  = new Texture("terrain/rock.png");
 	Texture dirt  = new Texture("terrain/dirt.png");
 	Texture splat = new Texture("terrain/terrain.png");
+	Texture texAttribute;
+	TiledDrawable draw = new TiledDrawable();
 	
 	@Override
 	public void init() {
@@ -80,16 +64,19 @@ public class TestShader implements Shader {
 	}
 
 	@Override
-	public void render(Renderable renderable) {
-		dirt.bind(3);
-		program.setUniformi("u_texture3", 3);
-		rock.bind(2);
-		program.setUniformi("u_texture2", 2);
-		grass.bind(1);
-		program.setUniformi("u_texture1", 1);
-		splat.bind(0);
-		program.setUniformi("u_texture0", 0);
+	public void render(Renderable renderable){
+		//bind correct textures
+		dirt.bind(4);
+		program.setUniformi("u_texture3", 4);
+		rock.bind(3);
+		program.setUniformi("u_texture2", 3);
+		grass.bind(2);
+		program.setUniformi("u_texture1", 2);
+		splat.bind(1);
+		program.setUniformi("u_texture0", 1);
+		
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
+		renderable.environment = Zomtasia.Zomtasia.env;
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){
 			Color color = ((ColorAttribute)renderable.material.get(ColorAttribute.Diffuse)).color;
 			program.setUniformf(u_color, color.r, color.g, color.b);
@@ -97,6 +84,7 @@ public class TestShader implements Shader {
 					renderable.primitiveType,
 					renderable.meshPartOffset,
 					renderable.meshPartSize);
+		
 		}
 	}
 
