@@ -42,11 +42,10 @@ public class TestShader implements Shader {
 	int u_projTrans;
 	int u_worldTrans;
 	int u_color;
-	int u_tex1;
-	int u_tex2;
-	Random rand = new Random();
-	float newRand = 0.0f;
-	boolean toggle = false;
+	Texture grass = new Texture("terrain/grass.png");
+	Texture rock  = new Texture("terrain/rock.png");
+	Texture dirt  = new Texture("terrain/dirt.png");
+	Texture splat = new Texture("terrain/terrain.png");
 	
 	@Override
 	public void init() {
@@ -82,22 +81,14 @@ public class TestShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable) {
-		if(!toggle){
-			newRand += 0.001f;
-		}else{
-			newRand -= 0.001f;
-		}
-		if(newRand > 1){
-			toggle = true;
-		}else if(newRand < 0){
-			toggle = false;
-		}
-		System.out.println("" + newRand);
-		Skybox.stars.bind(1);
+		dirt.bind(3);
+		program.setUniformi("u_texture3", 3);
+		rock.bind(2);
+		program.setUniformi("u_texture2", 2);
+		grass.bind(1);
 		program.setUniformi("u_texture1", 1);
-		Skybox.noon.bind(0);
+		splat.bind(0);
 		program.setUniformi("u_texture0", 0);
-		program.setUniformf("u_interpolation", newRand);
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){
 			Color color = ((ColorAttribute)renderable.material.get(ColorAttribute.Diffuse)).color;
