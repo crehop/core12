@@ -13,6 +13,7 @@ varying vec2 v_texCoord1;
 uniform mat4 u_projTrans;
 uniform mat4 u_worldTrans;
 uniform vec2 u_resolution;
+uniform float u_interpolation;
 
 void main(void) {
 	//set the varying to the actuals

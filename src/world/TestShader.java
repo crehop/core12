@@ -16,6 +16,8 @@ package world;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -42,6 +44,9 @@ public class TestShader implements Shader {
 	int u_color;
 	int u_tex1;
 	int u_tex2;
+	Random rand = new Random();
+	float newRand = 0.0f;
+	boolean toggle = false;
 	
 	@Override
 	public void init() {
@@ -77,11 +82,22 @@ public class TestShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable) {
-		System.out.println("" + program.getUniforms().length);
+		if(!toggle){
+			newRand += 0.001f;
+		}else{
+			newRand -= 0.001f;
+		}
+		if(newRand > 1){
+			toggle = true;
+		}else if(newRand < 0){
+			toggle = false;
+		}
+		System.out.println("" + newRand);
 		Skybox.stars.bind(1);
 		program.setUniformi("u_texture1", 1);
 		Skybox.noon.bind(0);
 		program.setUniformi("u_texture0", 0);
+		program.setUniformf("u_interpolation", newRand);
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){
 			Color color = ((ColorAttribute)renderable.material.get(ColorAttribute.Diffuse)).color;
