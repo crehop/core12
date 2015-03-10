@@ -55,7 +55,7 @@ public class TerrainChunk {
 	public void buildVertices() {
 	    int heightPitch = height + 1;
 	    int widthPitch = width + 1;
-	    int strength = 80; //heightmap multiplier
+	    int strength = 100; //heightmap multiplier
 	    int idx = 0;
 	    int hIdx = 0;
 	    for (int z = 0; z < heightPitch; z++) {

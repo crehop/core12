@@ -35,7 +35,7 @@ public class Terrain {
 		public TerrainChunk[][] terrainChunks;	
 	    int chunkNum = 0;
 	    // Scale of the terrain
-		float scale = 500;
+		float scale = 100;
 		// position 3, normal 3, color 1, texture 2
 		static int vertexSize = 3 + 3 + 1 + 2;
 		public int indexOffset = 0;
