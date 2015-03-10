@@ -16,9 +16,9 @@ void main(void) {
 	vec4 grass = texture2D(u_texture1, v_texCoord0) * v_color;
 	vec4 rock = texture2D(u_texture2, v_texCoord0) * v_color;
 	vec4 dirt = texture2D(u_texture3, v_texCoord0) * v_color;
-	vec4 premix0 = mix(grass,dirt,splat.r);
-	vec4 premix1 = mix(premix0,rock,splat.b);
-	vec4 finalMix = mix(premix1,rock,splat.g);
+	vec4 premix0 = mix(dirt,rock,splat.r);
+	vec4 premix1 = mix(premix0,dirt,splat.b);
+	vec4 finalMix = mix(premix1,grass,splat.g);
 
 
 	gl_FragColor = finalMix;

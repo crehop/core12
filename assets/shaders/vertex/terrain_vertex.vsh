@@ -12,10 +12,15 @@ uniform mat4 u_projTrans;
 uniform mat4 u_worldTrans;
 uniform vec2 u_resolution;
 
+uniform float offsetU;
+uniform float offsetV;
+uniform float scaleU;
+uniform float scaleV;
+
 void main(void) {
 	//set the varying to the actuals
 	v_color = a_color;
-	v_texCoord0 = a_texCoord0;
+	v_texCoord0 = vec2(((a_texCoord0.x  * scaleU) + offsetU), ((a_texCoord0.y* scaleV) + offsetV));
 
 	//gl_position is a built in variable to set the position of the vertecies
 	//projTrans = currentprojection? worldTrans = where to put it? position = where to put the vertex?

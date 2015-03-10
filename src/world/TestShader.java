@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
+import com.badlogic.gdx.graphics.g3d.utils.TextureDescriptor;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -65,15 +66,16 @@ public class TestShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable){
-		//bind correct textures
-		dirt.bind(4);
-		program.setUniformi("u_texture3", 4);
-		rock.bind(3);
-		program.setUniformi("u_texture2", 3);
-		grass.bind(2);
-		program.setUniformi("u_texture1", 2);
-		splat.bind(1);
-		program.setUniformi("u_texture0", 1);
+		//bind correct textures		
+		program.setUniformf("offsetU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetU);
+		program.setUniformf("offsetV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetV);
+		program.setUniformf("scaleU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleU);
+		program.setUniformf("scaleV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleV);
+
+		program.setUniformi("u_texture3", context.textureBinder.bind(dirt));
+		program.setUniformi("u_texture2", context.textureBinder.bind(rock));
+		program.setUniformi("u_texture1", context.textureBinder.bind(grass));
+		program.setUniformi("u_texture0", context.textureBinder.bind(((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).textureDescription));
 		
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.environment = Zomtasia.Zomtasia.env;
