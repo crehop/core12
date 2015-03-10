@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -67,14 +69,21 @@ public class TestShader implements Shader {
 	@Override
 	public void render(Renderable renderable){
 		//bind correct textures		
+		
 		program.setUniformf("offsetU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetU);
 		program.setUniformf("offsetV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetV);
 		program.setUniformf("scaleU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleU);
 		program.setUniformf("scaleV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleV);
 
 		program.setUniformi("u_texture3", context.textureBinder.bind(dirt));
+		dirt.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		dirt.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		program.setUniformi("u_texture2", context.textureBinder.bind(rock));
+		rock.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		rock.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		program.setUniformi("u_texture1", context.textureBinder.bind(grass));
+		grass.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		grass.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		program.setUniformi("u_texture0", context.textureBinder.bind(((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).textureDescription));
 		
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
