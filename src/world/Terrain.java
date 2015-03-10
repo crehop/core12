@@ -35,7 +35,7 @@ public class Terrain {
 		public TerrainChunk[][] terrainChunks;	
 	    int chunkNum = 0;
 	    // Scale of the terrain
-		float scale = 100;
+		float scale = 25;
 		// position 3, normal 3, color 1, texture 2
 		static int vertexSize = 3 + 3 + 1 + 2;
 		public int indexOffset = 0;
@@ -72,9 +72,7 @@ public class Terrain {
 	    			
 	    			Model result = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
 	    			ModelInstance modelInstance = new ModelInstance(result, 0,-100,0);
-	    			modelInstance.transform.scl(100);
-	    		    //modelInstance.model.meshes.get(0).scale(scale,scale,scale);
-	    		    
+	    			modelInstance.transform.scl(scale);
 
 	    		    //Finish Chunk
 	    		    chunk.setModelInstance(modelInstance,mesh);
