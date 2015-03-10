@@ -76,14 +76,14 @@ public class TestShader implements Shader {
 		program.setUniformf("scaleV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleV);
 
 		program.setUniformi("u_texture3", context.textureBinder.bind(dirt));
-		dirt.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		dirt.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
+		dirt.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		program.setUniformi("u_texture2", context.textureBinder.bind(rock));
-		rock.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		rock.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
+		rock.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		program.setUniformi("u_texture1", context.textureBinder.bind(grass));
-		grass.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		grass.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
+		grass.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		program.setUniformi("u_texture0", context.textureBinder.bind(((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).textureDescription));
 		
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);

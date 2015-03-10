@@ -29,7 +29,7 @@ public class Terrain {
 		private Texture mHeightMap;
 		private TextureRegion tRegion;
 		private TextureRegion mRegion;
-		private int chunkSize = 170;
+		private int chunkSize = 51;
 		private TextureRegion[][] chunkRegions;
 		private TextureRegion[][] terrainRegions;
 		public TerrainChunk[][] terrainChunks;	
@@ -39,7 +39,6 @@ public class Terrain {
 		// position 3, normal 3, color 1, texture 2
 		static int vertexSize = 3 + 3 + 1 + 2;
 		public int indexOffset = 0;
-		public boolean once = true;
 		
 		public void create () {
 			terrain = new Texture("terrain/terrain.png");
