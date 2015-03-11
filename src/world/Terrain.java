@@ -1,12 +1,9 @@
 package world;
-import screens.Console;
-import Zomtasia.Zomtasia;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttribute;
@@ -20,16 +17,14 @@ import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Matrix3;
 
 public class Terrain {
 		private TerrainChunk chunk;
-		private PerspectiveCamera camera;
 		private Texture terrain;
 		private Texture mHeightMap;
 		private TextureRegion tRegion;
 		private TextureRegion mRegion;
-		private int chunkSize = 51;
+		private int chunkSize = 100;
 		private TextureRegion[][] chunkRegions;
 		private TextureRegion[][] terrainRegions;
 		public TerrainChunk[][] terrainChunks;	
@@ -42,7 +37,6 @@ public class Terrain {
 		
 		public void create () {
 			terrain = new Texture("terrain/terrain.png");
-			camera = Zomtasia.cam;
 	        mHeightMap = new Texture("terrain/heightmap.png");
 	        mRegion = new TextureRegion(mHeightMap, 0,0, mHeightMap.getWidth() ,mHeightMap.getHeight());
 	        tRegion = new TextureRegion(terrain, 0,0, terrain.getWidth() ,terrain.getHeight());

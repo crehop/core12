@@ -55,26 +55,26 @@ public class TerrainChunk {
 	public void buildVertices() {
 	    int heightPitch = height + 1;
 	    int widthPitch = width + 1;
-	    int strength = 100; //heightmap multiplier
-	    int idx = 0;
-	    int hIdx = 0;
+	    int multiplier = 100; //heightmap multiplier
+	    int index = 0;
+	    int heightmapIndex = 0;
 	    for (int z = 0; z < heightPitch; z++) {
 	        for (int x = 0; x < widthPitch; x++) {
 
 	            //POSITION
-	            vertices[idx++] = x;
-	            vertices[idx++] = heightMap[hIdx++] * strength;
-	            vertices[idx++] = z;
+	            vertices[index++] = x;
+	            vertices[index++] = heightMap[heightmapIndex++] * multiplier;
+	            vertices[index++] = z;
 
 	            //SKIP NORMALS
-	            idx += 3;
+	            index += 3;
 
 	            //COLOR
-	            vertices[idx++] = Color.WHITE.toFloatBits();
+	            vertices[index++] = Color.WHITE.toFloatBits();
 
 	            //TEXTURE
-	            vertices[idx++] = ((float)z / height);
-	            vertices[idx++] = ((float)x / width);
+	            vertices[index++] = ((float)z / height);
+	            vertices[index++] = ((float)x / width);
 	        }
 	    }
 	}
