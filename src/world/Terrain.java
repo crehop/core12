@@ -64,12 +64,27 @@ public class Terrain {
 	    			mesh.setVertices(chunk.vertices);
 	    			mesh.setIndices(chunk.indices);
 	    			
+	    			Mesh mesh2 = new Mesh(true, chunk.vertices.length / 9, chunk.indices.length,
+	    			        new VertexAttribute(VertexAttributes.Usage.Position, 3, ShaderProgram.POSITION_ATTRIBUTE), 
+	    			        new VertexAttribute(VertexAttributes.Usage.Normal, 3, ShaderProgram.NORMAL_ATTRIBUTE),
+	    			        new VertexAttribute(VertexAttributes.Usage.ColorPacked, 4, ShaderProgram.COLOR_ATTRIBUTE), 
+	    			        new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2,  ShaderProgram.TEXCOORD_ATTRIBUTE + "0", 0));
+	    			mesh2.setVertices(chunk.waterVertices);
+	    			mesh2.setIndices(chunk.waterIndices);
+	    			
+	    			
 	    			Model result = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
 	    			ModelInstance modelInstance = new ModelInstance(result, 0,-100,0);
 	    			modelInstance.transform.scl(scale);
+	    			
+	    			Model result2 = ModelBuilder.createFromMesh(mesh2, GL20.GL_TRIANGLES, material);
+	    			ModelInstance modelInstance2 = new ModelInstance(result2, 0,-100,0);
+	    			modelInstance2.transform.scl(scale);
+
 
 	    		    //Finish Chunk
-	    		    chunk.setModelInstance(modelInstance,mesh);
+	    		    chunk.setModelInstance(modelInstance);
+	    		    chunk.setWaterModelInstance(modelInstance2);
 	    		    chunkNum++;
 	        	}
 	        }

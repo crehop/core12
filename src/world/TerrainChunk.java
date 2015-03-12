@@ -14,12 +14,16 @@ public class TerrainChunk {
 	public final short height;
 	public final float[] vertices;
 	public final short[] indices;
+	public final float[] waterVertices;
+	public final short[] waterIndices;
 	public final int vertexSize;
     private final int positionSize = 3;
 	public Location location;
-	private ModelInstance modelInstance;
+	private ModelInstance terrain;
+	private ModelInstance water;
 	private int xLoc = 0;
 	private int yLoc = 0;
+	private float waterHeight = 0.23529412f;
 	Material material;
 	private Mesh mesh;
 	
@@ -31,12 +35,18 @@ public class TerrainChunk {
 		this.height = (short)height;
 		this.vertices = new float[heightMap.length * vertexSize];
 		this.indices = new short[width * height * 6];
+		this.waterVertices = new float[heightMap.length * vertexSize];
+		this.waterIndices = new short[width * height * 6];
 		this.vertexSize = vertexSize;
 		this.location = new Location( 0,0,0);
+		
 		
 		buildHeightmap(map);
 		buildIndices();
 		buildVertices();
+		buildWaterIndices();
+		buildWaterVertices();
+        calcNormals(waterIndices, waterVertices);
         calcNormals(indices, vertices);
 	}
 	
@@ -78,7 +88,7 @@ public class TerrainChunk {
 	        }
 	    }
 	}
-
+	
 	private void buildIndices () {
 		int idx = 0;
 		short pitch = (short)(width + 1);
@@ -113,6 +123,67 @@ public class TerrainChunk {
 		}
 	}
 	
+	
+	public void buildWaterVertices() {
+	    int heightPitch = height + 1;
+	    int widthPitch = width + 1;
+	    int strength = 100; //heightmap multiplier
+	    int idx = 0;
+	    for (int z = 0; z < heightPitch; z++) {
+	        for (int x = 0; x < widthPitch; x++) {
+
+	            //POSITION
+	            waterVertices[idx++] = x;
+	            waterVertices[idx++] = waterHeight * strength;
+	            waterVertices[idx++] = z;
+
+	            //SKIP NORMALS
+	            idx += 3;
+
+	            //COLOR
+	            waterVertices[idx++] = Color.BLUE.toFloatBits();
+
+	            //TEXTURE
+	            waterVertices[idx++] = ((float)z / height);
+	            waterVertices[idx++] = ((float)x / width);
+	        }
+	    }
+	}
+	
+	private void buildWaterIndices () {
+		int idx = 0;
+		short pitch = (short)(width + 1);
+		short i1 = 0;
+		short i2 = 1;
+		short i3 = (short)(1 + pitch);
+		short i4 = pitch;
+		
+		short row = 0;
+
+		for (int z = 0; z < height; z++) {
+			for (int x = 0; x < width; x++) {
+				waterIndices[idx++] = i1;
+				waterIndices[idx++] = i3; //i3 is exchanged
+				waterIndices[idx++] = i2; //with i2
+
+				waterIndices[idx++] = i3;
+				waterIndices[idx++] = i1; //i1 is exchanged
+				waterIndices[idx++] = i4; //with i4
+
+				i1++;
+				i2++;
+				i3++;
+				i4++;
+			}
+			
+			row += pitch;
+			i1 = row;
+			i2 = (short)(row + 1);
+			i3 = (short)(i2 + pitch);
+			i4 = (short)(row + pitch);
+		}
+	}
+	
 
 	public boolean needsGL20 () {
 		return false;
@@ -128,12 +199,19 @@ public class TerrainChunk {
 	public void setLocation(Location location){
 		this.location = location;
 	}
-	public void setModelInstance(ModelInstance instance, Mesh mesh){
-		this.modelInstance = instance;
-		this.modelInstance.transform.translate(location.getPosition());
+	public void setModelInstance(ModelInstance instance){
+		this.terrain = instance;
+		this.terrain.transform.translate(location.getPosition());
 	}
-	public ModelInstance getModelInstance(){
-		return this.modelInstance;
+	public void setWaterModelInstance(ModelInstance instance2){
+		this.water = instance2;
+		this.water.transform.translate(location.getPosition());
+	}
+	public ModelInstance getTerrain(){
+		return this.terrain;
+	}
+	public ModelInstance getWater(){
+		return this.water;
 	}
 
     // Gets the index of the first float of a normal for a specific vertex
