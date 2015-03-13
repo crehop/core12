@@ -1,6 +1,8 @@
 package control;
 
+import server.Location;
 import Zomtasia.Zomtasia;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -16,6 +18,13 @@ public class Controls implements InputProcessor{
 	private boolean speedUpCam;
 	private boolean speedDownCam;
 	private boolean menu;
+	private boolean testForward;
+	private boolean testBack;
+	private boolean testLeft;
+	private boolean testRight;
+	private boolean testUp;
+	private boolean testDown;
+	private Location current;
 	private Zomtasia game;
 	
 	//Mouse sensitivity
@@ -70,6 +79,30 @@ public class Controls implements InputProcessor{
 		if(menu){
 			Gdx.app.log(Zomtasia.LOG, "CAMSNAP");
 		}
+		if(testForward){
+			Location current = Zomtasia.testPolice.getLocation();
+			Zomtasia.testPolice.setLocation(current.getX(), current.getY(), current.getZ() + movementSpeed);
+		}
+		if(testBack){
+			current = Zomtasia.testPolice.getLocation();
+			Zomtasia.testPolice.setLocation(current.getX(), current.getY(), current.getZ() - movementSpeed);
+		}
+		if(testLeft){
+			current = Zomtasia.testPolice.getLocation();
+			Zomtasia.testPolice.setLocation(current.getX() + movementSpeed, current.getY(), current.getZ());
+		}
+		if(testRight){
+			current = Zomtasia.testPolice.getLocation();
+			Zomtasia.testPolice.setLocation(current.getX() - movementSpeed, current.getY(), current.getZ());
+		}
+		if(testUp){
+			current = Zomtasia.testPolice.getLocation();
+			Zomtasia.testPolice.setLocation(current.getX(), current.getY() + movementSpeed, current.getZ());
+		}
+		if(testDown){
+			current = Zomtasia.testPolice.getLocation();
+			Zomtasia.testPolice.setLocation(current.getX(), current.getY() - movementSpeed, current.getZ());
+		}
 	}
 	@Override
 	public boolean keyDown(int keycode) {
@@ -100,6 +133,23 @@ public class Controls implements InputProcessor{
 				return false;
 			case Input.Keys.ESCAPE:
 				exitKey = true;
+				return false;
+			case Input.Keys.UP:
+				testForward = true;
+				return false;
+			case Input.Keys.DOWN:
+				testBack = true;
+				return false;
+			case Input.Keys.LEFT:
+				testLeft = true;
+				return false;
+			case Input.Keys.RIGHT:
+				testRight = true;
+			case Input.Keys.CONTROL_RIGHT:
+				testDown = true;
+				return false;
+			case Input.Keys.SHIFT_RIGHT:
+				testUp = true;
 				return false;
 			default:
 				return true;
@@ -134,6 +184,25 @@ public class Controls implements InputProcessor{
 				return false;
 			case Input.Keys.ESCAPE:
 				exitKey = false;
+				return false;
+			case Input.Keys.UP:
+				testForward = false;
+				return false;
+			case Input.Keys.DOWN:
+				testBack = false;
+				return false;
+			case Input.Keys.LEFT:
+				testLeft = false;
+				return false;
+			case Input.Keys.RIGHT:
+				testRight = false;
+				return false;
+			case Input.Keys.CONTROL_RIGHT:
+				testDown = false;
+				return false;
+			case Input.Keys.SHIFT_RIGHT:
+				testUp = false;
+				return false;
 		}
 		return false;
 		}

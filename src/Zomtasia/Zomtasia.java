@@ -23,13 +23,16 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
 import control.Controls;
+import entities.AssetHandler;
 import entities.Player;
+import entities.cars.PoliceCar;
 
 public class Zomtasia extends Game implements ApplicationListener {
 	public static String VERSION = "0.01 Pre-Alpha";
@@ -42,7 +45,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static Environment env;
 	private static Zomtasia game;
 	public static Controls controls;
-	private static AssetManager assets;
+	public static AssetHandler assets;
 	private static ArrayList<ModelInstance> models = new ArrayList<ModelInstance>();
 	public static ModelBuilder modelBuilder;
 	public static float lasttime = 0;
@@ -51,6 +54,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	TestShader test;
 	public static boolean cameraCreated = false;
 	public boolean once = true;
+	public static PoliceCar testPolice;
 	Texture grass;
 	float progress;
 	Vector3 xAxis = new Vector3(1,0,0);
@@ -66,35 +70,31 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Thread thread = new Thread(){
 			Time time = new Time();
 		};
+		assets = new AssetHandler();
 		test = new TestShader();
 		test.init();
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
 		controls = new Controls(this);
         Gdx.input.setInputProcessor(controls);
-       
         env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
         env.add(new DirectionalLight().set(1f, 1f, 1f, -18f, -11.8f, -22.2f));
 		player = new Player(0,0,10,this);
-        
+		assets.getAssetManager().finishLoading();
 		modelBatch = new ModelBatch();
-
-		modelBuilder = new ModelBuilder();
-		model = modelBuilder.createBox(5f, 5f, 5f, 
-            new Material(ColorAttribute.createDiffuse(Color.BLUE)),
-            Usage.Position | Usage.Normal);
-		newModelInstance(new ModelInstance(model));
+		//modelBuilder = new ModelBuilder();
+		//model = modelBuilder.createBox(5f, 5f, 5f, 
+        //    new Material(ColorAttribute.createDiffuse(Color.BLUE)),
+        //    Usage.Position | Usage.Normal);
+		//newModelInstance(new ModelInstance(model));
 		
 		
 		Gdx.graphics.setContinuousRendering(true);
 		Gdx.graphics.setVSync(true);
 		Gdx.input.setCursorCatched(true);
 		setScreen(player);
-		
-		assets = new AssetManager();
-		assets.load("skybox/skybox.g3dj", Model.class);
-		assets.finishLoading();
+		testPolice = new PoliceCar(0,0,0);
 		Skybox.render();
 		terrain.create();
 	}
@@ -102,7 +102,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	@Override
 	public void render() {
 		Console.setLine1("FPS:"+ Gdx.graphics.getFramesPerSecond());
-		if(assets.update()) {
+		if(assets.getAssetManager().update()) {
 			super.render();
 			if(cameraCreated == false){
 				cameraCreated = true;
@@ -123,9 +123,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 			
 			//Terrain==================================
 			modelBatch.begin(cam);
-			for(ModelInstance instance:models){
-				modelBatch.render(instance,env);
-			}
+			//for(ModelInstance instance:models){
+			//	modelBatch.render(instance,env);
+			//
+			//}
+			modelBatch.render(testPolice.render(),env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
@@ -136,7 +138,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        	}
 	        }
 	        modelBatch.end();
-	        //Lighting.endShader();
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 	  	    //=========================================
 
@@ -145,7 +146,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        Console.setLine2("Chunks being rendered:" + count);
 			Zomtasia.cam.update();	       
 	      }else{
-	       progress = assets.getProgress();
+	       progress = assets.getAssetManager().getProgress();
 	  	 }
 	}
 	
@@ -179,7 +180,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Zomtasia.game = game;
 	}
 	public AssetManager getAssets(){
-		return assets;
+		return assets.getAssetManager();
 	}
 
 	public static Terrain getTerrain() {
