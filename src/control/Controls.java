@@ -145,6 +145,7 @@ public class Controls implements InputProcessor{
 				return false;
 			case Input.Keys.RIGHT:
 				testRight = true;
+				return false;
 			case Input.Keys.CONTROL_RIGHT:
 				testDown = true;
 				return false;
