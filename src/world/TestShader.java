@@ -16,6 +16,9 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.g3d.utils.TextureDescriptor;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix3;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
@@ -34,6 +37,13 @@ public class TestShader implements Shader {
 	Texture texAttribute;
 	TiledDrawable draw = new TiledDrawable();
 	private TextureDescriptor descriptor;
+	private final Matrix3 normalMatrix = new Matrix3();
+	private static final float[] lightPosition = { 105, 135, 5 };
+	private static final float[] ambientColor = { 0.2f, 0.2f, 0.2f, 1.0f };
+	private static final float[] diffuseColor = { 0.5f, 0.5f, 0.5f, 1.0f };
+	private static final float[] specularColor = { 0.7f, 0.7f, 0.7f, 1.0f };
+	private static final float[] fogColor = { 0.2f, 0.1f, 0.6f, 1.0f };
+	private Matrix4 modelView = new Matrix4();
 	
 	@Override
 	public void init() {
@@ -70,15 +80,18 @@ public class TestShader implements Shader {
 	@Override
 	public void render(Renderable renderable){
 		//bind correct textures		
-		
+	    modelView.set(camera.view).mul(renderable.worldTransform);
 		program.setUniformf("offsetU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetU);
 		program.setUniformf("offsetV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetV);
 		program.setUniformf("scaleU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleU);
 		program.setUniformf("scaleV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleV);
 		
-		//program.setUniformi("u_texture4",context.textureBinder.bind(descriptor.texture));
-		//descriptor.texture.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
-		//descriptor.texture.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		program.setUniformMatrix("u_normalMatrix", normalMatrix.set(modelView).inv().transpose());
+		program.setUniform3fv("u_lightPosition", lightPosition, 0, 3);
+		//program.setUniform4fv("u_ambientColor", ambientColor, 0, 4);
+		//program.setUniform4fv("u_diffuseColor", diffuseColor, 0, 4);
+		//program.setUniform4fv("u_specularColor", specularColor, 0, 4);
+		
 		program.setUniformi("u_texture3", context.textureBinder.bind(dirt));
 		dirt.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		dirt.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);

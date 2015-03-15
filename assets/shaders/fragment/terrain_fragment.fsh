@@ -5,12 +5,18 @@ precision mediump float;
 varying vec4 v_color;
 varying vec2 v_texCoord0;
 varying vec2 v_texCoordActual;
+varying float intensity;
 
 uniform sampler2D u_texture0;
 uniform sampler2D u_texture1;
 uniform sampler2D u_texture2;
 uniform sampler2D u_texture3;
 uniform sampler2D u_texture4;
+
+uniform vec4 u_ambientColor;
+uniform vec4 u_diffuseColor;
+uniform vec4 u_specularColor;
+
 
 const vec4 fog_colour = vec4(0.21, 0.22, 0.20, 1.);
 vec4 add_fog(vec4 fragColour){
@@ -31,5 +37,5 @@ void main(void) {
 	vec4 premix1 = mix(premix0,dirt,splat.b);
 	vec4 finalMix = mix(premix1,grass,splat.g);
 
-	gl_FragColor = finalMix;
+	gl_FragColor = add_fog(finalMix * intensity);
 }
