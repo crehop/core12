@@ -76,9 +76,9 @@ public class TestShader implements Shader {
 		program.setUniformf("scaleU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleU);
 		program.setUniformf("scaleV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleV);
 		
-		program.setUniformi("u_texture4",context.textureBinder.bind(descriptor.texture));
-		descriptor.texture.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
-		descriptor.texture.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		//program.setUniformi("u_texture4",context.textureBinder.bind(descriptor.texture));
+		//descriptor.texture.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
+		//descriptor.texture.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		program.setUniformi("u_texture3", context.textureBinder.bind(dirt));
 		dirt.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		dirt.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);

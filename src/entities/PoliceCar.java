@@ -9,9 +9,9 @@ import com.badlogic.gdx.math.Vector3;
 public class PoliceCar {
 	private ModelInstance policeCar;
 	private Location location;
-	private float rotX = 100f;
-	private float rotY = 0f;
-	private float rotZ = 0f;
+	private float rotX = 90f;
+	private float rotY = 90f;
+	private float rotZ = 90f;
 	Vector3 xAxis = new Vector3(1,0,0);
 	Vector3 yAxis = new Vector3(0,1,0);
 	Vector3 zAxis = new Vector3(0,0,1);
@@ -32,9 +32,9 @@ public class PoliceCar {
 		this.location = location;
 	}
 	public ModelInstance render(){
+		this.policeCar.transform.setToRotation(zAxis, rotZ);
 		this.policeCar.transform.setToRotation(xAxis, rotX);
-		//this.policeCar.transform.setToRotation(yAxis, rotY);
-		//this.policeCar.transform.setToRotation(zAxis, rotZ);
+		this.policeCar.transform.setToRotation(yAxis, rotY);
 		this.policeCar.transform.setTranslation(location.getPosition());
 
 		return this.policeCar;

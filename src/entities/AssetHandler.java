@@ -14,8 +14,10 @@ public class AssetHandler {
 		assets.load("skybox/skybox.g3dj", Model.class);
 		assets.load("mobs/military/US_Marine.g3dj", Model.class);
 		assets.load("cars/police/City_Police_Car_LOD1.g3dj", Model.class);
+		assets.load("terrain/trees/Low_Poly_Forest_Pack.g3dj", Model.class);
 		assets.finishLoading();
 		storeModel(assets.get("cars/police/City_Police_Car_LOD1.g3dj", Model.class), "policeCar");
+		storeModel(assets.get("terrain/trees/Low_Poly_Forest_Pack.g3dj", Model.class), "trees");
 	}
 	public AssetManager getAssetManager(){
 		return assets;
