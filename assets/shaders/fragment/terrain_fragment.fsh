@@ -10,6 +10,7 @@ uniform sampler2D u_texture0;
 uniform sampler2D u_texture1;
 uniform sampler2D u_texture2;
 uniform sampler2D u_texture3;
+uniform sampler2D u_texture4;
 
 const vec4 fog_colour = vec4(0.21, 0.22, 0.20, 1.);
 vec4 add_fog(vec4 fragColour){
@@ -25,10 +26,12 @@ void main(void) {
 	vec4 grass = texture2D(u_texture1,  v_texCoordActual);  //* v_color;
 	vec4 rock = texture2D(u_texture2, v_texCoordActual);   //* v_color;
 	vec4 dirt = texture2D(u_texture3, v_texCoordActual); //* v_color;
+	vec4 shadow = texture2D(u_texture4, v_texCoordActual); //* v_color;
+
 	vec4 premix0 = mix(dirt,rock,splat.r);
 	vec4 premix1 = mix(premix0,dirt,splat.b);
-	vec4 finalMix = mix(premix1,grass,splat.g);
+	vec4 premix2 = mix(premix1,grass,splat.g);
+	vec4 finalMix = mix(premix2,shadow,0.99f);
 
-
-	gl_FragColor = add_fog(finalMix);
+	gl_FragColor = finalMix;
 }

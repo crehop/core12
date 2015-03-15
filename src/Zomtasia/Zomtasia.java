@@ -25,14 +25,17 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
+import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.g3d.utils.TextureDescriptor;
 import com.badlogic.gdx.math.Vector3;
 
 import control.Controls;
 import entities.AssetHandler;
 import entities.Player;
-import entities.cars.PoliceCar;
+import entities.PoliceCar;
 
 public class Zomtasia extends Game implements ApplicationListener {
 	public static String VERSION = "0.01 Pre-Alpha";
@@ -60,6 +63,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 	Vector3 xAxis = new Vector3(1,0,0);
 	Vector3 yAxis = new Vector3(0,1,0);
 	Vector3 zAxis = new Vector3(0,0,1);
+	DirectionalShadowLight shadowLight;
+	ModelBatch shadowBatch;
 	
 	//WORLD CLASSES
 	public static Terrain terrain = new Terrain();
@@ -80,6 +85,9 @@ public class Zomtasia extends Game implements ApplicationListener {
         env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
         env.add(new DirectionalLight().set(1f, 1f, 1f, -18f, -11.8f, -22.2f));
+        env.add((shadowLight = new DirectionalShadowLight(1024, 1024, 30f, 30f, 1f, 100f))
+    			.set(0.8f, 0.8f, 0.8f, -.4f, -.4f, -.4f));
+    	env.shadowMap = shadowLight;
 		player = new Player(0,0,10,this);
 		assets.getAssetManager().finishLoading();
 		modelBatch = new ModelBatch();
@@ -132,6 +140,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), env);
+	        		test.setShadowMap(env.shadowMap.getDepthMap());
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), test);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), env);
 	        		count++;

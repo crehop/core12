@@ -1,4 +1,4 @@
-package entities.cars;
+package entities;
 
 import server.Location;
 import Zomtasia.Zomtasia;

@@ -33,6 +33,7 @@ public class TestShader implements Shader {
 	Texture splat = new Texture("terrain/terrain.png");
 	Texture texAttribute;
 	TiledDrawable draw = new TiledDrawable();
+	private TextureDescriptor descriptor;
 	
 	@Override
 	public void init() {
@@ -74,7 +75,10 @@ public class TestShader implements Shader {
 		program.setUniformf("offsetV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetV);
 		program.setUniformf("scaleU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleU);
 		program.setUniformf("scaleV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleV);
-
+		
+		program.setUniformi("u_texture4",context.textureBinder.bind(descriptor.texture));
+		descriptor.texture.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
+		descriptor.texture.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		program.setUniformi("u_texture3", context.textureBinder.bind(dirt));
 		dirt.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		dirt.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
@@ -85,6 +89,7 @@ public class TestShader implements Shader {
 		grass.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		grass.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		program.setUniformi("u_texture0", context.textureBinder.bind(((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).textureDescription));
+		
 		
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.environment = Zomtasia.Zomtasia.env;
@@ -114,5 +119,8 @@ public class TestShader implements Shader {
 	}
 	public ShaderProgram getProgram(){
 		return program;
+	}
+	public void setShadowMap(TextureDescriptor descriptor){
+		this.descriptor = descriptor;
 	}
 }
