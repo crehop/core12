@@ -79,7 +79,7 @@ public class TestShader implements Shader {
 		lightPosition[1] = Zomtasia.Zomtasia.testPolice.getLocation().getY();
 		lightPosition[2] = Zomtasia.Zomtasia.testPolice.getLocation().getZ();
 		//bind correct textures		
-	    modelView.set(camera.view).mul(renderable.worldTransform);
+	    modelView.set(renderable.worldTransform);
 		program.setUniformf("offsetU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetU);
 		program.setUniformf("offsetV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetV);
 		program.setUniformf("scaleU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleU);
