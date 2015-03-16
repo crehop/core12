@@ -46,4 +46,7 @@ public class Location {
 	public void update(Vector3 position) {
 		this.position = position;
 	}
+	public void set(Vector3 lightPos) {
+		this.position = lightPos;
+	}
 }

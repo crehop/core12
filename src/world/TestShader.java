@@ -38,11 +38,7 @@ public class TestShader implements Shader {
 	TiledDrawable draw = new TiledDrawable();
 	private TextureDescriptor descriptor;
 	private final Matrix3 normalMatrix = new Matrix3();
-	private static final float[] lightPosition = { 105, 135, 5 };
-	private static final float[] ambientColor = { 0.2f, 0.2f, 0.2f, 1.0f };
-	private static final float[] diffuseColor = { 0.5f, 0.5f, 0.5f, 1.0f };
-	private static final float[] specularColor = { 0.7f, 0.7f, 0.7f, 1.0f };
-	private static final float[] fogColor = { 0.2f, 0.1f, 0.6f, 1.0f };
+	private static final float[] lightPosition = { 205, 135, 5 };
 	private Matrix4 modelView = new Matrix4();
 	
 	@Override
@@ -79,6 +75,9 @@ public class TestShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable){
+		lightPosition[0] = Zomtasia.Zomtasia.testPolice.getLocation().getX();
+		lightPosition[1] = Zomtasia.Zomtasia.testPolice.getLocation().getY();
+		lightPosition[2] = Zomtasia.Zomtasia.testPolice.getLocation().getZ();
 		//bind correct textures		
 	    modelView.set(camera.view).mul(renderable.worldTransform);
 		program.setUniformf("offsetU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetU);

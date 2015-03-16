@@ -50,7 +50,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static float lasttime = 0;
 	public String debug = "";
 	int count;
-	TestShader test;
+	public TestShader test;
 	public static boolean cameraCreated = false;
 	public boolean once = true;
 	public static PoliceCar testPolice;
@@ -192,5 +192,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 	}
 	public static void newModelInstance(ModelInstance modelInstance) {
 		models.add(modelInstance);
+	}
+	public TestShader getShader(){
+		return test;
 	}
 }

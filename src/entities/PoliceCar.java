@@ -32,9 +32,9 @@ public class PoliceCar {
 		this.location = location;
 	}
 	public ModelInstance render(){
-		this.policeCar.transform.setToRotation(zAxis, rotZ);
-		this.policeCar.transform.setToRotation(xAxis, rotX);
-		this.policeCar.transform.setToRotation(yAxis, rotY);
+		//this.policeCar.transform.setToRotation(zAxis, rotZ);
+		//this.policeCar.transform.setToRotation(xAxis, rotX);
+		//this.policeCar.transform.setToRotation(yAxis, rotY);
 		this.policeCar.transform.setTranslation(location.getPosition());
 
 		return this.policeCar;
