@@ -31,7 +31,7 @@ void main(void) {
 	v_texCoord0 = vec2(((a_texCoord0.x  * scaleU) + offsetU), ((a_texCoord0.y* scaleV) + offsetV));
 	vec3 normal = normalize(u_normalMatrix * a_normal);
 	vec3 light = normalize(u_lightPosition);
-	intensity = max( dot(normal, light) , 0.0);
+	intensity = max(dot(normal, light),0.0);
 
 	//gl_position is a built in variable to set the position of the vertecies
 	//projTrans = currentprojection? worldTrans = where to put it? position = where to put the vertex?
