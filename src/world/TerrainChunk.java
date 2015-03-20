@@ -213,11 +213,11 @@ public class TerrainChunk {
 	            idx += 3;
 
 	            //COLOR
-	            skyVertices[idx++] = Color.GREEN.toFloatBits();
+	            skyVertices[idx++] = Color.WHITE.toFloatBits();
 
 	            //TEXTURE
-	            skyVertices[idx++] = ((float)z / height);
-	            skyVertices[idx++] = ((float)x / width);
+	            skyVertices[idx++] = -((float)z / height);
+	            skyVertices[idx++] = -((float)x / width);
 	        }
 	    }
 	}
@@ -281,8 +281,9 @@ public class TerrainChunk {
 	}
 	public void setSkyModelInstance(ModelInstance instance3){
 		this.sky = instance3;
+		this.sky.transform.rotate(1,0,0,180);
+		this.sky.transform.rotate(0,1,0,90);
 		this.sky.transform.translate(location.getPosition().x, 0, location.getPosition().z);
-		this.sky.transform.rotate(1,0,0, 180);
 	}
 	public ModelInstance getTerrain(){
 		return this.terrain;
