@@ -72,6 +72,13 @@ public class Terrain {
 	    			mesh2.setVertices(chunk.waterVertices);
 	    			mesh2.setIndices(chunk.waterIndices);
 	    			
+	    			Mesh mesh3 = new Mesh(true, chunk.vertices.length / 9, chunk.indices.length,
+	    			        new VertexAttribute(VertexAttributes.Usage.Position, 3, ShaderProgram.POSITION_ATTRIBUTE), 
+	    			        new VertexAttribute(VertexAttributes.Usage.Normal, 3, ShaderProgram.NORMAL_ATTRIBUTE),
+	    			        new VertexAttribute(VertexAttributes.Usage.ColorPacked, 4, ShaderProgram.COLOR_ATTRIBUTE), 
+	    			        new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2,  ShaderProgram.TEXCOORD_ATTRIBUTE + "0", 0));
+	    			mesh3.setVertices(chunk.skyVertices);
+	    			mesh3.setIndices(chunk.skyIndices);
 	    			
 	    			Model result = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
 	    			ModelInstance modelInstance = new ModelInstance(result, 0,-100,0);
@@ -80,11 +87,16 @@ public class Terrain {
 	    			Model result2 = ModelBuilder.createFromMesh(mesh2, GL20.GL_TRIANGLES, material);
 	    			ModelInstance modelInstance2 = new ModelInstance(result2, 0,-100,0);
 	    			modelInstance2.transform.scl(scale);
+	    			
+	    			Model result3 = ModelBuilder.createFromMesh(mesh2, GL20.GL_TRIANGLES, material);
+	    			ModelInstance modelInstance3 = new ModelInstance(result2, 0,-100,0);
+	    			modelInstance3.transform.scl(scale);
 
 
 	    		    //Finish Chunk
 	    		    chunk.setModelInstance(modelInstance);
 	    		    chunk.setWaterModelInstance(modelInstance2);
+	    		    chunk.setSkyModelInstance(modelInstance3);
 	    		    chunkNum++;
 	        	}
 	        }

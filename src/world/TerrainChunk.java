@@ -1,17 +1,16 @@
 package world;
 
 import java.util.Random;
+
 import server.Location;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.g3d.RenderableProvider;
+import com.badlogic.gdx.math.Vector3;
 public class TerrainChunk {
 	public final float[] heightMap;
 	public final short width;
@@ -20,14 +19,18 @@ public class TerrainChunk {
 	public final short[] indices;
 	public final float[] waterVertices;
 	public final short[] waterIndices;
+	public final float[] skyVertices;
+	public final short[] skyIndices;
 	public final int vertexSize;
     private final int positionSize = 3;
 	public Location location;
 	private ModelInstance terrain;
 	private ModelInstance water;
+	private ModelInstance sky;
 	private int xLoc = 0;
 	private int yLoc = 0;
 	private float waterHeight = 0.23529412f;
+	private float skyHeight = 0.29529412f;
 	Material material;
 	private Mesh mesh;
 	Random rand = new Random();
@@ -42,6 +45,8 @@ public class TerrainChunk {
 		this.indices = new short[width * height * 6];
 		this.waterVertices = new float[heightMap.length * vertexSize];
 		this.waterIndices = new short[width * height * 6];
+		this.skyVertices = new float[heightMap.length * vertexSize];
+		this.skyIndices = new short[width * height * 6];
 		this.vertexSize = vertexSize;
 		this.location = new Location( 0,0,0);
 		
@@ -50,6 +55,9 @@ public class TerrainChunk {
 		buildVertices();
 		buildWaterIndices();
 		buildWaterVertices();
+		buildSkyIndices();
+		buildSkyVertices();
+        calcNormals(skyIndices, skyVertices);
         calcNormals(waterIndices, waterVertices);
         calcNormals(indices, vertices);
 	}
@@ -188,6 +196,66 @@ public class TerrainChunk {
 		}
 	}
 	
+	public void buildSkyVertices() {
+	    int heightPitch = height + 1;
+	    int widthPitch = width + 1;
+	    int strength = 100; //heightmap multiplier
+	    int idx = 0;
+	    for (int z = 0; z < heightPitch; z++) {
+	        for (int x = 0; x < widthPitch; x++) {
+
+	            //POSITION
+	            skyVertices[idx++] = x;
+	            skyVertices[idx++] = skyHeight * strength;
+	            skyVertices[idx++] = z;
+
+	            //SKIP NORMALS
+	            idx += 3;
+
+	            //COLOR
+	            skyVertices[idx++] = Color.GREEN.toFloatBits();
+
+	            //TEXTURE
+	            skyVertices[idx++] = ((float)z / height);
+	            skyVertices[idx++] = ((float)x / width);
+	        }
+	    }
+	}
+	
+	private void buildSkyIndices () {
+		int idx = 0;
+		short pitch = (short)(width + 1);
+		short i1 = 0;
+		short i2 = 1;
+		short i3 = (short)(1 + pitch);
+		short i4 = pitch;
+		
+		short row = 0;
+
+		for (int z = 0; z < height; z++) {
+			for (int x = 0; x < width; x++) {
+				skyIndices[idx++] = i1;
+				skyIndices[idx++] = i3; //i3 is exchanged
+				skyIndices[idx++] = i2; //with i2
+
+				skyIndices[idx++] = i3;
+				skyIndices[idx++] = i1; //i1 is exchanged
+				skyIndices[idx++] = i4; //with i4
+
+				i1++;
+				i2++;
+				i3++;
+				i4++;
+			}
+			
+			row += pitch;
+			i1 = row;
+			i2 = (short)(row + 1);
+			i3 = (short)(i2 + pitch);
+			i4 = (short)(row + pitch);
+		}
+	}
+	
 
 	public boolean needsGL20 () {
 		return false;
@@ -210,6 +278,11 @@ public class TerrainChunk {
 	public void setWaterModelInstance(ModelInstance instance2){
 		this.water = instance2;
 		this.water.transform.translate(location.getPosition());
+	}
+	public void setSkyModelInstance(ModelInstance instance3){
+		this.sky = instance3;
+		this.sky.transform.translate(location.getPosition().x, 0, location.getPosition().z);
+		this.sky.transform.rotate(1,0,0, 180);
 	}
 	public ModelInstance getTerrain(){
 		return this.terrain;
@@ -311,4 +384,8 @@ public class TerrainChunk {
     public Mesh getMesh(){
     	return mesh;
     }
+
+	public ModelInstance getSky() {
+		return sky;
+	}
 }
