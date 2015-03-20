@@ -8,11 +8,6 @@ varying vec2 v_texCoordActual;
 varying float intensity;
 
 uniform sampler2D u_texture0;
-uniform sampler2D u_texture1;
-uniform sampler2D u_texture2;
-uniform sampler2D u_texture3;
-uniform sampler2D u_texture4;
-
 uniform vec4 u_ambientColor;
 uniform vec4 u_diffuseColor;
 uniform vec4 u_specularColor;
@@ -28,14 +23,7 @@ vec4 add_fog(vec4 fragColour){
 }
 
 void main(void) {
-	vec4 splat = texture2D(u_texture0, v_texCoord0);// * v_color;
-	vec4 grass = texture2D(u_texture1,  v_texCoordActual);  //* v_color;
-	vec4 rock = texture2D(u_texture2, v_texCoordActual);   //* v_color;
-	vec4 dirt = texture2D(u_texture3, v_texCoordActual); //* v_color;
-
-	vec4 premix0 = mix(dirt,rock,splat.r);
-	vec4 premix1 = mix(premix0,dirt,splat.b);
-	vec4 finalMix = mix(premix1,grass,splat.g);
-
-	gl_FragColor = add_fog(finalMix + mix(finalMix, intensity, .45));
+	vec4 water = texture2D(u_texture0, v_texCoord0);// * v_color;
+	
+	gl_FragColor = add_fog(mix(water, intensity, .45));
 }

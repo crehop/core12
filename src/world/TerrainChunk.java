@@ -1,13 +1,17 @@
 package world;
 
+import java.util.Random;
 import server.Location;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 public class TerrainChunk {
 	public final float[] heightMap;
 	public final short width;
@@ -26,6 +30,7 @@ public class TerrainChunk {
 	private float waterHeight = 0.23529412f;
 	Material material;
 	private Mesh mesh;
+	Random rand = new Random();
 	
 	public TerrainChunk (int width, int height, int vertexSize, Pixmap map, int xLoc, int yLoc) {
 		this.xLoc = xLoc;
@@ -39,7 +44,6 @@ public class TerrainChunk {
 		this.waterIndices = new short[width * height * 6];
 		this.vertexSize = vertexSize;
 		this.location = new Location( 0,0,0);
-		
 		
 		buildHeightmap(map);
 		buildIndices();

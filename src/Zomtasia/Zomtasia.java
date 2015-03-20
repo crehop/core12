@@ -7,8 +7,10 @@ import world.Flora;
 //import world.Lighting;
 import world.Skybox;
 import world.Terrain;
-import world.TestShader;
+import world.TerrainChunk;
+import world.TerrainShader;
 import world.Time;
+import world.WaterShader;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -50,7 +52,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static float lasttime = 0;
 	public String debug = "";
 	int count;
-	public TestShader test;
+	public TerrainShader terrainShader;
+	public WaterShader waterShader;
 	public static boolean cameraCreated = false;
 	public boolean once = true;
 	public static PoliceCar testPolice;
@@ -61,6 +64,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	Vector3 yAxis = new Vector3(0,1,0);
 	Vector3 zAxis = new Vector3(0,0,1);
 	ModelBatch shadowBatch;
+	public static TerrainChunk current = null;
 	
 	//WORLD CLASSES
 	public static Terrain terrain = new Terrain();
@@ -72,8 +76,10 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Time time = new Time();
 		};
 		assets = new AssetHandler();
-		test = new TestShader();
-		test.init();
+		terrainShader = new TerrainShader();
+		terrainShader.init();
+		waterShader = new WaterShader();
+		waterShader.init();
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
 		controls = new Controls(this);
@@ -136,8 +142,9 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
 	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), env);
-	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), test);
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), env);
+	        		this.current = terrain.getTerrainChunk(x, y);
+	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
+	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
 	        		count++;
 	        	}
 	        }
@@ -193,7 +200,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static void newModelInstance(ModelInstance modelInstance) {
 		models.add(modelInstance);
 	}
-	public TestShader getShader(){
-		return test;
+	public TerrainShader getShader(){
+		return terrainShader;
 	}
 }
