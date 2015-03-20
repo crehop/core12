@@ -76,9 +76,9 @@ public class WaterShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable){
-		lightPosition[0] = Zomtasia.Zomtasia.testPolice.getLocation().getX();
-		lightPosition[1] = Zomtasia.Zomtasia.testPolice.getLocation().getY();
-		lightPosition[2] = Zomtasia.Zomtasia.testPolice.getLocation().getZ();
+		lightPosition[0] = -Zomtasia.Zomtasia.testPolice.getLocation().getX();
+		lightPosition[1] = -Zomtasia.Zomtasia.testPolice.getLocation().getY();
+		lightPosition[2] = -Zomtasia.Zomtasia.testPolice.getLocation().getZ();
 		//bind correct textures		
 	    modelView.set(renderable.worldTransform);
 		program.setUniformMatrix("u_normalMatrix", normalMatrix.set(modelView).inv().transpose());
