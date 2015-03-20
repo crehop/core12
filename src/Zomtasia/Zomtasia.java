@@ -145,7 +145,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        		this.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
-	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), env);
+	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), waterShader);
 	        		count++;
 	        	}
 	        }

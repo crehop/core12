@@ -51,7 +51,7 @@ public class Skybox {
 	public static void create(){
 		skydome = Zomtasia.getGame().getAssets().get("skybox/skybox.g3dj", Model.class);
 		sky = new ModelInstance(skydome,0,0,0);
-		sky.transform.scl(1500);
+		sky.transform.scl(500);
 		skyboxTexture = sky.materials.get(0);
 		initiated = true;
 	}
