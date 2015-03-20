@@ -22,6 +22,11 @@ uniform vec2 u_resolution;
 uniform int u_random;
 
 
+uniform float offsetU;
+uniform float offsetV;
+uniform float scaleU;
+uniform float scaleV;
+
 void main(void) {
 	//set the varying to the actuals
 	v_color = a_color;

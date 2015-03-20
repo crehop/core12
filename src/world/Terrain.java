@@ -44,6 +44,7 @@ public class Terrain {
 	        terrainRegions = tRegion.split(chunkSize, chunkSize);
 	        terrainChunks = new TerrainChunk[chunkRegions.length][chunkRegions[0].length];
 	        Pixmap map = new Pixmap(Gdx.files.internal("terrain/heightmap.png"));
+	        Pixmap map2 = new Pixmap(Gdx.files.internal("terrain/clouds.png"));
 
 	        for(int x = 0; x < chunkRegions.length; x++){
 	        	for(int y = 0; y < chunkRegions[x].length; y++){
@@ -51,7 +52,7 @@ public class Terrain {
 	        		        FloatAttribute.createShininess(119f), TextureAttribute.createDiffuse(terrainRegions[x][y]));
 	    			
 	        		//Create Chunk
-	        		chunk = new TerrainChunk(chunkSize, chunkSize, vertexSize, map, chunkRegions[x][y].getRegionX(),chunkRegions[x][y].getRegionY());
+	        		chunk = new TerrainChunk(chunkSize, chunkSize, vertexSize, map, map2, chunkRegions[x][y].getRegionX(),chunkRegions[x][y].getRegionY());
 	        		chunk.setLocation(x * chunkSize, 0, y * chunkSize);
 	        		terrainChunks[x][y] = chunk;
 	        		

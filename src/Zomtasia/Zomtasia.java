@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import screens.Console;
 import world.Flora;
+import world.SkyShader;
 //import world.Lighting;
 import world.Skybox;
 import world.Terrain;
@@ -54,6 +55,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	int count;
 	public TerrainShader terrainShader;
 	public WaterShader waterShader;
+	public SkyShader skyShader;
 	public static boolean cameraCreated = false;
 	public boolean once = true;
 	public static PoliceCar testPolice;
@@ -80,6 +82,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 		terrainShader.init();
 		waterShader = new WaterShader();
 		waterShader.init();
+		skyShader = new SkyShader();
+		skyShader.init();
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
 		controls = new Controls(this);
@@ -145,7 +149,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        		this.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
-	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), waterShader);
+	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
 	        		count++;
 	        	}
 	        }

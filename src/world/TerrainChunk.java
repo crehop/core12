@@ -35,7 +35,7 @@ public class TerrainChunk {
 	private Mesh mesh;
 	Random rand = new Random();
 	
-	public TerrainChunk (int width, int height, int vertexSize, Pixmap map, int xLoc, int yLoc) {
+	public TerrainChunk (int width, int height, int vertexSize, Pixmap map, Pixmap map2, int xLoc, int yLoc) {
 		this.xLoc = xLoc;
 		this.yLoc = yLoc;
 		this.heightMap = new float[(width + 1) * (height + 1)];
@@ -53,13 +53,15 @@ public class TerrainChunk {
 		buildHeightmap(map);
 		buildIndices();
 		buildVertices();
-		buildWaterIndices();
-		buildWaterVertices();
+        calcNormals(indices, vertices);
+		buildHeightmap(map2);
 		buildSkyIndices();
 		buildSkyVertices();
         calcNormals(skyIndices, skyVertices);
+		buildWaterIndices();
+		buildWaterVertices();
         calcNormals(waterIndices, waterVertices);
-        calcNormals(indices, vertices);
+
 	}
 	
 	public void buildHeightmap (Pixmap map) {
@@ -201,12 +203,13 @@ public class TerrainChunk {
 	    int widthPitch = width + 1;
 	    int strength = 100; //heightmap multiplier
 	    int idx = 0;
+	    int heightmapIndex = 0;
 	    for (int z = 0; z < heightPitch; z++) {
 	        for (int x = 0; x < widthPitch; x++) {
 
 	            //POSITION
 	            skyVertices[idx++] = x;
-	            skyVertices[idx++] = skyHeight * strength;
+	            skyVertices[idx++] = skyHeight + heightMap[heightmapIndex++] * strength;
 	            skyVertices[idx++] = z;
 
 	            //SKIP NORMALS
