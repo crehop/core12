@@ -41,6 +41,7 @@ public class WaterShader implements Shader {
 	int currentChunkX;
 	int currentChunkY;
 	TerrainChunk current;
+	float waterHeight;
 	
 	@Override
 	public void init() {
@@ -83,7 +84,6 @@ public class WaterShader implements Shader {
 	    modelView.set(renderable.worldTransform);
 		program.setUniformMatrix("u_normalMatrix", normalMatrix.set(modelView).inv().transpose());
 		program.setUniform3fv("u_lightPosition", lightPosition , 0, 3);
-		//program.setUniform4fv("u_ambientColor", ambientColor, 0, 4);
 		//program.setUniform4fv("u_diffuseColor", diffuseColor, 0, 4);
 		//program.setUniform4fv("u_specularColor", specularColor, 0, 4);
 		program.setUniformi("u_texture0", context.textureBinder.bind(water));

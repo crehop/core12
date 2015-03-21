@@ -30,7 +30,7 @@ public class TerrainChunk {
 	private int xLoc = 0;
 	private int yLoc = 0;
 	private float waterHeight = 0.23529412f;
-	private float skyHeight = 0.29529412f;
+	private float skyHeight = 0.39529412f;
 	Material material;
 	private Mesh mesh;
 	Random rand = new Random();
@@ -201,15 +201,21 @@ public class TerrainChunk {
 	public void buildSkyVertices() {
 	    int heightPitch = height + 1;
 	    int widthPitch = width + 1;
-	    int strength = 10; //heightmap multiplier
+	    int strength = 15; //heightmap multiplier
 	    int idx = 0;
 	    int heightmapIndex = 0;
 	    for (int z = 0; z < heightPitch; z++) {
 	        for (int x = 0; x < widthPitch; x++) {
 	            //POSITION
-	            skyVertices[idx++] = x + rand.nextFloat() * 10;
-	            skyVertices[idx++] = skyHeight + (heightMap[heightmapIndex++] * strength);
-	            skyVertices[idx++] = z + rand.nextFloat() * 10;;
+	        	if(z == 0 || z == heightPitch - 1 || x == 0 || x == widthPitch - 1){
+	        		skyVertices[idx++] = x;
+	            	skyVertices[idx++] = skyHeight * -(heightMap[heightmapIndex++] * strength);
+	            	skyVertices[idx++] = z;
+	        	}else{
+		            skyVertices[idx++] = x + (int)(rand.nextFloat() * 0.5);
+		            skyVertices[idx++] = skyHeight * -(heightMap[heightmapIndex++] * strength);
+		            skyVertices[idx++] = z + rand.nextFloat() * 1;;
+	        	}
 
 	            //SKIP NORMALS
 	            idx += 3;
@@ -390,5 +396,11 @@ public class TerrainChunk {
 
 	public ModelInstance getSky() {
 		return sky;
+	}
+	public float getWaterHeight(){
+		return waterHeight;
+	}
+	public float getSkyHeight(){
+		return skyHeight;
 	}
 }

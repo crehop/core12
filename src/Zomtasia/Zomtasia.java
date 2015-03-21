@@ -133,6 +133,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 	  	    //=========================================
 			
+
+			
 			//Terrain==================================
 			modelBatch.begin(cam);
 			//for(ModelInstance instance:models){
@@ -147,11 +149,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), env);
 	        		this.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
 	        		count++;
 	        	}
 	        }
@@ -159,12 +158,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
-			//Terrain==================================
+			//Water==================================
 			modelBatch.begin(cam);
-			//for(ModelInstance instance:models){
-			//	modelBatch.render(instance,env);
-			//
-			//}
 			modelBatch.render(testPolice.render(),env);
 			modelBatch.render(testFlora.getModelInstance(), env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
@@ -173,11 +168,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), env);
 	        		this.current = terrain.getTerrainChunk(x, y);
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
 	        		count++;
 	        	}
 	        }
@@ -185,12 +177,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
-			//Terrain==================================
+			//Sky==================================
 			modelBatch.begin(cam);
-			//for(ModelInstance instance:models){
-			//	modelBatch.render(instance,env);
-			//
-			//}
 			modelBatch.render(testPolice.render(),env);
 			modelBatch.render(testFlora.getModelInstance(), env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
@@ -199,10 +187,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), env);
 	        		this.current = terrain.getTerrainChunk(x, y);
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
-	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
 	        		count++;
 	        	}
@@ -211,6 +196,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
+
 
 	        Console.render();
 	        debug = "";

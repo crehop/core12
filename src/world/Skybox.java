@@ -40,7 +40,7 @@ public class Skybox {
 				skyboxTexture.set(TextureAttribute.createDiffuse(stars));
 			}
 			sky.transform.setTranslation(
-					Zomtasia.player.getLocation().getX() + 1, Zomtasia.player.getLocation().getY() - 400,
+					Zomtasia.player.getLocation().getX() , Zomtasia.player.getLocation().getY(),
 					Zomtasia.player.getLocation().getZ() );
 			return sky;
 		}else{
@@ -51,7 +51,7 @@ public class Skybox {
 	public static void create(){
 		skydome = Zomtasia.getGame().getAssets().get("skybox/skybox.g3dj", Model.class);
 		sky = new ModelInstance(skydome,0,0,0);
-		sky.transform.scl(500);
+		sky.transform.scl(1000000);
 		skyboxTexture = sky.materials.get(0);
 		initiated = true;
 	}
