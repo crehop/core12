@@ -212,6 +212,9 @@ public class Zomtasia extends Game implements ApplicationListener {
 		super.dispose();
 		modelBatch.dispose();
 		model.dispose();
+		skyShader.dispose();
+		terrainShader.dispose();
+		waterShader.dispose();
 	}
 
 	@Override

@@ -201,7 +201,7 @@ public class TerrainChunk {
 	public void buildSkyVertices() {
 	    int heightPitch = height + 1;
 	    int widthPitch = width + 1;
-	    int strength = 15; //heightmap multiplier
+	    int strength = 25; //heightmap multiplier
 	    int idx = 0;
 	    int heightmapIndex = 0;
 	    for (int z = 0; z < heightPitch; z++) {
