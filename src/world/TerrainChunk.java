@@ -29,7 +29,7 @@ public class TerrainChunk {
 	private ModelInstance sky;
 	private int xLoc = 0;
 	private int yLoc = 0;
-	private float waterHeight = 0.23529412f;
+	private float waterHeight = -0.85529412f;
 	private float skyHeight = 0.39529412f;
 	Material material;
 	private Mesh mesh;
@@ -285,13 +285,13 @@ public class TerrainChunk {
 	}
 	public void setWaterModelInstance(ModelInstance instance2){
 		this.water = instance2;
-		this.water.transform.translate(location.getPosition());
+		this.water.transform.translate(location.getPosition().x, this.waterHeight, location.getPosition().z);
 	}
 	public void setSkyModelInstance(ModelInstance instance3){
 		this.sky = instance3;
 		this.sky.transform.rotate(1,0,0,180);
 		this.sky.transform.rotate(0,1,0,90);
-		this.sky.transform.translate(location.getPosition().x, 0, location.getPosition().z);
+		this.sky.transform.translate(location.getPosition().x, this.skyHeight, location.getPosition().z);
 	}
 	public ModelInstance getTerrain(){
 		return this.terrain;
