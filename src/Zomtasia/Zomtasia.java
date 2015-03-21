@@ -142,19 +142,74 @@ public class Zomtasia extends Game implements ApplicationListener {
 			modelBatch.render(testPolice.render(),env);
 			modelBatch.render(testFlora.getModelInstance(), env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
 	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), env);
 	        		this.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
+	        		count++;
+	        	}
+	        }
+	        modelBatch.end();
+			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
+			Gdx.gl.glDisable(GL20.GL_BLEND);
+	  	    //=========================================
+			//Terrain==================================
+			modelBatch.begin(cam);
+			//for(ModelInstance instance:models){
+			//	modelBatch.render(instance,env);
+			//
+			//}
+			modelBatch.render(testPolice.render(),env);
+			modelBatch.render(testFlora.getModelInstance(), env);
+			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
+			count = 0;
+	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
+	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), env);
+	        		this.current = terrain.getTerrainChunk(x, y);
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
+	        		count++;
+	        	}
+	        }
+	        modelBatch.end();
+			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
+			Gdx.gl.glDisable(GL20.GL_BLEND);
+	  	    //=========================================
+			//Terrain==================================
+			modelBatch.begin(cam);
+			//for(ModelInstance instance:models){
+			//	modelBatch.render(instance,env);
+			//
+			//}
+			modelBatch.render(testPolice.render(),env);
+			modelBatch.render(testFlora.getModelInstance(), env);
+			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
+			count = 0;
+	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
+	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), env);
+	        		this.current = terrain.getTerrainChunk(x, y);
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
+	        		//modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
 	        		count++;
 	        	}
 	        }
 	        modelBatch.end();
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
+			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
 
 	        Console.render();

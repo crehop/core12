@@ -89,8 +89,8 @@ public class Terrain {
 	    			ModelInstance modelInstance2 = new ModelInstance(result2, 0,-100,0);
 	    			modelInstance2.transform.scl(scale);
 	    			
-	    			Model result3 = ModelBuilder.createFromMesh(mesh2, GL20.GL_TRIANGLES, material);
-	    			ModelInstance modelInstance3 = new ModelInstance(result2, 0,-100,0);
+	    			Model result3 = ModelBuilder.createFromMesh(mesh3, GL20.GL_TRIANGLES, material);
+	    			ModelInstance modelInstance3 = new ModelInstance(result3, 0,-100,0);
 	    			modelInstance3.transform.scl(scale);
 
 

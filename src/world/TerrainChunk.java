@@ -201,16 +201,15 @@ public class TerrainChunk {
 	public void buildSkyVertices() {
 	    int heightPitch = height + 1;
 	    int widthPitch = width + 1;
-	    int strength = 100; //heightmap multiplier
+	    int strength = 10; //heightmap multiplier
 	    int idx = 0;
 	    int heightmapIndex = 0;
 	    for (int z = 0; z < heightPitch; z++) {
 	        for (int x = 0; x < widthPitch; x++) {
-
 	            //POSITION
-	            skyVertices[idx++] = x;
-	            skyVertices[idx++] = skyHeight + heightMap[heightmapIndex++] * strength;
-	            skyVertices[idx++] = z;
+	            skyVertices[idx++] = x + rand.nextFloat() * 10;
+	            skyVertices[idx++] = skyHeight + (heightMap[heightmapIndex++] * strength);
+	            skyVertices[idx++] = z + rand.nextFloat() * 10;;
 
 	            //SKIP NORMALS
 	            idx += 3;
