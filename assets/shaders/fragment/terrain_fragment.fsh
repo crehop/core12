@@ -37,5 +37,5 @@ void main(void) {
 	vec4 premix1 = mix(premix0,dirt,splat.b);
 	vec4 finalMix = mix(premix1,grass,splat.g);
 
-	gl_FragColor = add_fog(finalMix + mix(finalMix, -intensity, .45));
+	gl_FragColor = add_fog((finalMix + mix(finalMix, vec4(-intensity,-intensity,-intensity,1), intensity)));
 }

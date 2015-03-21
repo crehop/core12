@@ -29,7 +29,7 @@ public class TerrainChunk {
 	private ModelInstance sky;
 	private int xLoc = 0;
 	private int yLoc = 0;
-	private float waterHeight = -0.85529412f;
+	private float waterHeight = -0.65529412f;
 	private float skyHeight = 0.39529412f;
 	Material material;
 	private Mesh mesh;
