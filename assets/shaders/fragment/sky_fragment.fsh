@@ -25,7 +25,7 @@ vec4 add_fog(vec4 fragColour){
 void main(void) {
 	vec4 sky = texture2D(u_texture0, v_texCoord0);// * v_color;
 	sky.a = -sky.a + (sky.r + sky.b + sky.g);
-	vec4 finalMix = mix(sky,vec4(0.5,0.5,0.5,0.0), intensity);
+	vec4 finalMix = mix(sky,vec4(0.5,0.5,0.5,1.0), intensity);
 	vec4 finalMix2 = mix(finalMix, vec4(1,1,1,1), sky.a);
 	gl_FragColor = finalMix2;
 }

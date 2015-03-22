@@ -24,6 +24,6 @@ vec4 add_fog(vec4 fragColour){
 
 void main(void) {
 	vec4 water = texture2D(u_texture0, v_texCoord0);// * v_color;
-	
-	gl_FragColor = add_fog(mix(water,  vec4(-intensity,-intensity,-intensity,-intensity), .25));
+	vec4 premix = mix(water,  vec4(-intensity,-intensity,-intensity,-intensity), .25);
+	gl_FragColor = add_fog(mix(premix,v_color,0.20));
 }
