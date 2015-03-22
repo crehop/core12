@@ -68,7 +68,7 @@ public class Controls implements InputProcessor{
 			Zomtasia.player.moveDown((float)(movementSpeed));
 		}
 		if(speedUpCam){
-			movementSpeed = defaultMovementSpeed * 5;
+			movementSpeed = defaultMovementSpeed * 15;
 		}
 		else if(speedDownCam){
 			movementSpeed = defaultMovementSpeed / 100;
