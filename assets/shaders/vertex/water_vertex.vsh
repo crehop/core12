@@ -20,9 +20,14 @@ uniform mat4 u_worldTrans;
 uniform mat3 u_normalMatrix;
 uniform vec3 u_lightPosition;
 uniform vec2 u_resolution;
+uniform float waveTime;
+uniform float waveWidth;
+uniform float waveHeight;
 uniform int u_random;
  
 void main(void){
+	vec4 v = vec4(gl_Vertex);
+	v.z = sin(waveWidth * v.x + waveTime) * cos(waveWidth * v.y + waveTime) * waveHeight;
   	vec3 normalDirection = normalize(-a_normal);
   	vec3 lightDirection = normalize(vec3(-u_lightPosition));
   	vec4 diffuse = vec4(1.0, 1.0, 1.0, 0.0);
@@ -30,7 +35,7 @@ void main(void){
   	vec3 diffuseReflection
     	= vec3(diffuse) * vec3(materialDiffuse)
     	* max(0.0, dot(normalDirection, lightDirection));
-  	v_color = vec4(diffuseReflection, 1.0);
+  	v_color = vec4(diffuseReflection * v, 1.0);
 	v_texCoord0 = a_texCoord0;
 	v_random = u_random;	
 	vec3 normal = normalize(u_lightPosition * a_normal  * u_normalMatrix);

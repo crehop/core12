@@ -77,6 +77,7 @@ public class WaterShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable){
+		
 		lightPosition[0] = -Zomtasia.Zomtasia.testPolice.getLocation().getX();
 		lightPosition[1] = -Zomtasia.Zomtasia.testPolice.getLocation().getY();
 		lightPosition[2] = -Zomtasia.Zomtasia.testPolice.getLocation().getZ();
@@ -89,7 +90,9 @@ public class WaterShader implements Shader {
 		program.setUniformi("u_texture0", context.textureBinder.bind(water));
 		water.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		water.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		
+		program.setUniformf("waveTime", 1.01f);
+		program.setUniformf("waveWidth", 1.02f);
+		program.setUniformf("waveHeight", 1.02f);
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.environment = Zomtasia.Zomtasia.env;
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){

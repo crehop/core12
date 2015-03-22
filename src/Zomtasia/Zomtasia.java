@@ -215,6 +215,16 @@ public class Zomtasia extends Game implements ApplicationListener {
 		skyShader.dispose();
 		terrainShader.dispose();
 		waterShader.dispose();
+        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
+        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
+        		terrain.getTerrainChunk(x, y).getSky().model.dispose();
+        		terrain.getTerrainChunk(x, y).getWater().model.dispose();
+        		terrain.getTerrainChunk(x, y).getTerrain().model.dispose();
+        	}
+        }
+        for(ModelInstance model:models){
+        	model.model.dispose();
+        }
 	}
 
 	@Override
