@@ -41,6 +41,7 @@ void main(void){
 	t_contrib += cos(a_position *1.0 *PI + waveTime)/25; 
 	s_contrib += cos(a_position *1.0 *PI + waveTime)/25; 
 	t_contrib += sin(a_position *1.0 *PI + waveTime)/25;
+	//
 
 
 	height *= -s_contrib*t_contrib*0.5f;
