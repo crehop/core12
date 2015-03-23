@@ -1,5 +1,3 @@
-precision mediump float;
-
 attribute vec2 a_texCoord0;
 attribute vec3 a_position;
 attribute vec3 a_normal;
@@ -37,10 +35,10 @@ void main(void){
 	float s_contrib = sin(v_texCoord0.s*2.0*PI + waveTime); 
 	float t_contrib = cos(v_texCoord0.t*2.0*PI + waveTime); 
 	float height = s_contrib*t_contrib*0.5f; //scale height 
-	s_contrib += sin(a_position *1.0 *PI + waveTime)/25; 
-	t_contrib += cos(a_position *1.0 *PI + waveTime)/25; 
-	s_contrib += cos(a_position *1.0 *PI + waveTime)/25; 
-	t_contrib += sin(a_position *1.0 *PI + waveTime)/25;
+	s_contrib += sin(a_position.y *1.0 *PI + waveTime)/25; 
+	t_contrib += cos(a_position.y *1.0 *PI + waveTime)/25; 
+	s_contrib += cos(a_position.y *1.0 *PI + waveTime)/25; 
+	t_contrib += sin(a_position.y *1.0 *PI + waveTime)/25;
 	//
 
 
