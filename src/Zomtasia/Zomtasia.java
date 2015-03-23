@@ -54,7 +54,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public String debug = "";
 	int count;
 	public TerrainShader terrainShader;
-	public WaterShader waterShader;
+	public static WaterShader waterShader;
 	public SkyShader skyShader;
 	public static boolean cameraCreated = false;
 	public boolean once = true;

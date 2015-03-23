@@ -30,7 +30,8 @@ public class TerrainChunk {
 	private int xLoc = 0;
 	private int yLoc = 0;
 	private float waterHeight = -0.65529412f;
-	private float skyHeight = 0.39529412f;
+	private float skyHeight = 10.39529412f;
+	private float landHeight = -20.0f;
 	Material material;
 	private Mesh mesh;
 	Random rand = new Random();
@@ -201,7 +202,7 @@ public class TerrainChunk {
 	public void buildSkyVertices() {
 	    int heightPitch = height + 1;
 	    int widthPitch = width + 1;
-	    int strength = 25; //heightmap multiplier
+	    int strength = 2; //heightmap multiplier
 	    int idx = 0;
 	    int heightmapIndex = 0;
 	    for (int z = 0; z < heightPitch; z++) {
@@ -209,11 +210,11 @@ public class TerrainChunk {
 	            //POSITION
 	        	if(z == 0 || z == heightPitch - 1 || x == 0 || x == widthPitch - 1){
 	        		skyVertices[idx++] = x;
-	            	skyVertices[idx++] = skyHeight * -(heightMap[heightmapIndex++] * strength);
+	            	skyVertices[idx++] = skyHeight * -(heightMap[heightmapIndex++] * strength + skyHeight);
 	            	skyVertices[idx++] = z;
 	        	}else{
 		            skyVertices[idx++] = x + (int)(rand.nextFloat() * 0.5);
-		            skyVertices[idx++] = skyHeight * -(heightMap[heightmapIndex++] * strength);
+		            skyVertices[idx++] = skyHeight * -(heightMap[heightmapIndex++] * strength + skyHeight);
 		            skyVertices[idx++] = z + rand.nextFloat() * 1;;
 	        	}
 
@@ -273,7 +274,7 @@ public class TerrainChunk {
 	}
 	public void setLocation(float x, float y, float z){
 		this.location.setX(x);
-		this.location.setY(y-100);
+		this.location.setY(landHeight);
 		this.location.setZ(z);
 	}
 	public void setLocation(Location location){

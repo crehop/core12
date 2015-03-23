@@ -42,6 +42,7 @@ public class WaterShader implements Shader {
 	int currentChunkY;
 	TerrainChunk current;
 	float waterHeight;
+	float random;
 	
 	@Override
 	public void init() {
@@ -90,9 +91,10 @@ public class WaterShader implements Shader {
 		program.setUniformi("u_texture0", context.textureBinder.bind(water));
 		water.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		water.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		program.setUniformf("waveTime", 1.01f);
-		program.setUniformf("waveWidth", 1.02f);
-		program.setUniformf("waveHeight", 1.02f);
+		program.setUniformf("waveTime", Time.getTime());
+		program.setUniformf("u_random", random);
+		//program.setUniformf("waveWidth", 10.5f);
+		//program.setUniformf("waveHeight", 50.02f);
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.environment = Zomtasia.Zomtasia.env;
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){
@@ -121,5 +123,9 @@ public class WaterShader implements Shader {
 	}
 	public ShaderProgram getProgram(){
 		return program;
+	}
+	public void nextRandom(){
+		random = rand.nextFloat();
+		System.out.println("NEXT RANDOM");
 	}
 }

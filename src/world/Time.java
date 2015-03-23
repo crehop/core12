@@ -12,6 +12,9 @@ public class Time {
             @Override
             public void run() {
                 time += 0.01;
+                if(time%1 == 0){
+                	Zomtasia.Zomtasia.waterShader.nextRandom();
+                }
             }
         }
         , 0        //    (delay)
