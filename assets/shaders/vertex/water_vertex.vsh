@@ -37,10 +37,17 @@ void main(void){
 	float s_contrib = sin(v_texCoord0.s*2.0*PI + waveTime); 
 	float t_contrib = cos(v_texCoord0.t*2.0*PI + waveTime); 
 	float height = s_contrib*t_contrib*0.5f; //scale height 
+	s_contrib += sin(a_position *1.0 *PI + waveTime)/25; 
+	t_contrib += cos(a_position *1.0 *PI + waveTime)/25; 
+	s_contrib += cos(a_position *1.0 *PI + waveTime)/25; 
+	t_contrib += sin(a_position *1.0 *PI + waveTime)/25;
+
+
+	height *= -s_contrib*t_contrib*0.5f;
 	vec3 normal = normalize(u_lightPosition * a_normal  * u_normalMatrix);
 	vec3 light = normalize(u_lightPosition);
 	intensity = max(dot(normal, light),0.0);
 	//gl_position is a built in variable to set the position of the vertecies
 	//projTrans = currentprojection? worldTrans = where to put it? position = actual vertex?
-    gl_Position = u_projTrans * u_worldTrans  * (vec4(a_position,1) * vec4(1,height/20 + u_random/100, 1,1));
+    gl_Position = u_projTrans * u_worldTrans  * (vec4(a_position,1) * vec4(1,height / 5 + u_random/100, 1,1));
 }
