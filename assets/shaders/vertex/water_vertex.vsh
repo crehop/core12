@@ -1,5 +1,5 @@
-//actual final recieved from openGl;
-attribute vec4 a_color;
+precision mediump float;
+
 attribute vec2 a_texCoord0;
 attribute vec3 a_position;
 attribute vec3 a_normal;
