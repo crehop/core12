@@ -7,9 +7,6 @@ varying vec4 v_color;
 varying vec2 v_texCoord0;
 varying vec2 v_texCoordActual;
 varying float intensity;
-varying vec3 w_position;
-
-
 
 //can set uniforms from code
 uniform mat4 u_projTrans;
@@ -18,10 +15,9 @@ uniform mat3 u_normalMatrix;
 uniform vec3 u_lightPosition;
 uniform vec2 u_resolution;
 uniform float waveTime; 
-uniform float u_random;
- 
-void main(void){
+uniform float waveHeight;
 
+void main(void){
   	vec3 normalDirection = normalize(-a_normal);
   	vec3 lightDirection = normalize(vec3(-u_lightPosition));
   	vec4 diffuse = vec4(1.0, 1.0, 1.0, 0.0);
@@ -34,19 +30,11 @@ void main(void){
 	float PI = 3.14159; 
 	float s_contrib = sin(v_texCoord0.s*2.0*PI + waveTime); 
 	float t_contrib = cos(v_texCoord0.t*2.0*PI + waveTime); 
-	float height = s_contrib*t_contrib*0.5f; //scale height 
-	s_contrib += sin(a_position.y *1.0 *PI + waveTime)/25; 
-	t_contrib += cos(a_position.y *1.0 *PI + waveTime)/25; 
-	s_contrib += cos(a_position.y *1.0 *PI + waveTime)/25; 
-	t_contrib += sin(a_position.y *1.0 *PI + waveTime)/25;
-	//
-
-
-	height *= -s_contrib*t_contrib*0.5f;
+	float height = s_contrib*t_contrib*waveHeight; //scale height 
 	vec3 normal = normalize(u_lightPosition * a_normal  * u_normalMatrix);
 	vec3 light = normalize(u_lightPosition);
 	intensity = max(dot(normal, light),0.0);
 	//gl_position is a built in variable to set the position of the vertecies
 	//projTrans = currentprojection? worldTrans = where to put it? position = actual vertex?
-    gl_Position = u_projTrans * u_worldTrans  * (vec4(a_position,1) * vec4(1,height / 5 + u_random/100, 1,1));
+    gl_Position = u_projTrans * u_worldTrans  * (vec4(a_position,1) * vec4(1,height,1,1));
 }

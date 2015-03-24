@@ -33,6 +33,7 @@ public class WaterShader implements Shader {
 	int u_color;
 	Random rand = new Random();
 	Texture water = new Texture("terrain/water.png");
+	Texture noise = new Texture("terrain/tex10.png");
 	Texture texAttribute;
 	TiledDrawable draw = new TiledDrawable();
 	private final Matrix3 normalMatrix = new Matrix3();
@@ -43,6 +44,7 @@ public class WaterShader implements Shader {
 	TerrainChunk current;
 	float waterHeight;
 	float random;
+	float waveHeight = 0.003f;
 	
 	@Override
 	public void init() {
@@ -92,9 +94,7 @@ public class WaterShader implements Shader {
 		water.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
 		water.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		program.setUniformf("waveTime", Time.getTime());
-		program.setUniformf("u_random", random);
-		//program.setUniformf("waveWidth", 10.5f);
-		//program.setUniformf("waveHeight", 50.02f);
+		program.setUniformf("waveHeight", waveHeight);
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.environment = Zomtasia.Zomtasia.env;
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){
