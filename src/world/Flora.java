@@ -10,6 +10,7 @@ public class Flora {
 	Location location;
 	public Flora(float x, float y, float z){
 		tree = new ModelInstance(Zomtasia.assets.getModel("trees"), x, y, z);
+		tree.transform.scale(100, 100, 100);
 		this.location = new Location(x, y, z);
 	}
 	public ModelInstance getModelInstance(){
