@@ -202,6 +202,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 			//TREES====================================
 			
 			modelBatch.begin(cam);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
 			for(ModelInstance renderTree:testFlora.getTrees()){
 				modelBatch.render(renderTree,treeShader);
 			}

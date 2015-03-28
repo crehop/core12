@@ -28,5 +28,8 @@ void main(void) {
 	if(mix(leaves, premix, intensity).a < .8){
 		discard;
 	}
+	if(leaves.r + leaves.b + leaves.g > 2.3){
+		discard;
+	}
 	gl_FragColor = mix(leaves, premix, intensity);
 }
