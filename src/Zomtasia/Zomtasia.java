@@ -202,17 +202,14 @@ public class Zomtasia extends Game implements ApplicationListener {
 			//TREES====================================
 			
 			modelBatch.begin(cam);
-			Gdx.gl.glEnable(GL20.GL_BLEND);
-			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
 			for(ModelInstance renderTree:testFlora.getTrees()){
 				modelBatch.render(renderTree,treeShader);
 			}
 			modelBatch.end();
-			Gdx.gl.glDisable(GL20.GL_BLEND);
 			//=========================================
 	        Console.render();
 	        debug = "";
-	        Console.setLine2("Chunks being rendered:" + count);
+	        Console.setLine2("Chunks being rendered:" + count + "trees being rendered:" + testFlora.getTrees().size());
 			Zomtasia.cam.update();	       
 	      }else{
 	       progress = assets.getAssetManager().getProgress();
