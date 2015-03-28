@@ -1,4 +1,4 @@
-package world;
+package Shaders;
 
 import java.util.Random;
 

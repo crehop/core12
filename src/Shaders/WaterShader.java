@@ -1,6 +1,9 @@
-package world;
+package Shaders;
 
 import java.util.Random;
+
+import world.TerrainChunk;
+import world.Time;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -9,6 +12,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -22,7 +26,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-public class SkyShader implements Shader {
+public class WaterShader implements Shader {
 	ShaderProgram program;
 	Camera camera;
 	RenderContext context;
@@ -30,17 +34,25 @@ public class SkyShader implements Shader {
 	int u_projTrans;
 	int u_worldTrans;
 	int u_color;
-	Texture clouds = new Texture("terrain/clouds.png");
+	Random rand = new Random();
+	Texture water = new Texture("terrain/water.png");
+	Texture noise = new Texture("terrain/tex10.png");
 	Texture texAttribute;
 	TiledDrawable draw = new TiledDrawable();
 	private final Matrix3 normalMatrix = new Matrix3();
 	private static final float[] lightPosition = { 205, 135, 5 };
 	private Matrix4 modelView = new Matrix4();
+	int currentChunkX;
+	int currentChunkY;
+	TerrainChunk current;
+	float waterHeight;
+	float random;
+	float waveHeight = 0.003f;
 	
 	@Override
 	public void init() {
-        String vert = Gdx.files.internal("shaders/vertex/sky_vertex.vsh").readString();
-        String frag = Gdx.files.internal("shaders/fragment/sky_fragment.fsh").readString();
+        String vert = Gdx.files.internal("shaders/vertex/water_vertex.vsh").readString();
+        String frag = Gdx.files.internal("shaders/fragment/water_fragment.fsh").readString();
         program = new ShaderProgram(vert, frag);
         if (!program.isCompiled()){
         	throw new GdxRuntimeException(program.getLog());
@@ -71,29 +83,23 @@ public class SkyShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable){
+		
 		lightPosition[0] = -Zomtasia.Zomtasia.testPolice.getLocation().getX();
 		lightPosition[1] = -Zomtasia.Zomtasia.testPolice.getLocation().getY();
 		lightPosition[2] = -Zomtasia.Zomtasia.testPolice.getLocation().getZ();
-		
 		//bind correct textures		
 	    modelView.set(renderable.worldTransform);
-		//program.setUniformf("offsetU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetU);
-		//program.setUniformf("offsetV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).offsetV);
-		//program.setUniformf("scaleU", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleU);
-		//program.setUniformf("scaleV", ((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).scaleV);
-		
 		program.setUniformMatrix("u_normalMatrix", normalMatrix.set(modelView).inv().transpose());
 		program.setUniform3fv("u_lightPosition", lightPosition , 0, 3);
-		//program.setUniform4fv("u_ambientColor", ambientColor, 0, 4);
 		//program.setUniform4fv("u_diffuseColor", diffuseColor, 0, 4);
 		//program.setUniform4fv("u_specularColor", specularColor, 0, 4);
-		
-		program.setUniformi("u_texture0", context.textureBinder.bind(clouds));
-		clouds.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
-		clouds.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		program.setUniformi("u_texture0", context.textureBinder.bind(water));
+		water.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
+		water.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		program.setUniformf("waveTime", Time.getTime());
+		program.setUniformf("waveHeight", waveHeight);
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.environment = Zomtasia.Zomtasia.env;
-		
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){
 			Color color = ((ColorAttribute)renderable.material.get(ColorAttribute.Diffuse)).color;
 			program.setUniformf(u_color, color.r, color.g, color.b);
@@ -101,6 +107,7 @@ public class SkyShader implements Shader {
 					renderable.primitiveType,
 					renderable.meshPartOffset,
 					renderable.meshPartSize);
+		
 		}
 	}
 
@@ -119,5 +126,9 @@ public class SkyShader implements Shader {
 	}
 	public ShaderProgram getProgram(){
 		return program;
+	}
+	public void nextRandom(){
+		random = rand.nextFloat();
+		System.out.println("NEXT RANDOM");
 	}
 }

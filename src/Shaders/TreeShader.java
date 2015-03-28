@@ -1,6 +1,9 @@
-package world;
+package Shaders;
 
 import java.util.Random;
+
+import world.TerrainChunk;
+import world.Time;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -23,7 +26,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-public class WaterShader implements Shader {
+public class TreeShader implements Shader {
 	ShaderProgram program;
 	Camera camera;
 	RenderContext context;
@@ -48,8 +51,8 @@ public class WaterShader implements Shader {
 	
 	@Override
 	public void init() {
-        String vert = Gdx.files.internal("shaders/vertex/water_vertex.vsh").readString();
-        String frag = Gdx.files.internal("shaders/fragment/water_fragment.fsh").readString();
+        String vert = Gdx.files.internal("shaders/vertex/tree_vertex.vsh").readString();
+        String frag = Gdx.files.internal("shaders/fragment/tree_fragment.fsh").readString();
         program = new ShaderProgram(vert, frag);
         if (!program.isCompiled()){
         	throw new GdxRuntimeException(program.getLog());
@@ -86,15 +89,9 @@ public class WaterShader implements Shader {
 		lightPosition[2] = -Zomtasia.Zomtasia.testPolice.getLocation().getZ();
 		//bind correct textures		
 	    modelView.set(renderable.worldTransform);
+		program.setUniformi("u_texture0", context.textureBinder.bind(((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).textureDescription));
 		program.setUniformMatrix("u_normalMatrix", normalMatrix.set(modelView).inv().transpose());
 		program.setUniform3fv("u_lightPosition", lightPosition , 0, 3);
-		//program.setUniform4fv("u_diffuseColor", diffuseColor, 0, 4);
-		//program.setUniform4fv("u_specularColor", specularColor, 0, 4);
-		program.setUniformi("u_texture0", context.textureBinder.bind(water));
-		water.unsafeSetWrap(TextureWrap.Repeat,TextureWrap.Repeat);
-		water.unsafeSetFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		program.setUniformf("waveTime", Time.getTime());
-		program.setUniformf("waveHeight", waveHeight);
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.environment = Zomtasia.Zomtasia.env;
 		if(renderable.material.get(ColorAttribute.Diffuse) != null){

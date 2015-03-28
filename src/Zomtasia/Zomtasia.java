@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 import screens.Console;
 import world.Flora;
-import world.SkyShader;
 //import world.Lighting;
 import world.Skybox;
 import world.Terrain;
 import world.TerrainChunk;
-import world.TerrainShader;
 import world.Time;
-import world.WaterShader;
+import Shaders.SkyShader;
+import Shaders.TerrainShader;
+import Shaders.TreeShader;
+import Shaders.WaterShader;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -26,6 +27,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -53,8 +55,9 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static float lasttime = 0;
 	public String debug = "";
 	int count;
-	public TerrainShader terrainShader;
+	public static TerrainShader terrainShader;
 	public static WaterShader waterShader;
+	public static TreeShader treeShader;
 	public SkyShader skyShader;
 	public static boolean cameraCreated = false;
 	public boolean once = true;
@@ -84,6 +87,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 		waterShader.init();
 		skyShader = new SkyShader();
 		skyShader.init();
+		treeShader = new TreeShader();
+		treeShader.init();
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
 		controls = new Controls(this);
@@ -105,10 +110,9 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Gdx.graphics.setVSync(true);
 		Gdx.input.setCursorCatched(true);
 		setScreen(player);
-		testPolice = new PoliceCar(0,0,0);
-		testFlora = new Flora(10,10,10);
-		Skybox.render();
+		testPolice = new PoliceCar(0,0,0);		Skybox.render();
 		terrain.create();
+		testFlora = new Flora();
 	}
 
 	@Override
@@ -142,7 +146,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 			//
 			//}
 			modelBatch.render(testPolice.render(),env);
-			modelBatch.render(testFlora.getModelInstance(), env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
@@ -161,7 +164,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 			//Water==================================
 			modelBatch.begin(cam);
 			modelBatch.render(testPolice.render(),env);
-			modelBatch.render(testFlora.getModelInstance(), env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
@@ -180,7 +182,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 			//Sky==================================
 			modelBatch.begin(cam);
 			modelBatch.render(testPolice.render(),env);
-			modelBatch.render(testFlora.getModelInstance(), env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
@@ -197,7 +198,17 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
 
-
+			//TREES====================================
+			modelBatch.begin(cam);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			Gdx.gl.glBlendFunc(Gdx.gl.GL_SRC_ALPHA,Gdx.gl.GL_ONE_MINUS_DST_ALPHA);
+			for(ModelInstance renderTree:testFlora.getTrees()){
+				Console.setLine5("TREE ARRAY SIZE = " + testFlora.getTrees().size());
+				modelBatch.render(renderTree,treeShader);
+			}
+			modelBatch.end();
+			Gdx.gl.glDisable(GL20.GL_BLEND);
+			//=========================================
 	        Console.render();
 	        debug = "";
 	        Console.setLine2("Chunks being rendered:" + count);
