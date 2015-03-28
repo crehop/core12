@@ -25,5 +25,8 @@ vec4 add_fog(vec4 fragColour){
 void main(void) {
 	vec4 leaves = texture2D(u_texture0, v_texCoord0.st);// * v_color;
 	vec4 premix = vec4(0,0,0,leaves.a);
-	gl_FragColor = mix(leaves, premix, intensity);
+	if(mix(leaves, premix, intensity).a<.8){
+		discard;
+	}
+	gl_FragColor = add_fog(mix(leaves, premix, intensity));
 }

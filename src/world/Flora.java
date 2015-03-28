@@ -43,7 +43,7 @@ public class Flora {
 		model.meshes.get(11).scale(0, 0, 0);
 		model.meshes.get(12).scale(0, 0, 0);
 		model.meshes.get(13).scale(0, 0, 0);
-		trees.add(new ModelInstance(model,0,10,0));
+		trees.add(new ModelInstance(model,591,-84, 480));
 	}
 	public ArrayList<ModelInstance> getTrees(){
 		return trees;

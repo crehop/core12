@@ -29,6 +29,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
@@ -199,11 +200,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 	  	    //=========================================
 
 			//TREES====================================
+			
 			modelBatch.begin(cam);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
-			Gdx.gl.glBlendFunc(Gdx.gl.GL_SRC_ALPHA,Gdx.gl.GL_ONE_MINUS_DST_ALPHA);
+			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
 			for(ModelInstance renderTree:testFlora.getTrees()){
-				Console.setLine5("TREE ARRAY SIZE = " + testFlora.getTrees().size());
 				modelBatch.render(renderTree,treeShader);
 			}
 			modelBatch.end();
