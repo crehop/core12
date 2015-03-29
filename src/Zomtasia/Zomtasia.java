@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -100,11 +101,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 		player = new Player(0,0,10,this);
 		assets.getAssetManager().finishLoading();
 		modelBatch = new ModelBatch();
-		//modelBuilder = new ModelBuilder();
-		//model = modelBuilder.createBox(5f, 5f, 5f, 
-        //    new Material(ColorAttribute.createDiffuse(Color.BLUE)),
-        //    Usage.Position | Usage.Normal);
-		//newModelInstance(new ModelInstance(model));
+		modelBuilder = new ModelBuilder();
+		model = modelBuilder.createBox(1f, 1f, 1f, 
+           new Material(ColorAttribute.createDiffuse(Color.RED)),
+           Usage.Position | Usage.Normal);
+		newModelInstance(new ModelInstance(model));
 		
 		
 		Gdx.graphics.setContinuousRendering(true);
@@ -138,14 +139,15 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 	  	    //=========================================
 			
-
+			//TEST=====================================
+			modelBatch.begin(cam);
+			for(ModelInstance instance:models){
+				modelBatch.render(instance,env);
+			
+			}
+			//=========================================
 			
 			//Terrain==================================
-			modelBatch.begin(cam);
-			//for(ModelInstance instance:models){
-			//	modelBatch.render(instance,env);
-			//
-			//}
 			modelBatch.render(testPolice.render(),env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -226,13 +228,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		skyShader.dispose();
 		terrainShader.dispose();
 		waterShader.dispose();
-        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
-        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-        		terrain.getTerrainChunk(x, y).getSky().model.dispose();
-        		terrain.getTerrainChunk(x, y).getWater().model.dispose();
-        		terrain.getTerrainChunk(x, y).getTerrain().model.dispose();
-        	}
-        }
+		assets.assets.dispose();
         for(ModelInstance model:models){
         	model.model.dispose();
         }

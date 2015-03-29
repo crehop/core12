@@ -50,6 +50,7 @@ public class Skybox {
 	}
 	public static void create(){
 		skydome = Zomtasia.getGame().getAssets().get("skybox/skybox.g3dj", Model.class);
+		Zomtasia.assets.addDisposable(skydome);
 		sky = new ModelInstance(skydome,0,0,0);
 		sky.transform.scl(1000000);
 		skyboxTexture = sky.materials.get(0);

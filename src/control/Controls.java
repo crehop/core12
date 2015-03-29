@@ -29,7 +29,7 @@ public class Controls implements InputProcessor{
 	
 	//Mouse sensitivity
 	private float mouseSensitivity = 0.04141519f;
-	private final float defaultMovementSpeed = 5.25f;
+	private final float defaultMovementSpeed = 0.50f;
 	public float movementSpeed = defaultMovementSpeed;
 	private int mouseX = 0;
 	private int mouseY = 0;

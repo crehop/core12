@@ -18,6 +18,7 @@ public class PoliceCar {
 	
 	public PoliceCar(float x, float y, float z){
 		policeCar = new ModelInstance(Zomtasia.assets.getModel("policeCar"), x, y, z);
+		policeCar.transform.scale(0.01f, 0.01f, 0.01f);
 		this.location = new Location(x, y, z);
 	}
 	public Location getLocation(){
