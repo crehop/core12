@@ -37,7 +37,7 @@ public class Flora {
 		tree.meshes.get(12).scale(0, 0, 0);
 		tree.meshes.get(13).scale(0, 0, 0);*/
 		ModelInstance treeInstance = new ModelInstance(tree,0,0,0);
-		treeInstance.transform.scale(20, 20, 20);
+		treeInstance.transform.scale(110, 110, 110);
 		trees.add(treeInstance);
 		
 		/*tree2.meshes.get(0).scale(0, 0, 0);

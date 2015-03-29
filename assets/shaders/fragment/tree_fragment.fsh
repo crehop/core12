@@ -31,5 +31,15 @@ void main(void) {
 	if(leaves.r + leaves.b + leaves.g > 2.3){
 		discard;
 	}
+	if(leaves.r > 0.35){
+		if(leaves.b > 0.35){
+			if(leaves.g > 0.35){
+				leaves.a = 0.5;
+				leaves.b -= leaves.b - 0.1;
+				leaves.r -= leaves.r - 0.1;
+				leaves.g -= leaves.g - 0.1 + intensity;
+			}
+		}
+	}
 	gl_FragColor = mix(leaves, premix, intensity);
 }
