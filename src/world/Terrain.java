@@ -27,7 +27,7 @@ public class Terrain {
 		private int chunkSize = 100;
 		private TextureRegion[][] chunkRegions;
 		private TextureRegion[][] terrainRegions;
-		public TerrainChunk[][] terrainChunks;	
+		public  TerrainChunk[][] terrainChunks;	
 	    int chunkNum = 0;
 	    // Scale of the terrain
 		float scale = 1;

@@ -152,6 +152,9 @@ public class Controls implements InputProcessor{
 			case Input.Keys.SHIFT_RIGHT:
 				testUp = true;
 				return false;
+			case Input.Keys.T:
+				menu = true;
+				return false;
 			default:
 				return true;
 		}
@@ -203,6 +206,10 @@ public class Controls implements InputProcessor{
 				return false;
 			case Input.Keys.SHIFT_RIGHT:
 				testUp = false;
+				return false;
+			case Input.Keys.T:
+				Zomtasia.testFlora.createTree(Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
+				menu = false;
 				return false;
 		}
 		return false;

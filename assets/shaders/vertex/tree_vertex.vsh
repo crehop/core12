@@ -22,7 +22,6 @@ void main(void) {
 	vec3 normal = normalize(u_normalMatrix * a_normal);
 	vec3 light = normalize(u_lightPosition);
 	intensity = max(dot(normal, light),0.0);
-
 	//gl_position is a built in variable to set the position of the vertecies
 	//projTrans = currentprojection? worldTrans = where to put it? position = actual vertex?
     gl_Position = u_projTrans * u_worldTrans * vec4(a_position, 1.0);

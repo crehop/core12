@@ -102,7 +102,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		assets.getAssetManager().finishLoading();
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
-		model = modelBuilder.createBox(1f, 1f, 1f, 
+		model = modelBuilder.createBox(.01f, .01f, .01f, 
            new Material(ColorAttribute.createDiffuse(Color.RED)),
            Usage.Position | Usage.Normal);
 		newModelInstance(new ModelInstance(model));
@@ -145,10 +145,12 @@ public class Zomtasia extends Game implements ApplicationListener {
 				modelBatch.render(instance,env);
 			
 			}
+			modelBatch.render(testPolice.render(),env);
+	        modelBatch.end();
 			//=========================================
 			
 			//Terrain==================================
-			modelBatch.render(testPolice.render(),env);
+			modelBatch.begin(cam);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);

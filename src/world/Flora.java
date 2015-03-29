@@ -37,7 +37,6 @@ public class Flora {
 		tree.meshes.get(12).scale(0, 0, 0);
 		tree.meshes.get(13).scale(0, 0, 0);
 		ModelInstance treeInstance = new ModelInstance(tree,0,0,0);
-		treeInstance.transform.scale(1, 1, 1);
 		trees.add(treeInstance);
 		
 		/*tree2.meshes.get(0).scale(0, 0, 0);
@@ -59,5 +58,11 @@ public class Flora {
 	}
 	public ArrayList<ModelInstance> getTrees(){
 		return trees;
+	}
+	public void createTree(float x, float y, float z) {
+		ModelInstance newTree = new ModelInstance(tree,x,y,z);
+		newTree.transform.scale(1, 1, 1);
+		newTree.transform.translate(3.6f,0,4.3f);
+		trees.add(newTree);
 	}
 }
