@@ -1,11 +1,21 @@
 package world;
 
 import java.util.ArrayList;
+
 import server.Location;
 import Zomtasia.Zomtasia;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 public class Flora {
 	Model tree;
@@ -14,31 +24,18 @@ public class Flora {
 	Renderable render;
 	ArrayList<ModelInstance> trees = new ArrayList<ModelInstance>();;
 	public Flora(){
-		tree = Zomtasia.assets.getModel("tree1");
-		tree2 = Zomtasia.assets.getModel("tree2");
+		tree2 = Zomtasia.assets.getModel("tree1");
 		seperateIntoTrees();
 	}
 	//public ModelInstance getModelInstance(){
 	//	return tree;
 	//}
 	public void seperateIntoTrees(){
-		tree.meshes.get(0).scale(0, 0, 0);
-		tree.meshes.get(1).scale(0, 0, 0);
-		tree.meshes.get(2).scale(0, 0, 0);
-		tree.meshes.get(3).scale(0, 0, 0);
-		tree.meshes.get(4).scale(0, 0, 0);
-		tree.meshes.get(5).scale(0, 0, 0);
-		tree.meshes.get(6).scale(0, 0, 0);
-		tree.meshes.get(7).scale(0, 0, 0);
-		tree.meshes.get(8).scale(0, 0, 0);
-		tree.meshes.get(9).scale(0, 0, 0);
-		tree.meshes.get(10).scale(1, 1, 1);
-		tree.meshes.get(11).scale(0, 0, 0);
-		tree.meshes.get(12).scale(0, 0, 0);
-		tree.meshes.get(13).scale(0, 0, 0);
-		ModelInstance treeInstance = new ModelInstance(tree,0,0,0);
-		trees.add(treeInstance);
-		
+		Mesh mesh = tree2.meshes.get(10);
+		Material material = tree2.materials.first();
+		tree = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
+		createTree(0,10,0);
+
 		/*tree2.meshes.get(0).scale(0, 0, 0);
 		tree2.meshes.get(1).scale(0, 0, 0);
 		tree2.meshes.get(2).scale(0, 0, 0);
