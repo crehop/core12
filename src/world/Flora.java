@@ -24,7 +24,7 @@ public class Flora {
 	Renderable render;
 	ArrayList<ModelInstance> trees = new ArrayList<ModelInstance>();;
 	public Flora(){
-		tree2 = Zomtasia.assets.getModel("tree1");
+		tree2 = Zomtasia.assets.getModel("tree1"); 
 		seperateIntoTrees();
 	}
 	//public ModelInstance getModelInstance(){
