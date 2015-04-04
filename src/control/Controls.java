@@ -50,7 +50,6 @@ public class Controls implements InputProcessor{
 			return;
 		}
 		if(menu){
-			Zomtasia.testFlora.createTree(Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
 		}
 		if(forward){
 			Zomtasia.player.walkForward((float)(movementSpeed));
@@ -212,6 +211,7 @@ public class Controls implements InputProcessor{
 				return false;
 			case Input.Keys.T:
 				menu = false;
+				Zomtasia.testFlora.createTree(Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
 				return false;
 		}
 		return false;
