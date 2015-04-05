@@ -17,6 +17,8 @@ import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
+import entities.GameObject;
+
 public class Flora {
 	// Materials breakdown;
 	// 0 pine
@@ -28,7 +30,7 @@ public class Flora {
 	// 6 big leafy light colored tree 2
 	// 7 pine
 	// 8 pine
-	
+	public GameObject lastMoved;
 	Model tree;
 	Model tree1;
 	Model tree2;
@@ -46,7 +48,7 @@ public class Flora {
 	Model tree14;
 	Location location;
 	int count = 0;
-	ArrayList<ModelInstance> trees = new ArrayList<ModelInstance>();;
+	ArrayList<GameObject> trees = new ArrayList<GameObject>();;
 	public Flora(){
 		tree = Zomtasia.assets.getModel("tree1"); 
 		seperateIntoTrees();
@@ -123,41 +125,44 @@ public class Flora {
 		tree14 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
 		createTree(0,10,0);
 	}
-	public ArrayList<ModelInstance> getTrees(){
+	public ArrayList<GameObject> getTrees(){
 		return trees;
 	}
 	public void createTree(float x, float y, float z) {
-		ModelInstance newTree;
+		GameObject newTree;
 		switch(count){
 		case 0:
-			newTree = new ModelInstance(tree1,x,y,z);
+			newTree = new GameObject(tree1,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 1:
-			newTree = new ModelInstance(tree2,x,y,z);
+			newTree = new GameObject(tree2,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 2:
-			newTree = new ModelInstance(tree3,x,y,z);
+			newTree = new GameObject(tree3,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 3:
-			newTree = new ModelInstance(tree4,x,y,z);
+			newTree = new GameObject(tree4,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
@@ -166,94 +171,104 @@ public class Flora {
 			}
 			return;
 		case 4:
-			newTree = new ModelInstance(tree5,x,y,z);
+			newTree = new GameObject(tree5,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 5:
-			newTree = new ModelInstance(tree6,x,y,z);
+			newTree = new GameObject(tree6,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 6:
-			newTree = new ModelInstance(tree7,x,y,z);
+			newTree = new GameObject(tree7,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 7:
-			newTree = new ModelInstance(tree8,x,y,z);
+			newTree = new GameObject(tree8,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 8:
-			newTree = new ModelInstance(tree9,x,y,z);
+			newTree = new GameObject(tree9,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 9:
-			newTree = new ModelInstance(tree10,x,y,z);
+			newTree = new GameObject(tree10,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 10:
-			newTree = new ModelInstance(tree11,x,y,z);
+			newTree = new GameObject(tree11,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 11:
-			newTree = new ModelInstance(tree12,x,y,z);
+			newTree = new GameObject(tree12,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 12:
-			newTree = new ModelInstance(tree13,x,y,z);
+			newTree = new GameObject(tree13,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 13:
-			newTree = new ModelInstance(tree14,x,y,z);
+			newTree = new GameObject(tree14,x,y,z);
 			newTree.transform.translate(3.6f,0,4.3f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		default:
 			return;

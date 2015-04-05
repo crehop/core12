@@ -37,6 +37,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import control.Controls;
 import entities.AssetHandler;
+import entities.GameObject;
 import entities.Player;
 import entities.PoliceCar;
 
@@ -67,9 +68,9 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static Flora testFlora;
 	Texture grass;
 	float progress;
-	Vector3 xAxis = new Vector3(1,0,0);
-	Vector3 yAxis = new Vector3(0,1,0);
-	Vector3 zAxis = new Vector3(0,0,1);
+	public static Vector3 xAxis = new Vector3(1,0,0);
+	public static Vector3 yAxis = new Vector3(0,1,0);
+	public static Vector3 zAxis = new Vector3(0,0,1);
 	ModelBatch shadowBatch;
 	public static TerrainChunk current = null;
 	
@@ -208,7 +209,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 			modelBatch.begin(cam);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
-			for(ModelInstance renderTree:testFlora.getTrees()){
+			for(GameObject renderTree:testFlora.getTrees()){
+				renderTree.transform.setToTranslation(renderTree.getLocation().getPosition());
 				modelBatch.render(renderTree,treeShader);
 			}
 			modelBatch.end();

@@ -79,31 +79,31 @@ public class Controls implements InputProcessor{
 			movementSpeed = defaultMovementSpeed;
 		}
 		if(menu){
-			Gdx.app.log(Zomtasia.LOG, "CAMSNAP");
+			Zomtasia.testFlora.createTree(Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
 		}
 		if(testForward){
-			Location current = Zomtasia.testPolice.getLocation();
-			Zomtasia.testPolice.setLocation(current.getX(), current.getY(), current.getZ() + movementSpeed);
+			current = Zomtasia.testFlora.lastMoved.getLocation();
+			Zomtasia.testFlora.lastMoved.setLocation(current.getX(), current.getY(), current.getZ() + movementSpeed);
 		}
 		if(testBack){
-			current = Zomtasia.testPolice.getLocation();
-			Zomtasia.testPolice.setLocation(current.getX(), current.getY(), current.getZ() - movementSpeed);
+			current = Zomtasia.testFlora.lastMoved.getLocation();
+			Zomtasia.testFlora.lastMoved.setLocation(current.getX(), current.getY(), current.getZ() - movementSpeed);
 		}
 		if(testLeft){
-			current = Zomtasia.testPolice.getLocation();
-			Zomtasia.testPolice.setLocation(current.getX() + movementSpeed, current.getY(), current.getZ());
+			current = Zomtasia.testFlora.lastMoved.getLocation();
+			Zomtasia.testFlora.lastMoved.setLocation(current.getX() + movementSpeed, current.getY(), current.getZ());
 		}
 		if(testRight){
-			current = Zomtasia.testPolice.getLocation();
-			Zomtasia.testPolice.setLocation(current.getX() - movementSpeed, current.getY(), current.getZ());
+			current = Zomtasia.testFlora.lastMoved.getLocation();
+			Zomtasia.testFlora.lastMoved.setLocation(current.getX() - movementSpeed, current.getY(), current.getZ());
 		}
 		if(testUp){
-			current = Zomtasia.testPolice.getLocation();
-			Zomtasia.testPolice.setLocation(current.getX(), current.getY() + movementSpeed, current.getZ());
+			current = Zomtasia.testFlora.lastMoved.getLocation();
+			Zomtasia.testFlora.lastMoved.setLocation(current.getX(), current.getY() + movementSpeed, current.getZ());
 		}
 		if(testDown){
-			current = Zomtasia.testPolice.getLocation();
-			Zomtasia.testPolice.setLocation(current.getX(), current.getY() - movementSpeed, current.getZ());
+			current = Zomtasia.testFlora.lastMoved.getLocation();
+			Zomtasia.testFlora.lastMoved.setLocation(current.getX(), current.getY() - movementSpeed, current.getZ());
 		}
 	}
 	@Override
