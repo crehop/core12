@@ -84,9 +84,9 @@ public class TreeShader implements Shader {
 	@Override
 	public void render(Renderable renderable){
 		
-		lightPosition[0] = -Zomtasia.Zomtasia.testPolice.getLocation().getX();
-		lightPosition[1] = -Zomtasia.Zomtasia.testPolice.getLocation().getY();
-		lightPosition[2] = -Zomtasia.Zomtasia.testPolice.getLocation().getZ();
+		lightPosition[0] = 0;
+		lightPosition[1] = 0;
+		lightPosition[2] = 0;
 		//bind correct textures		
 	    modelView.set(renderable.worldTransform);
 		program.setUniformi("u_texture0", context.textureBinder.bind(((TextureAttribute)(renderable.material.get(TextureAttribute.Diffuse))).textureDescription));

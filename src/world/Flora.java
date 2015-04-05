@@ -58,72 +58,58 @@ public class Flora {
 		Mesh mesh = tree.meshes.get(0);
 		Material material = tree.materials.get(2);
 		tree1 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK medium leafy light tree
 		material = tree.materials.get(3);
 		mesh = tree.meshes.get(1);
 		tree2 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//DONT USE, BAD TREE
 		material = tree.materials.get(3);
 		mesh = tree.meshes.get(2);
 		tree3 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK smallest leafy light tree
 		material = tree.materials.get(4);
 		mesh = tree.meshes.get(3);
 		tree4 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK medium leafy light tree
 		material = tree.materials.get(4);
 		mesh = tree.meshes.get(4);
 		tree5 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK biggest leafy light tree
 		material = tree.materials.get(5);
 		mesh = tree.meshes.get(5);
 		tree6 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK big leafy light tree
 		material = tree.materials.get(6);
 		mesh = tree.meshes.get(6);
 		tree7 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//DO NOT USE USELESS Shadow 2;
 		material = tree.materials.get(2);
 		mesh = tree.meshes.get(7);
 		tree8 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK (Medium leafy tree)
 		material = tree.materials.get(3);
 		mesh = tree.meshes.get(8);
 		tree9 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK (PINE3 SMALL)
 		material = tree.materials.get(0);
 		mesh = tree.meshes.get(9);
 		tree10 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK (PINE2 TALL)
 		material = tree.materials.get(0);
 		mesh = tree.meshes.get(10);
 		tree11 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK (PINE1 MEDIUM)
 		material = tree.materials.get(0);
 		mesh = tree.meshes.get(11);
 		tree12 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK (LEAFY TREEN MEDIUM)
 		material = tree.materials.get(3);
 		mesh = tree.meshes.get(12);
 		tree13 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 		//OK (SHADOW)
 		material = tree.materials.get(1);
 		mesh = tree.meshes.get(13);
 		tree14 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-		createTree(0,10,0);
 	}
 	public ArrayList<GameObject> getTrees(){
 		return trees;
@@ -169,6 +155,7 @@ public class Flora {
 			if(count>13) {
 				count = 0;
 			}
+			lastMoved = newTree;
 			return;
 		case 4:
 			newTree = new GameObject(tree5,x,y,z);
