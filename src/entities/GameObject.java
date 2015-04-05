@@ -14,6 +14,7 @@ public class GameObject extends ModelInstance{
 	float scaleY = 1f;
 	float scaleZ = 1f;
 	boolean staticObject = false;
+	String meta = "null";
 	public GameObject(Model model, float x, float y, float z) {
 		super(model,x,y,z);
 		this.location = new Location(x,y,z);
@@ -100,5 +101,17 @@ public class GameObject extends ModelInstance{
 	}
 	public boolean isStatic(){
 		return this.staticObject;
+	}
+	public boolean hasMeta(){
+		if(meta.equalsIgnoreCase("null")){
+			return false;
+		}
+		return true;
+	}
+	public String getMeta(){
+		return meta;
+	}
+	public void setMeta(String meta){
+		this.meta = meta;
 	}
 }
