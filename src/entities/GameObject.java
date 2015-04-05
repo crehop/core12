@@ -25,9 +25,9 @@ public class GameObject extends ModelInstance{
 		this.roll = roll;
 		this.pitch = pitch;
 		this.yaw = yaw;
-		super.transform.rotate(Zomtasia.Zomtasia.yAxis, yaw);
-		super.transform.rotate(Zomtasia.Zomtasia.xAxis, pitch);
-		super.transform.rotate(Zomtasia.Zomtasia.zAxis, roll);
+		super.transform.setToRotation(Zomtasia.Zomtasia.yAxis, yaw);
+		super.transform.setToRotation(Zomtasia.Zomtasia.xAxis, pitch);
+		super.transform.setToRotation(Zomtasia.Zomtasia.zAxis, roll);
 	}
 	public GameObject(Model model, float x, float y, float z,float  yaw,float  pitch,float  roll, float scaleX, float scaleY, float scaleZ){
 		super(model,x,y,z);
@@ -38,9 +38,9 @@ public class GameObject extends ModelInstance{
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		this.scaleZ = scaleZ;
-		super.transform.rotate(Zomtasia.Zomtasia.yAxis, yaw);
-		super.transform.rotate(Zomtasia.Zomtasia.xAxis, pitch);
-		super.transform.rotate(Zomtasia.Zomtasia.zAxis, roll);
+		super.transform.setToRotation(Zomtasia.Zomtasia.yAxis, yaw);
+		super.transform.setToRotation(Zomtasia.Zomtasia.xAxis, pitch);
+		super.transform.setToRotation(Zomtasia.Zomtasia.zAxis, roll);
 		super.transform.scale(scaleX, scaleY, scaleZ);
 	}
 	public Location getLocation() {

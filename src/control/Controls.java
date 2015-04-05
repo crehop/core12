@@ -81,6 +81,10 @@ public class Controls implements InputProcessor{
 		}
 		if(menu){
 			Zomtasia.testFlora.createTree(count,Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
+			count++;
+			if(count > 13){
+				count = 0;
+			}
 		}
 		if(testForward){
 			current = Zomtasia.testFlora.lastMoved.getLocation();
