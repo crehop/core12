@@ -37,6 +37,7 @@ public class Controls implements InputProcessor{
 	private int magX = 0;
 	private int resX = 0;
 	private int resY = 0;
+	int count = 0;
 	
 	public Controls(Zomtasia game){
 		this.game = game;
@@ -79,6 +80,7 @@ public class Controls implements InputProcessor{
 			movementSpeed = defaultMovementSpeed;
 		}
 		if(menu){
+			Zomtasia.testFlora.createTree(count,Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
 		}
 		if(testForward){
 			current = Zomtasia.testFlora.lastMoved.getLocation();
@@ -210,14 +212,17 @@ public class Controls implements InputProcessor{
 				return false;
 			case Input.Keys.T:
 				menu = false;
-				Zomtasia.testFlora.createTree(Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
+				count++;
+				if(count>13) {
+					count = 0;
+				}
 				return false;
 		}
 		return false;
 		}
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method 
 		return false;
 	}
 	@Override

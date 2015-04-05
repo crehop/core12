@@ -39,7 +39,6 @@ import control.Controls;
 import entities.AssetHandler;
 import entities.GameObject;
 import entities.Player;
-import entities.PoliceCar;
 
 public class Zomtasia extends Game implements ApplicationListener {
 	public static String VERSION = "0.01 Pre-Alpha";
@@ -64,7 +63,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public SkyShader skyShader;
 	public static boolean cameraCreated = false;
 	public boolean once = true;
-	public static PoliceCar testPolice;
 	public static Flora testFlora;
 	Texture grass;
 	float progress;
@@ -103,7 +101,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		assets.getAssetManager().finishLoading();
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
-		model = modelBuilder.createBox(.01f, .01f, .01f, 
+		model = modelBuilder.createBox(.02f, .02f, .02f, 
            new Material(ColorAttribute.createDiffuse(Color.RED)),
            Usage.Position | Usage.Normal);
 		newModelInstance(new ModelInstance(model));
@@ -113,7 +111,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Gdx.graphics.setVSync(true);
 		Gdx.input.setCursorCatched(true);
 		setScreen(player);
-		testPolice = new PoliceCar(0,0,0);		Skybox.render();
+		Skybox.render();
 		terrain.create();
 		testFlora = new Flora();
 	}
@@ -144,9 +142,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 			modelBatch.begin(cam);
 			for(ModelInstance instance:models){
 				modelBatch.render(instance,env);
-			
 			}
-			modelBatch.render(testPolice.render(),env);
 	        modelBatch.end();
 			//=========================================
 			
@@ -169,7 +165,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	  	    //=========================================
 			//Water==================================
 			modelBatch.begin(cam);
-			modelBatch.render(testPolice.render(),env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
@@ -187,7 +182,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	  	    //=========================================
 			//Sky==================================
 			modelBatch.begin(cam);
-			modelBatch.render(testPolice.render(),env);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
@@ -211,6 +205,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
 			for(GameObject renderTree:testFlora.getTrees()){
 				renderTree.transform.setToTranslation(renderTree.getLocation().getPosition());
+				Console.setLine3("TREE LOCATION:" + renderTree.getLocation().getX() + "," + renderTree.getLocation().getY() + "," + renderTree.getLocation().getZ());
 				modelBatch.render(renderTree,treeShader);
 			}
 			modelBatch.end();
