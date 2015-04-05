@@ -118,18 +118,10 @@ public class Flora {
 		GameObject newTree;
 		switch(count){
 		case 0:
-			newTree = new GameObject(tree1,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
-			trees.add(newTree);
-			count++;
-			if(count>13) {
-				count = 0;
-			}
-			lastMoved = newTree;
 			return;
 		case 1:
 			newTree = new GameObject(tree2,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(-8.25f,0.02f,-10.8149f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -139,7 +131,7 @@ public class Flora {
 			return;
 		case 2:
 			newTree = new GameObject(tree3,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(-8.25f,0.01f,3.12f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -149,7 +141,7 @@ public class Flora {
 			return;
 		case 3:
 			newTree = new GameObject(tree4,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(13.374f,0.015f,3.039f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -159,7 +151,7 @@ public class Flora {
 			return;
 		case 4:
 			newTree = new GameObject(tree5,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(13.37f,0.01f,-3.34f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -169,7 +161,7 @@ public class Flora {
 			return;
 		case 5:
 			newTree = new GameObject(tree6,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(2.844f,0.01f,11.79f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -179,7 +171,7 @@ public class Flora {
 			return;
 		case 6:
 			newTree = new GameObject(tree7,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(3.299f,0.0f,13.48f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -188,18 +180,10 @@ public class Flora {
 			lastMoved = newTree;
 			return;
 		case 7:
-			newTree = new GameObject(tree8,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
-			trees.add(newTree);
-			count++;
-			if(count>13) {
-				count = 0;
-			}
-			lastMoved = newTree;
 			return;
 		case 8:
 			newTree = new GameObject(tree9,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(-8.267f,0.0f,-4.04f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -209,7 +193,7 @@ public class Flora {
 			return;
 		case 9:
 			newTree = new GameObject(tree10,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(3.62f,0,-1.6f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -229,7 +213,7 @@ public class Flora {
 			return;
 		case 11:
 			newTree = new GameObject(tree12,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(3.67f,0,-6.96f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -239,7 +223,7 @@ public class Flora {
 			return;
 		case 12:
 			newTree = new GameObject(tree13,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(-8.24f,0.0f,9.88f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {
@@ -249,7 +233,7 @@ public class Flora {
 			return;
 		case 13:
 			newTree = new GameObject(tree14,x,y,z);
-			newTree.transform.translate(3.6f,0,4.3f);
+			newTree.transform.translate(-8.32f,-0.09f,9.95f);
 			trees.add(newTree);
 			count++;
 			if(count>13) {

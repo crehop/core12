@@ -210,7 +210,7 @@ public class Controls implements InputProcessor{
 				return false;
 			case Input.Keys.T:
 				menu = false;
-				Zomtasia.testFlora.createTree(0, 0, 0);
+				Zomtasia.testFlora.createTree(Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
 				return false;
 		}
 		return false;
