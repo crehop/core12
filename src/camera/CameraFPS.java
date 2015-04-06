@@ -18,8 +18,8 @@ public class CameraFPS{
 	protected float pitch = 0.0f;
 	protected Location location;
 	protected Viewport viewport;
-	protected float far = 10000000;
-	protected float near = 1;
+	protected float far = 1000;
+	protected float near = 0.1f;
 	
 	public CameraFPS(float x, float y, float z){
 		position = new Vector3(x,y,z);

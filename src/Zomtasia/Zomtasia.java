@@ -18,6 +18,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -71,6 +72,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static Vector3 zAxis = new Vector3(0,0,1);
 	ModelBatch shadowBatch;
 	public static TerrainChunk current = null;
+	private Vector3 position = new Vector3();
 	
 	//WORLD CLASSES
 	public static Terrain terrain = new Terrain();
@@ -156,7 +158,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
 	        		this.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
-	        		count++;
 	        	}
 	        }
 	        modelBatch.end();
@@ -173,7 +174,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
 	        		this.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
-	        		count++;
 	        	}
 	        }
 	        modelBatch.end();
@@ -190,7 +190,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
 	        		this.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
-	        		count++;
 	        	}
 	        }
 	        modelBatch.end();
@@ -204,15 +203,18 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
 			for(GameObject renderTree:testFlora.getTrees()){
-				renderTree.transform.setToTranslation(renderTree.getLocation().getPosition());
-				Console.setLine3("TREE LOCATION:" + renderTree.getLocation().getX() + "," + renderTree.getLocation().getY() + "," + renderTree.getLocation().getZ());
-				modelBatch.render(renderTree,treeShader);
+				if(isVisible(renderTree)){
+					renderTree.transform.setToTranslation(renderTree.getLocation().getPosition());
+					Console.setLine3("TREE LOCATION:" + renderTree.getLocation().getX() + "," + renderTree.getLocation().getY() + "," + renderTree.getLocation().getZ());
+					modelBatch.render(renderTree,treeShader);
+					count++;
+				}
 			}
 			modelBatch.end();
 			//=========================================
 	        Console.render();
 	        debug = "";
-	        Console.setLine2("Chunks being rendered:" + count + "trees being rendered:" + testFlora.getTrees().size());
+	        Console.setLine2("Models being rendered:" + count);
 			Zomtasia.cam.update();	       
 	      }else{
 	       progress = assets.getAssetManager().getProgress();
@@ -267,5 +269,10 @@ public class Zomtasia extends Game implements ApplicationListener {
 	}
 	public TerrainShader getShader(){
 		return terrainShader;
+	}
+	protected boolean isVisible(final GameObject instance) {
+	    instance.transform.getTranslation(position);
+	    position.add(instance.center);
+	    return cam.frustum.sphereInFrustum(position, instance.radius);
 	}
 }

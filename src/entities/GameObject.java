@@ -4,6 +4,8 @@ import server.Location;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 
 public class GameObject extends ModelInstance{
 	Location location;
@@ -15,9 +17,18 @@ public class GameObject extends ModelInstance{
 	float scaleZ = 1f;
 	boolean staticObject = false;
 	String meta = "null";
+    public final Vector3 center = new Vector3();
+    public final Vector3 dimensions = new Vector3();
+    public final float radius;
+    private final static BoundingBox bounds = new BoundingBox();
+
 	public GameObject(Model model, float x, float y, float z) {
 		super(model,x,y,z);
 		this.location = new Location(x,y,z);
+        calculateBoundingBox(bounds);
+        bounds.getCenter(center);
+        bounds.getDimensions(dimensions);
+        radius = dimensions.len() / 2f;
 	}
 	public GameObject(Model model, float x, float y, float z,float  yaw,float  pitch,float  roll) {
 		super(model,x,y,z);
@@ -28,6 +39,10 @@ public class GameObject extends ModelInstance{
 		super.transform.setToRotation(Zomtasia.Zomtasia.yAxis, yaw);
 		super.transform.setToRotation(Zomtasia.Zomtasia.xAxis, pitch);
 		super.transform.setToRotation(Zomtasia.Zomtasia.zAxis, roll);
+        calculateBoundingBox(bounds);
+        bounds.getCenter(center);
+        bounds.getDimensions(dimensions);
+        radius = dimensions.len() / 2f;
 	}
 	public GameObject(Model model, float x, float y, float z,float  yaw,float  pitch,float  roll, float scaleX, float scaleY, float scaleZ){
 		super(model,x,y,z);
@@ -42,6 +57,10 @@ public class GameObject extends ModelInstance{
 		super.transform.setToRotation(Zomtasia.Zomtasia.xAxis, pitch);
 		super.transform.setToRotation(Zomtasia.Zomtasia.zAxis, roll);
 		super.transform.scale(scaleX, scaleY, scaleZ);
+        calculateBoundingBox(bounds);
+        bounds.getCenter(center);
+        bounds.getDimensions(dimensions);
+        radius = dimensions.len() / 2f;
 	}
 	public Location getLocation() {
 		return this.location;
