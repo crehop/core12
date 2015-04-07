@@ -18,7 +18,7 @@ import com.badlogic.gdx.math.collision.Ray;
 
 import entities.GameObject;
 
-public class ControlsInput extends InputAdapter implements InputProcessor {
+public class Controls extends InputAdapter implements InputProcessor {
 	private boolean exitKey;
 	private boolean forward;
 	private boolean back;
@@ -58,7 +58,7 @@ public class ControlsInput extends InputAdapter implements InputProcessor {
 	private Vector3 direction = new Vector3();
 	private Vector2 mousePosition = new Vector2();
 	//========================
-	public ControlsInput(Zomtasia game){
+	public Controls(Zomtasia game){
 		this.game = game;
 		this.resX = Gdx.graphics.getWidth();
 		this.resY = Gdx.graphics.getHeight();

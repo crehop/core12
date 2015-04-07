@@ -36,7 +36,7 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import control.ControlsInput;
+import control.Controls;
 import entities.AssetHandler;
 import entities.GameObject;
 import entities.Player;
@@ -51,7 +51,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static Player player;
 	public static Environment env;
 	private static Zomtasia game;
-	public static ControlsInput controls;
+	public static Controls controls;
 	public static AssetHandler assets;
 	private static ArrayList<ModelInstance> models = new ArrayList<ModelInstance>();
 	public static ModelBuilder modelBuilder;
@@ -95,7 +95,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		treeShader.init();
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
-		controls = new ControlsInput(this);
+		controls = new Controls(this);
         Gdx.input.setInputProcessor(controls);
         env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
