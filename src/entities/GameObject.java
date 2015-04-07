@@ -1,5 +1,6 @@
 package entities;
 
+import screens.Console;
 import server.Location;
 
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -29,6 +30,8 @@ public class GameObject extends ModelInstance{
         bounds.getCenter(center);
         bounds.getDimensions(dimensions);
         radius = dimensions.len() / 2f;
+        Zomtasia.Zomtasia.instances.add(this);
+        Console.setLine4("Instance count:" + Zomtasia.Zomtasia.instances.size);
 	}
 	public GameObject(Model model, float x, float y, float z,float  yaw,float  pitch,float  roll) {
 		super(model,x,y,z);
@@ -43,6 +46,8 @@ public class GameObject extends ModelInstance{
         bounds.getCenter(center);
         bounds.getDimensions(dimensions);
         radius = dimensions.len() / 2f;
+        Zomtasia.Zomtasia.instances.add(this);
+        Console.setLine4("Instance count:" + Zomtasia.Zomtasia.instances.size);
 	}
 	public GameObject(Model model, float x, float y, float z,float  yaw,float  pitch,float  roll, float scaleX, float scaleY, float scaleZ){
 		super(model,x,y,z);
@@ -61,6 +66,8 @@ public class GameObject extends ModelInstance{
         bounds.getCenter(center);
         bounds.getDimensions(dimensions);
         radius = dimensions.len() / 2f;
+        Zomtasia.Zomtasia.instances.add(this);
+        Console.setLine4("Instance count:" + Zomtasia.Zomtasia.instances.size);
 	}
 	public Location getLocation() {
 		return this.location;

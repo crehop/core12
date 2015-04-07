@@ -1,5 +1,6 @@
 package control;
 
+import screens.Console;
 import server.Location;
 import Zomtasia.Zomtasia;
 
@@ -8,8 +9,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 
-public class ControlsInput extends InputAdapter implements InputProcessor, ApplicationListener {
+import entities.GameObject;
+
+public class ControlsInput extends InputAdapter implements InputProcessor {
 	private boolean exitKey;
 	private boolean forward;
 	private boolean back;
@@ -42,52 +51,19 @@ public class ControlsInput extends InputAdapter implements InputProcessor, Appli
 	int count = 0;
 	
 	//3d OBJECT MANIPULATION
-	//private int selected = -1, selecting = -1;
-	//private Material selectionMaterial;
-	//private Material originalMaterial;
+	private int selected = -1, selecting = -1;
+	private Material selectionMaterial;
+	private Material originalMaterial;
+	private Vector3 position = new Vector3();
 	
 	//========================
 	public ControlsInput(Zomtasia game){
 		this.game = game;
 		this.resX = Gdx.graphics.getWidth();
 		this.resY = Gdx.graphics.getHeight();
-	}
-	
-	@Override
-	public void create() {
-		//System.out.println("CONFIRM CREATION");
-	    //selectionMaterial = new Material();
-	   // selectionMaterial.set(ColorAttribute.createDiffuse(Color.ORANGE));
-	   // originalMaterial = new Material();
-	}
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
+	    selectionMaterial = new Material();
+		selectionMaterial.set(ColorAttribute.createDiffuse(Color.ORANGE));
+		originalMaterial = new Material();
 	}
 
 	public  void checkInput() {
@@ -98,28 +74,45 @@ public class ControlsInput extends InputAdapter implements InputProcessor, Appli
 		if(menu){
 		}
 		if(forward){
-			Zomtasia.player.walkForward((float)(movementSpeed));
+			if(Gdx.input.isCursorCatched()){
+				Zomtasia.player.walkForward((float)(movementSpeed));
+			}
 		}
 		if(back){
-			Zomtasia.player.walkBackward((float)(movementSpeed));
+			Console.setLine5("CONFIRM BACK");
+			if(Gdx.input.isCursorCatched()){
+				Zomtasia.player.walkBackward((float)(movementSpeed));
+			}
 		}
 		if(strafeLeft){
-			Zomtasia.player.strafeLeft((float)(movementSpeed));
+			if(Gdx.input.isCursorCatched()){
+				Zomtasia.player.strafeLeft((float)(movementSpeed));
+			}
 		}
 		if(strafeRight){	
-			Zomtasia.player.strafeRight((float)(movementSpeed));
+			if(Gdx.input.isCursorCatched()){
+				Zomtasia.player.strafeRight((float)(movementSpeed));
+			}
 		}
 		if(jump){
-			Zomtasia.player.moveUp((float)(movementSpeed));
+			if(Gdx.input.isCursorCatched()){
+				Zomtasia.player.moveUp((float)(movementSpeed));
+			}
 		}
 		if(crouch){
-			Zomtasia.player.moveDown((float)(movementSpeed));
+			if(Gdx.input.isCursorCatched()){
+				Zomtasia.player.moveDown((float)(movementSpeed));
+			}
 		}
 		if(speedUpCam){
-			movementSpeed = defaultMovementSpeed * 15;
+			if(Gdx.input.isCursorCatched()){
+				movementSpeed = defaultMovementSpeed * 15;
+			}
 		}
 		else if(speedDownCam){
-			movementSpeed = defaultMovementSpeed / 100;
+			if(Gdx.input.isCursorCatched()){
+				movementSpeed = defaultMovementSpeed / 100;
+			}
 		}
 		else{
 			movementSpeed = defaultMovementSpeed;
@@ -160,52 +153,84 @@ public class ControlsInput extends InputAdapter implements InputProcessor, Appli
 	public boolean keyDown(int keycode) {
 		switch(keycode){
 			case Input.Keys.A:
-				strafeLeft = true;
+				if(Gdx.input.isCursorCatched()){
+					strafeLeft = true;
+				}
 				return false;
 			case Input.Keys.S:
-				back = true;
+				if(Gdx.input.isCursorCatched()){
+					back = true;
+				}
 				return false;
 			case Input.Keys.D:
-				strafeRight = true;
+				if(Gdx.input.isCursorCatched()){
+					strafeRight = true;
+				}
 				return false;
 			case Input.Keys.W:
-				forward = true;
+				if(Gdx.input.isCursorCatched()){
+					forward = true;
+				}
 				return false;
 			case Input.Keys.TAB:
-				speedUpCam = true;
+				if(Gdx.input.isCursorCatched()){
+					speedUpCam = true;
+				}
 				return false;
 			case Input.Keys.CONTROL_LEFT:
-				speedDownCam = true;
+				if(Gdx.input.isCursorCatched()){
+					speedDownCam = true;
+				}
 				return false;
 			case Input.Keys.SHIFT_LEFT:
-				crouch = true;
+				if(Gdx.input.isCursorCatched()){
+					crouch = true;
+				}
 				return false;
 			case Input.Keys.SPACE:
-				jump = true;
+				if(Gdx.input.isCursorCatched()){
+					jump = true;
+				}
 				return false;
 			case Input.Keys.ESCAPE:
-				exitKey = true;
+				if(Gdx.input.isCursorCatched()){
+					exitKey = true;
+				}
 				return false;
 			case Input.Keys.UP:
-				testForward = true;
+				if(Gdx.input.isCursorCatched()){
+					testForward = true;
+				}
 				return false;
 			case Input.Keys.DOWN:
-				testBack = true;
+				if(Gdx.input.isCursorCatched()){
+					testBack = true;
+				}
 				return false;
 			case Input.Keys.LEFT:
-				testLeft = true;
+				if(Gdx.input.isCursorCatched()){
+					testLeft = true;
+				}
 				return false;
 			case Input.Keys.RIGHT:
-				testRight = true;
+				if(Gdx.input.isCursorCatched()){
+					testRight = true;
+				}
 				return false;
 			case Input.Keys.CONTROL_RIGHT:
-				testDown = true;
+				if(Gdx.input.isCursorCatched()){
+					testDown = true;
+				}
 				return false;
 			case Input.Keys.SHIFT_RIGHT:
-				testUp = true;
+				if(Gdx.input.isCursorCatched()){
+					testUp = true;
+				}
 				return false;
 			case Input.Keys.T:
-				menu = true;
+				if(Gdx.input.isCursorCatched()){
+					menu = true;
+				}
 				return false;
 			default:
 				return true;
@@ -222,6 +247,13 @@ public class ControlsInput extends InputAdapter implements InputProcessor, Appli
 				return false;
 			case Input.Keys.D:
 				strafeRight = false;
+				return false;
+			case Input.Keys.E:
+				if(Gdx.input.isCursorCatched()){
+					Gdx.input.setCursorCatched(false);
+				}else{
+					Gdx.input.setCursorCatched(true);
+				}
 				return false;
 			case Input.Keys.W:
 				forward = false;
@@ -313,17 +345,71 @@ public class ControlsInput extends InputAdapter implements InputProcessor, Appli
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+		  selecting = getObject(screenX, screenY);
+		  return selecting >= 0;
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+	    if (selecting >= 0) {
+	        if (selecting == getObject(screenX, screenY))
+	            setSelected(selecting);
+	        selecting = -1;
+	        return true;
+	    }
+	    return false;   
 	}
+
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
+	    if (selecting < 0) 
+	        return false;
+	    if (selected == selecting) {
+	        Ray ray = Zomtasia.cam.getPickRay(screenX, screenY);
+	        final float distance = -ray.origin.y / ray.direction.y;
+	        position.set(ray.direction).scl(distance).add(ray.origin);
+	        Zomtasia.instances.get(selected).transform.setTranslation(position);
+	    }
+	    return true;
+	}
+	public int getObject (int screenX, int screenY) {
+	    Ray ray = Zomtasia.cam.getPickRay(screenX, screenY);
+	 
+	    int result = -1;
+	    float distance = -1;
+	 
+	    for (int i = 0; i < Zomtasia.instances.size; ++i) {
+	        final GameObject instance = Zomtasia.instances.get(i);
+	 
+	        instance.transform.getTranslation(position);
+	        position.add(instance.center);
+	 
+	        float dist2 = ray.origin.dst2(position);
+	        if (distance >= 0f && dist2 > distance)
+	            continue;
+	 
+	        if (Intersector.intersectRaySphere(ray, position, instance.radius, null)) {
+	            result = i;
+	            distance = dist2;
+	        }
+	    }
+	 
+	    return result;
+	}
+
+	public void setSelected (int value) {
+	    if (selected == value) return;
+	    if (selected >= 0) {
+	        Material mat = Zomtasia.instances.get(selected).materials.get(0);
+	        mat.clear();
+	        mat.set(originalMaterial);
+	    }
+	    selected = value;
+	    if (selected >= 0) {
+	        Material mat = Zomtasia.instances.get(selected).materials.get(0);
+	        originalMaterial.clear();
+	        originalMaterial.set(mat);
+	        mat.clear();
+	        mat.set(selectionMaterial);
+	    }
 	}
 }

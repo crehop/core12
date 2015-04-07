@@ -34,6 +34,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 import control.ControlsInput;
 import entities.AssetHandler;
@@ -75,6 +76,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	CameraInputController camController;
 	//WORLD CLASSES
 	public static Terrain terrain = new Terrain();
+    public static Array<GameObject> instances = new Array<GameObject>();
 	
 	@Override
 	public void create() {
@@ -207,7 +209,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 				if(isVisible(renderTree)){
 					renderTree.transform.setToTranslation(renderTree.getLocation().getPosition());
 					Console.setLine3("TREE LOCATION:" + renderTree.getLocation().getX() + "," + renderTree.getLocation().getY() + "," + renderTree.getLocation().getZ());
-					modelBatch.render(renderTree,treeShader);
+					if(Gdx.input.isCursorCatched()){
+						modelBatch.render(renderTree,treeShader);
+					}else{
+						modelBatch.render(renderTree,env);
+					}
 					count++;
 				}
 			}
