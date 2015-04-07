@@ -4,7 +4,6 @@ import screens.Console;
 import server.Location;
 import Zomtasia.Zomtasia;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;

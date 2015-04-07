@@ -95,7 +95,6 @@ public class TreeShader implements Shader {
 					renderable.primitiveType,
 					renderable.meshPartOffset,
 					renderable.meshPartSize);
-		
 		}
 	}
 
