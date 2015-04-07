@@ -257,8 +257,12 @@ public class Controls extends InputAdapter implements InputProcessor {
 					Gdx.input.setCursorCatched(false);
 					Zomtasia.cam.lookAt(this.direction);
 					Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-					
 				}else{
+					if(selected > 0){
+				        mat = Zomtasia.instances.get(selected).materials.get(0);
+				        mat.clear();
+				        mat.set(originalMaterial);
+					}
 					this.direction = Zomtasia.cam.direction;
 					Gdx.input.setCursorCatched(true);
 					Gdx.input.setCursorPosition((int)this.mousePosition.x, (int)this.mousePosition.y);
@@ -356,14 +360,16 @@ public class Controls extends InputAdapter implements InputProcessor {
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		  selecting = getObject(screenX, screenY);
-		  return selecting >= 0;
+		  //selecting = getObject(screenX, screenY);
+		  return false;
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		selecting = getObject(screenX, screenY);
 	    if (selecting >= 0) {
-	        if (selecting == getObject(screenX, screenY))
+	        if (selecting == getObject(screenX, screenY)){
 	            setSelected(selecting);
+	        }
 	        selecting = -1;
 	        return true;
 	    }
