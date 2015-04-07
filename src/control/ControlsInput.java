@@ -38,7 +38,7 @@ public class ControlsInput extends InputAdapter implements InputProcessor {
 	private boolean testDown;
 	private Location current;
 	private Zomtasia game;
-	
+	private Material mat;
 	//Mouse sensitivity
 	private float mouseSensitivity = 0.04141519f;
 	private final float defaultMovementSpeed = 0.50f;
@@ -411,12 +411,13 @@ public class ControlsInput extends InputAdapter implements InputProcessor {
 	public void setSelected (int value) {
 	    if (selected == value) return;
 	    if (selected >= 0) {
-	        Material mat = Zomtasia.instances.get(selected).materials.get(0);
+	        mat = Zomtasia.instances.get(selected).materials.get(0);
 	        mat.clear();
 	        mat.set(originalMaterial);
-		    selected = value;
-	    }else if (selected >= 0) {
-	        Material mat = Zomtasia.instances.get(selected).materials.get(0);
+	    }
+	    selected = value;
+	    if (selected >= 0) {
+	        mat = Zomtasia.instances.get(selected).materials.get(0);
 	        originalMaterial.clear();
 	        originalMaterial.set(mat);
 	        mat.clear();
