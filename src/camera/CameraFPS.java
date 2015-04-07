@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import server.Location;
 import Zomtasia.Zomtasia;
 
-public class CameraFPS{
+public class CameraFPS {
 	protected Vector3 position = null;
 	protected float lastYaw = 0.0f;
 	protected float lastPitch = 0.0f;
@@ -20,7 +20,7 @@ public class CameraFPS{
 	protected Viewport viewport;
 	protected float far = 1000;
 	protected float near = 0.1f;
-	
+
 	public CameraFPS(float x, float y, float z){
 		position = new Vector3(x,y,z);
 		this.location = new Location(x,y,z);

@@ -5,16 +5,10 @@ import java.util.ArrayList;
 import server.Location;
 import Zomtasia.Zomtasia;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.Renderable;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 import entities.GameObject;
@@ -52,6 +46,7 @@ public class Flora {
 		tree = Zomtasia.assets.getModel("tree1"); 
 		seperateIntoTrees();
 	}
+	@SuppressWarnings("deprecation")
 	public void seperateIntoTrees(){
 		//DO NOT USE (USELESS SHADOW)
 		Mesh mesh = tree.meshes.get(0);

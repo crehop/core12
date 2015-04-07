@@ -27,15 +27,15 @@ public class Skybox {
 			if(Time.getTime() > 5.0f && Time.getTime() < 10.0f){
 				skyboxTexture.set(TextureAttribute.createDiffuse(noon));
 			}else if((Time.getTime() > 10 && Time.getTime() < 15.0f)){
-				skyboxTexture.set(TextureAttribute.createDiffuse(noon));
+				skyboxTexture.set(TextureAttribute.createDiffuse(afternoon));
 			}else if((Time.getTime() > 15 && Time.getTime() < 20.0f)){
-				skyboxTexture.set(TextureAttribute.createDiffuse(noon));
+				skyboxTexture.set(TextureAttribute.createDiffuse(dusk));
 			}else if((Time.getTime() > 20 && Time.getTime() < 25.0f)){
-				skyboxTexture.set(TextureAttribute.createDiffuse(noon));
+				skyboxTexture.set(TextureAttribute.createDiffuse(evening));
 			}else if((Time.getTime() > 25 && Time.getTime() < 30.0f)){
-				skyboxTexture.set(TextureAttribute.createDiffuse(noon));
+				skyboxTexture.set(TextureAttribute.createDiffuse(night));
 			}else if((Time.getTime() > 30 && Time.getTime() < 35.0f)){
-				skyboxTexture.set(TextureAttribute.createDiffuse(noon));
+				skyboxTexture.set(TextureAttribute.createDiffuse(midnight));
 			}else if((Time.getTime() > 35)){
 				skyboxTexture.set(TextureAttribute.createDiffuse(stars));
 			}

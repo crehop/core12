@@ -81,16 +81,19 @@ public class Terrain {
 	    			mesh3.setVertices(chunk.skyVertices);
 	    			mesh3.setIndices(chunk.skyIndices);
 	    			
-	    			Model result = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
+	    			@SuppressWarnings("deprecation")
+					Model result = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
 	    			Zomtasia.Zomtasia.assets.addDisposable(result);
 	    			ModelInstance modelInstance = new ModelInstance(result, 0,-100,0);
 	    			modelInstance.transform.scl(scale);
 	    			
+	    			@SuppressWarnings("deprecation")
 	    			Model result2 = ModelBuilder.createFromMesh(mesh2, GL20.GL_TRIANGLES, material);
 	    			Zomtasia.Zomtasia.assets.addDisposable(result2);
 	    			ModelInstance modelInstance2 = new ModelInstance(result2, 0,-100,0);
 	    			modelInstance2.transform.scl(scale);
 	    			
+	    			@SuppressWarnings("deprecation")
 	    			Model result3 = ModelBuilder.createFromMesh(mesh3, GL20.GL_TRIANGLES, material);
 	    			Zomtasia.Zomtasia.assets.addDisposable(result3);
 	    			ModelInstance modelInstance3 = new ModelInstance(result3, 0,-100,0);

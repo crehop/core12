@@ -17,8 +17,8 @@ import Shaders.WaterShader;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -29,14 +29,13 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
-import control.Controls;
+import control.ControlsInput;
 import entities.AssetHandler;
 import entities.GameObject;
 import entities.Player;
@@ -51,7 +50,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static Player player;
 	public static Environment env;
 	private static Zomtasia game;
-	public static Controls controls;
+	public static ControlsInput controls;
 	public static AssetHandler assets;
 	private static ArrayList<ModelInstance> models = new ArrayList<ModelInstance>();
 	public static ModelBuilder modelBuilder;
@@ -73,7 +72,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	ModelBatch shadowBatch;
 	public static TerrainChunk current = null;
 	private Vector3 position = new Vector3();
-	
+	CameraInputController camController;
 	//WORLD CLASSES
 	public static Terrain terrain = new Terrain();
 	
@@ -94,7 +93,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		treeShader.init();
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
-		controls = new Controls(this);
+		controls = new ControlsInput(this);
         Gdx.input.setInputProcessor(controls);
         env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
@@ -103,12 +102,12 @@ public class Zomtasia extends Game implements ApplicationListener {
 		assets.getAssetManager().finishLoading();
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
+		//ABSOLUTE 0,0,0 BOX=========================================
 		model = modelBuilder.createBox(.02f, .02f, .02f, 
            new Material(ColorAttribute.createDiffuse(Color.RED)),
            Usage.Position | Usage.Normal);
 		newModelInstance(new ModelInstance(model));
-		
-		
+		//===========================================================
 		Gdx.graphics.setContinuousRendering(true);
 		Gdx.graphics.setVSync(true);
 		Gdx.input.setCursorCatched(true);
@@ -116,6 +115,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Skybox.render();
 		terrain.create();
 		testFlora = new Flora();
+		camController = new CameraInputController(cam);
+        Gdx.input.setInputProcessor(new InputMultiplexer(controls, camController));
 	}
 
 	@Override
@@ -152,11 +153,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 			modelBatch.begin(cam);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
-			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
+			Gdx.gl.glBlendFunc(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_ALPHA);
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		this.current = terrain.getTerrainChunk(x, y);
+	        		Zomtasia.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
 	        	}
 	        }
@@ -168,11 +169,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 			modelBatch.begin(cam);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
-			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
+			Gdx.gl.glBlendFunc(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_ALPHA);
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		this.current = terrain.getTerrainChunk(x, y);
+	        		Zomtasia.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
 	        	}
 	        }
@@ -184,11 +185,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 			modelBatch.begin(cam);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
-			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
+			Gdx.gl.glBlendFunc(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_ALPHA);
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		this.current = terrain.getTerrainChunk(x, y);
+	        		Zomtasia.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
 	        	}
 	        }
@@ -201,7 +202,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 			
 			modelBatch.begin(cam);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
-			Gdx.gl.glBlendFunc(Gdx.gl.GL_ONE_MINUS_SRC_ALPHA, Gdx.gl.GL_ALPHA);
+			Gdx.gl.glBlendFunc(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_ALPHA);
 			for(GameObject renderTree:testFlora.getTrees()){
 				if(isVisible(renderTree)){
 					renderTree.transform.setToTranslation(renderTree.getLocation().getPosition());

@@ -3,11 +3,13 @@ package control;
 import server.Location;
 import Zomtasia.Zomtasia;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 
-public class Controls implements InputProcessor{
+public class ControlsInput extends InputAdapter implements InputProcessor, ApplicationListener {
 	private boolean exitKey;
 	private boolean forward;
 	private boolean back;
@@ -39,10 +41,53 @@ public class Controls implements InputProcessor{
 	private int resY = 0;
 	int count = 0;
 	
-	public Controls(Zomtasia game){
+	//3d OBJECT MANIPULATION
+	//private int selected = -1, selecting = -1;
+	//private Material selectionMaterial;
+	//private Material originalMaterial;
+	
+	//========================
+	public ControlsInput(Zomtasia game){
 		this.game = game;
 		this.resX = Gdx.graphics.getWidth();
 		this.resY = Gdx.graphics.getHeight();
+	}
+	
+	@Override
+	public void create() {
+		//System.out.println("CONFIRM CREATION");
+	    //selectionMaterial = new Material();
+	   // selectionMaterial.set(ColorAttribute.createDiffuse(Color.ORANGE));
+	   // originalMaterial = new Material();
+	}
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public  void checkInput() {
