@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
@@ -55,7 +56,8 @@ public class ControlsInput extends InputAdapter implements InputProcessor {
 	private Material selectionMaterial;
 	private Material originalMaterial;
 	private Vector3 position = new Vector3();
-	
+	private Vector3 direction = new Vector3();
+	private Vector2 mousePosition = new Vector2();
 	//========================
 	public ControlsInput(Zomtasia game){
 		this.game = game;
@@ -250,9 +252,18 @@ public class ControlsInput extends InputAdapter implements InputProcessor {
 				return false;
 			case Input.Keys.E:
 				if(Gdx.input.isCursorCatched()){
+					this.mousePosition.x = Gdx.input.getX();
+					this.mousePosition.y = Gdx.input.getY();
+					this.direction = Zomtasia.cam.direction;
 					Gdx.input.setCursorCatched(false);
+					Zomtasia.cam.lookAt(this.direction);
+					Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+					
 				}else{
+					this.direction = Zomtasia.cam.direction;
 					Gdx.input.setCursorCatched(true);
+					Gdx.input.setCursorPosition((int)this.mousePosition.x, (int)this.mousePosition.y);
+					Zomtasia.cam.lookAt(this.direction);
 				}
 				return false;
 			case Input.Keys.W:
@@ -308,35 +319,36 @@ public class ControlsInput extends InputAdapter implements InputProcessor {
 	}
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-	    magX = Math.abs(mouseX - screenX);
-	    magY = Math.abs(mouseY - screenY);
-	    if (mouseX > screenX) {
-		   resX += magX;
-	    }
-
-	    if (mouseX < screenX) {
-		    resX -= magX;
-	    }
-
-	    if (mouseY < screenY) {
-	    	resY -= magY;
-	    }
-
-	    if (mouseY > screenY) {
-	    	resY += magY;
-	    }
+	    if(Gdx.input.isCursorCatched()){
+	    	magX = Math.abs(mouseX - screenX);
+	    	magY = Math.abs(mouseY - screenY);
+	    	if (mouseX > screenX) {
+	    		resX += magX;
+	    	}
+	    	
+	    	if (mouseX < screenX) {
+	    		resX -= magX;
+	    	}
+	    	
+	    	if (mouseY < screenY) {
+	    		resY -= magY;
+	    	}
+	    	
+	    	if (mouseY > screenY) {
+	    		resY += magY;
+	    	}
 	    
-		//CAMERA PITCH YAW CODE =====================
-		Zomtasia.player.pitch((float)((float)resY * (float)mouseSensitivity));
-		Zomtasia.player.yaw((float)((float)resX * (float)mouseSensitivity));
-		resX = 0;
-		resY = 0;
-	    mouseX = screenX;
-	    mouseY = screenY;
-		//===========================================
+	    	//CAMERA PITCH YAW CODE =====================
+	    	Zomtasia.player.pitch((float)((float)resY * (float)mouseSensitivity));
+	    	Zomtasia.player.yaw((float)((float)resX * (float)mouseSensitivity));
+	    	resX = 0;
+			resY = 0;
+			mouseX = screenX;
+			mouseY = screenY;
+			//===========================================
+	    }
 
-
-	    return false;
+		return false;
 	}
 	@Override
 	public boolean scrolled(int amount) {
@@ -402,9 +414,8 @@ public class ControlsInput extends InputAdapter implements InputProcessor {
 	        Material mat = Zomtasia.instances.get(selected).materials.get(0);
 	        mat.clear();
 	        mat.set(originalMaterial);
-	    }
-	    selected = value;
-	    if (selected >= 0) {
+		    selected = value;
+	    }else if (selected >= 0) {
 	        Material mat = Zomtasia.instances.get(selected).materials.get(0);
 	        originalMaterial.clear();
 	        originalMaterial.set(mat);
