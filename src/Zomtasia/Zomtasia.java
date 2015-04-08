@@ -73,7 +73,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	ModelBatch shadowBatch;
 	public static TerrainChunk current = null;
 	private Vector3 position = new Vector3();
-	CameraInputController camController;
 	//WORLD CLASSES
 	public static Terrain terrain = new Terrain();
     public static Array<GameObject> instances = new Array<GameObject>();
@@ -117,8 +116,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Skybox.render();
 		terrain.create();
 		testFlora = new Flora();
-		camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(new InputMultiplexer(controls, camController));
 	}
 
 	@Override
