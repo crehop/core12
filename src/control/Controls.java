@@ -49,7 +49,9 @@ public class Controls extends InputAdapter implements InputProcessor {
 	private int resX = 0;
 	private int resY = 0;
 	int count = 0;
-	
+	int result;
+	float distance;
+	float dist2;
 	//3d OBJECT MANIPULATION
 	private int selected = -1, selecting = -1;
 	private Material selectionMaterial;
@@ -390,9 +392,9 @@ public class Controls extends InputAdapter implements InputProcessor {
 	}
 	public int getObject (int screenX, int screenY) {
 	    Ray ray = Zomtasia.cam.getPickRay(screenX, screenY);
-	 
-	    int result = -1;
-	    float distance = -1;
+	    
+	    result = -1;
+	    distance = -1;
 	 
 	    for (int i = 0; i < Zomtasia.instances.size; ++i) {
 	        final GameObject instance = Zomtasia.instances.get(i);
@@ -400,7 +402,7 @@ public class Controls extends InputAdapter implements InputProcessor {
 	        instance.transform.getTranslation(position);
 	        position.add(instance.center);
 	 
-	        float dist2 = ray.origin.dst2(position);
+	        dist2 = ray.origin.dst2(position);
 	        if (distance >= 0f && dist2 > distance)
 	            continue;
 	 
