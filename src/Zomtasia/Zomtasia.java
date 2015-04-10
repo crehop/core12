@@ -138,9 +138,13 @@ public class Zomtasia extends Game implements ApplicationListener {
 		last = delta;
 		delta = Time.getTime() - last;
 		controls.checkInput();
+		
+		//MAIN MENU LOOP============================================================================================================
 		if(assets.getAssetManager().update() && this.screen.equals(splash)) {
 			ui.render(delta);
 		}
+		
+		//GAME LOOP=================================================================================================================
 		else if(assets.getAssetManager().update() && this.screen.equals(player)) {
 			super.render();
 			if(cameraCreated == false){
@@ -239,6 +243,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	        debug = "";
 	        Console.setLine2("Models being rendered:" + count);
 			Zomtasia.cam.update();	       
+		//LOADING LOOP =========================================================================================================
 	      }else{
 	       progress = assets.getAssetManager().getProgress();
 	  	 }
