@@ -129,7 +129,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		testFlora = new Flora();
 		last = Time.getTime();
 		delta = Time.getTime();
-		multiplexer = new InputMultiplexer(ui.getStage(), controls);
+		multiplexer = new InputMultiplexer(ui, controls);
 	    Gdx.input.setInputProcessor(multiplexer);
 	}
 
