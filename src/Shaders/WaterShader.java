@@ -1,7 +1,5 @@
 package Shaders;
 
-import java.util.Random;
-
 import world.TerrainChunk;
 import world.Time;
 
@@ -30,7 +28,6 @@ public class WaterShader implements Shader {
 	int u_projTrans;
 	int u_worldTrans;
 	int u_color;
-	Random rand = new Random();
 	Texture water = new Texture("terrain/water.png");
 	Texture noise = new Texture("terrain/tex10.png");
 	Texture texAttribute;
@@ -122,9 +119,5 @@ public class WaterShader implements Shader {
 	}
 	public ShaderProgram getProgram(){
 		return program;
-	}
-	public void nextRandom(){
-		random = rand.nextFloat();
-		System.out.println("NEXT RANDOM");
 	}
 }

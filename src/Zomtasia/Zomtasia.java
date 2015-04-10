@@ -1,8 +1,12 @@
 package Zomtasia;
 
+import interfaces.UI;
+
 import java.util.ArrayList;
 
 import screens.Console;
+import screens.Player;
+import screens.SplashScreen;
 import world.Flora;
 //import world.Lighting;
 import world.Skybox;
@@ -39,7 +43,6 @@ import com.badlogic.gdx.utils.Array;
 import control.Controls;
 import entities.AssetHandler;
 import entities.GameObject;
-import entities.Player;
 
 public class Zomtasia extends Game implements ApplicationListener {
 	public static String VERSION = "0.01 Pre-Alpha";
@@ -48,7 +51,11 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public ModelBatch modelBatch;
 	public Model model;
 	public ModelInstance instance;
+	
+	public static SplashScreen splash;
 	public static Player player;
+	public static UI ui;
+	
 	public static Environment env;
 	private static Zomtasia game;
 	public static Controls controls;
@@ -76,7 +83,10 @@ public class Zomtasia extends Game implements ApplicationListener {
 	//WORLD CLASSES
 	public static Terrain terrain = new Terrain();
     public static Array<GameObject> instances = new Array<GameObject>();
-	
+	public static InputMultiplexer multiplexer;
+	//DELTA
+	public static float last;
+	public static float delta;
 	@Override
 	public void create() {
 		@SuppressWarnings("unused")
@@ -92,14 +102,15 @@ public class Zomtasia extends Game implements ApplicationListener {
 		skyShader.init();
 		treeShader = new TreeShader();
 		treeShader.init();
+		ui = new UI();
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
 		controls = new Controls(this);
-        Gdx.input.setInputProcessor(controls);
         env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
         env.add(new DirectionalLight().set(1f, 1f, 1f, -18f, -11.8f, -22.2f));
 		player = new Player(0,0,10,this);
+		splash = new SplashScreen(this);
 		assets.getAssetManager().finishLoading();
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
@@ -112,16 +123,25 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Gdx.graphics.setContinuousRendering(true);
 		Gdx.graphics.setVSync(true);
 		Gdx.input.setCursorCatched(true);
-		setScreen(player);
+		setScreen(splash);
 		Skybox.render();
 		terrain.create();
 		testFlora = new Flora();
+		last = Time.getTime();
+		delta = Time.getTime();
+		multiplexer = new InputMultiplexer(ui.getStage(), controls);
+	    Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
 	public void render() {
-		Console.setLine1("FPS:"+ Gdx.graphics.getFramesPerSecond());
-		if(assets.getAssetManager().update()) {
+		last = delta;
+		delta = Time.getTime() - last;
+		controls.checkInput();
+		if(assets.getAssetManager().update() && this.screen.equals(splash)) {
+			ui.render(delta);
+		}
+		else if(assets.getAssetManager().update() && this.screen.equals(player)) {
 			super.render();
 			if(cameraCreated == false){
 				cameraCreated = true;
@@ -133,7 +153,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	  	    
 	  	    //skybox===================================
 	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-			controls.checkInput();
 			modelBatch.begin(cam);
 			modelBatch.render(Skybox.render());
 	        modelBatch.end();

@@ -251,6 +251,11 @@ public class Controls extends InputAdapter implements InputProcessor {
 			case Input.Keys.D:
 				strafeRight = false;
 				return false;
+			case Input.Keys.ENTER:
+				if(game.getScreen().equals(Zomtasia.splash)){
+					game.setScreen(Zomtasia.player);
+				}
+				return false;
 			case Input.Keys.E:
 				if(Gdx.input.isCursorCatched()){
 					this.mousePosition.x = Gdx.input.getX();
@@ -362,19 +367,43 @@ public class Controls extends InputAdapter implements InputProcessor {
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		  //selecting = getObject(screenX, screenY);
-		  return false;
+		if(button == Input.Buttons.RIGHT){
+			return true;
+		}
+		return false;
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		selecting = getObject(screenX, screenY);
-	    if (selecting >= 0) {
+	    if (button == Input.Buttons.LEFT && selecting >= 0) {
 	        if (selecting == getObject(screenX, screenY)){
 	            setSelected(selecting);
 	        }
 	        selecting = -1;
 	        return true;
 	    }
+	    else if(button == Input.Buttons.RIGHT){
+			if(Gdx.input.isCursorCatched()){
+				this.mousePosition.x = Gdx.input.getX();
+				this.mousePosition.y = Gdx.input.getY();
+				this.direction = Zomtasia.cam.direction;
+				Gdx.input.setCursorCatched(false);
+				Zomtasia.cam.lookAt(this.direction);
+				Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+				return true;
+			}else{
+				if(selected > 0){
+			        mat = Zomtasia.instances.get(selected).materials.get(0);
+			        mat.clear();
+			        mat.set(originalMaterial);
+				}
+				this.direction = Zomtasia.cam.direction;
+				Gdx.input.setCursorCatched(true);
+				Gdx.input.setCursorPosition((int)this.mousePosition.x, (int)this.mousePosition.y);
+				Zomtasia.cam.lookAt(this.direction);
+				return true;
+			}
+		}
 	    return false;   
 	}
 

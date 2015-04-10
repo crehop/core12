@@ -7,13 +7,15 @@ public class Time {
 	public static Timer timer = new Timer();
 	public static float time = 0;
 	public static Task task;
+	public static boolean paused;
 	public Time(){
 		Timer.schedule(new Task(){
             @Override
             public void run() {
-                time += 0.01;
-                if(time%1 == 0){
-                	Zomtasia.Zomtasia.waterShader.nextRandom();
+                if(isPaused()){
+                	
+                }else{
+                    time += 0.01;
                 }
             }
         }
@@ -23,5 +25,11 @@ public class Time {
 	}
 	public static float getTime(){
 		return time;
+	}
+	public static boolean isPaused(){
+		if(paused){
+			return true;
+		}
+		return false;
 	}
 }

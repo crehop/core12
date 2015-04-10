@@ -1,4 +1,4 @@
-package entities;
+package screens;
 
 import Zomtasia.Zomtasia;
 
@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector3;
 
 import camera.CameraFPS;
+import entities.IDGetter;
 
 //import renderer.CameraRTS;
 public class Player extends CameraFPS implements Screen{
