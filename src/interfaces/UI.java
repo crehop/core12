@@ -1,5 +1,7 @@
 package interfaces;
 
+import actors.Title;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
@@ -9,42 +11,37 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class UI extends InputAdapter implements InputProcessor {
-	private Stage stage;
-	private Texture start;
-	private Actor actor = new Actor();
-	SpriteBatch spriteBatch;
+public class UI extends InputAdapter{
+	private Stage titleStage;
+	SpriteBatch  batch;
 	public UI(){
 		create();
 	}
 	
 	public void create () {
-		spriteBatch = new SpriteBatch();
-	    stage = new Stage(new ExtendViewport(640, 480, 1080, 720));
-	    Gdx.input.setInputProcessor(stage);
-	    start = new Texture("screens/start.png");
-	    stage.addActor(actor);
-	    actor.setBounds(0, 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth());
+		Actor title = new Title();
+		
+		batch = new SpriteBatch();
+	    titleStage = new Stage(new ScreenViewport());
+	    titleStage.addActor(title);
+	    titleStage.setKeyboardFocus(title);
 	}
 
 	public void resize (int width, int height) {
 	    // See below for what true means.
-	    stage.getViewport().update(width, height, false);
+	    titleStage.getViewport().update(width, height, false);
 	}
 
 	public void render (float delta) {
-		// Set the viewport to the whole screen.
-		// Draw anywhere on the screen.
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		spriteBatch.begin();
-		spriteBatch.draw(start, 0 + Gdx.graphics.getWidth()/2 - start.getWidth()/2, 0 + Gdx.graphics.getHeight()/2 - start.getHeight()/2);
-		spriteBatch.end();
-		// Restore the stage's viewport.
+        titleStage.act(Gdx.graphics.getDeltaTime()); 
+        titleStage.draw();
 	}
 	public void dispose() {
-	    stage.dispose();
+	    titleStage.dispose();
+	    batch.dispose();
 	}
 
 	@Override
@@ -95,7 +92,7 @@ public class UI extends InputAdapter implements InputProcessor {
 		return false;
 	}
 	public Stage getStage(){
-		return stage;
+		return titleStage;
 	}
 	
 }

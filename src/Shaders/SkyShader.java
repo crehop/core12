@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class SkyShader implements Shader {
@@ -27,8 +26,6 @@ public class SkyShader implements Shader {
 	int u_worldTrans;
 	int u_color;
 	Texture clouds = new Texture("terrain/clouds.png");
-	Texture texAttribute;
-	TiledDrawable draw = new TiledDrawable();
 	private final Matrix3 normalMatrix = new Matrix3();
 	private static final float[] lightPosition = { 205, 135, 5 };
 	private Matrix4 modelView = new Matrix4();
@@ -53,6 +50,7 @@ public class SkyShader implements Shader {
 	@Override
 	public void dispose() {
 		program.dispose();
+		clouds.dispose();
 	}
 
 	@Override

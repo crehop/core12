@@ -71,8 +71,7 @@ public class Controls extends InputAdapter implements InputProcessor {
 
 	public  void checkInput() {
 		if(exitKey){
-			game.dispose();
-			return;
+			
 		}
 		if(menu){
 		}
@@ -292,8 +291,8 @@ public class Controls extends InputAdapter implements InputProcessor {
 				jump = false;
 				return false;
 			case Input.Keys.ESCAPE:
-				exitKey = false;
-				return false;
+				game.dispose();
+				return true;
 			case Input.Keys.UP:
 				testForward = false;
 				return false;

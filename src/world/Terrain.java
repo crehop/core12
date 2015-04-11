@@ -1,5 +1,7 @@
 package world;
 
+import Zomtasia.Zomtasia;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -80,22 +82,21 @@ public class Terrain {
 	    			        new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2,  ShaderProgram.TEXCOORD_ATTRIBUTE + "0", 0));
 	    			mesh3.setVertices(chunk.skyVertices);
 	    			mesh3.setIndices(chunk.skyIndices);
-	    			
 	    			@SuppressWarnings("deprecation")
 					Model result = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
-	    			Zomtasia.Zomtasia.assets.addDisposable(result);
+	    			Zomtasia.assets.addDisposable(result);
 	    			ModelInstance modelInstance = new ModelInstance(result, 0,-100,0);
 	    			modelInstance.transform.scl(scale);
 	    			
 	    			@SuppressWarnings("deprecation")
 	    			Model result2 = ModelBuilder.createFromMesh(mesh2, GL20.GL_TRIANGLES, material);
-	    			Zomtasia.Zomtasia.assets.addDisposable(result2);
+	    			Zomtasia.assets.addDisposable(result2);
 	    			ModelInstance modelInstance2 = new ModelInstance(result2, 0,-100,0);
 	    			modelInstance2.transform.scl(scale);
 	    			
 	    			@SuppressWarnings("deprecation")
 	    			Model result3 = ModelBuilder.createFromMesh(mesh3, GL20.GL_TRIANGLES, material);
-	    			Zomtasia.Zomtasia.assets.addDisposable(result3);
+	    			Zomtasia.assets.addDisposable(result3);
 	    			ModelInstance modelInstance3 = new ModelInstance(result3, 0,-100,0);
 	    			modelInstance3.transform.scl(scale);
 
@@ -105,9 +106,17 @@ public class Terrain {
 	    		    chunk.setWaterModelInstance(modelInstance2);
 	    		    chunk.setSkyModelInstance(modelInstance3);
 	    		    chunkNum++;
+	    		    
+	    		    mesh.dispose();
+	    		    mesh2.dispose();
+	    		    mesh3.dispose();
+	    	        map.dispose();
+	    	        map2.dispose();
+	    	        terrain.dispose();
+	    	        mHeightMap.dispose();
 	        	}
 	        }
-	        map.dispose();
+
 		}
 		public TerrainChunk[][] getChunks(){
 			return this.terrainChunks;

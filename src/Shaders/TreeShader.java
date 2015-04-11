@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class TreeShader implements Shader {
@@ -29,10 +27,6 @@ public class TreeShader implements Shader {
 	int u_worldTrans;
 	int u_color;
 	Random rand = new Random();
-	Texture water = new Texture("terrain/water.png");
-	Texture noise = new Texture("terrain/tex10.png");
-	Texture texAttribute;
-	TiledDrawable draw = new TiledDrawable();
 	private final Matrix3 normalMatrix = new Matrix3();
 	private static final float[] lightPosition = { 205, 135, 5 };
 	private Matrix4 modelView = new Matrix4();

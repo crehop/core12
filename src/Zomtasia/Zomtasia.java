@@ -35,7 +35,6 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -129,16 +128,14 @@ public class Zomtasia extends Game implements ApplicationListener {
 		testFlora = new Flora();
 		last = Time.getTime();
 		delta = Time.getTime();
-		multiplexer = new InputMultiplexer(ui, controls);
+		multiplexer = new InputMultiplexer(ui.getStage(), controls);
 	    Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
 	public void render() {
 		last = delta;
-		delta = Time.getTime() - last;
-		controls.checkInput();
-		
+		delta = Time.getTime() - last;		
 		//MAIN MENU LOOP============================================================================================================
 		if(assets.getAssetManager().update() && this.screen.equals(splash)) {
 			ui.render(delta);
@@ -146,6 +143,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		
 		//GAME LOOP=================================================================================================================
 		else if(assets.getAssetManager().update() && this.screen.equals(player)) {
+			controls.checkInput();
 			super.render();
 			if(cameraCreated == false){
 				cameraCreated = true;
@@ -261,11 +259,13 @@ public class Zomtasia extends Game implements ApplicationListener {
         for(ModelInstance model:models){
         	model.model.dispose();
         }
+        ui.dispose();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
+		ui.resize(width, height);
 	}
 
 	@Override

@@ -104,6 +104,24 @@ public class Flora {
 		material = tree.materials.get(1);
 		mesh = tree.meshes.get(13);
 		tree14 = ModelBuilder.createFromMesh(mesh, GL20.GL_TRIANGLES, material);
+		makeDisposable();
+	}
+	private void makeDisposable(){
+		Zomtasia.assets.addDisposable(tree);
+		Zomtasia.assets.addDisposable(tree1);
+		Zomtasia.assets.addDisposable(tree2);
+		Zomtasia.assets.addDisposable(tree3);
+		Zomtasia.assets.addDisposable(tree4);
+		Zomtasia.assets.addDisposable(tree5);
+		Zomtasia.assets.addDisposable(tree6);
+		Zomtasia.assets.addDisposable(tree7);
+		Zomtasia.assets.addDisposable(tree8);
+		Zomtasia.assets.addDisposable(tree9);
+		Zomtasia.assets.addDisposable(tree10);
+		Zomtasia.assets.addDisposable(tree11);
+		Zomtasia.assets.addDisposable(tree12);
+		Zomtasia.assets.addDisposable(tree13);
+		Zomtasia.assets.addDisposable(tree14);
 	}
 	public ArrayList<GameObject> getTrees(){
 		return trees;

@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class TerrainShader implements Shader {
@@ -30,8 +29,6 @@ public class TerrainShader implements Shader {
 	Texture rock  = new Texture("terrain/rock.png");
 	Texture dirt  = new Texture("terrain/dirt.png");
 	Texture splat = new Texture("terrain/terrain.png");
-	Texture texAttribute;
-	TiledDrawable draw = new TiledDrawable();
 	private final Matrix3 normalMatrix = new Matrix3();
 	private static final float[] lightPosition = { 205, 135, 5 };
 	private Matrix4 modelView = new Matrix4();
@@ -56,6 +53,10 @@ public class TerrainShader implements Shader {
 	@Override
 	public void dispose() {
 		program.dispose();
+		grass.dispose();
+		rock.dispose();
+		dirt.dispose();
+		splat.dispose();
 	}
 
 	@Override

@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class WaterShader implements Shader {
@@ -30,8 +29,6 @@ public class WaterShader implements Shader {
 	int u_color;
 	Texture water = new Texture("terrain/water.png");
 	Texture noise = new Texture("terrain/tex10.png");
-	Texture texAttribute;
-	TiledDrawable draw = new TiledDrawable();
 	private final Matrix3 normalMatrix = new Matrix3();
 	private static final float[] lightPosition = { 205, 135, 5 };
 	private Matrix4 modelView = new Matrix4();
@@ -62,6 +59,8 @@ public class WaterShader implements Shader {
 	@Override
 	public void dispose() {
 		program.dispose();
+		water.dispose();
+		noise.dispose();
 	}
 
 	@Override

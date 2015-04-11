@@ -32,7 +32,7 @@ public class Button {
 		return false;
 	}
 	public void render() {
-		Zomtasia.ui.spriteBatch.draw(backround, x, y, width, height);
+		Zomtasia.ui.batch.draw(backround, x, y, width, height);
 	}
 	public boolean isVisible() {
 		return visible;
