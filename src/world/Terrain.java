@@ -106,14 +106,6 @@ public class Terrain {
 	    		    chunk.setWaterModelInstance(modelInstance2);
 	    		    chunk.setSkyModelInstance(modelInstance3);
 	    		    chunkNum++;
-	    		    
-	    		    mesh.dispose();
-	    		    mesh2.dispose();
-	    		    mesh3.dispose();
-	    	        map.dispose();
-	    	        map2.dispose();
-	    	        terrain.dispose();
-	    	        mHeightMap.dispose();
 	        	}
 	        }
 
