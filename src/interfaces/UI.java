@@ -19,11 +19,10 @@ public class UI{
 	
 	public void create () {
 		Actor title = new Title();
-		
 		batch = new SpriteBatch();
 	    titleStage = new Stage(new ScreenViewport());
 	    titleStage.addActor(title);
-	    titleStage.addActor(new Button(1,50,50));
+	    titleStage.addActor(new Button(1,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/4));
 	    titleStage.setKeyboardFocus(title);
 	}
 

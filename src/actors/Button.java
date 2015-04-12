@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 public class Button extends Actor{
 	String text;
@@ -12,16 +11,16 @@ public class Button extends Actor{
 	Sprite buttonDown = new Sprite(new Texture("screens/startButtonDown.png"));
 
 	public Button(int scale, int x, int y) {
-		this.setX(x);
-		this.setY(y);
+		this.setX(x - buttonUp.getWidth()/2);
+		this.setY(y - buttonUp.getHeight()/2);
 		buttonUp.scale(scale);
 		setBounds(buttonUp.getX(), buttonUp.getY(), buttonUp.getWidth(), buttonUp.getHeight());
-		setTouchable(Touchable.disabled);
+
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		batch.draw(buttonUp, getX(), getY());
+		buttonUp.draw(batch);
 	}
 	@Override
 	public void act(float delta) {

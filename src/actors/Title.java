@@ -16,7 +16,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 public class Title extends Actor{
 	Sprite sprite = new Sprite(new Texture("screens/start.png"));
 	public Title() {
+		this.setX(Gdx.graphics.getWidth()/2 - sprite.getWidth()/2);
+		this.setY(Gdx.graphics.getHeight()/2 + Gdx.graphics.getHeight()/6 - sprite.getHeight()/2);
 		setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+		setTouchable(Touchable.disabled);
+		sprite.scale(1.5f);
 		setTouchable(Touchable.disabled);
 		this.addListener(new InputListener() {
 			@Override
@@ -41,8 +45,7 @@ public class Title extends Actor{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
-		batch.draw(sprite, getX(), getY());
+		sprite.draw(batch);
 	}
 	@Override
 	public void act(float delta) {
