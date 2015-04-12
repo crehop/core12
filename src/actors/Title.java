@@ -32,7 +32,7 @@ public class Title extends Actor{
 				else if(keycode == Input.Keys.ENTER){
 					Zomtasia.getGame().setScreen(Zomtasia.getGame().player);
 					Gdx.input.setInputProcessor(Zomtasia.controls);
-					System.out.println("SCREEN CHANGED");
+					Gdx.input.setCursorCatched(true);
 					return true;
 				}
 				return false;

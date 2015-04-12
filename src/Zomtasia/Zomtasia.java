@@ -8,7 +8,6 @@ import screens.Console;
 import screens.Player;
 import screens.SplashScreen;
 import world.Flora;
-//import world.Lighting;
 import world.Skybox;
 import world.Terrain;
 import world.TerrainChunk;
@@ -26,7 +25,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -47,10 +45,9 @@ import entities.GameObject;
 public class Zomtasia extends Game implements ApplicationListener {
 	public static String VERSION = "0.01 Pre-Alpha";
 	public static String LOG = "";
+	
 	public static PerspectiveCamera cam;
 	public ModelBatch modelBatch;
-	public Model model;
-	public ModelInstance instance;
 	
 	public static SplashScreen splash;
 	public static Player player;
@@ -58,33 +55,35 @@ public class Zomtasia extends Game implements ApplicationListener {
 	
 	public static Environment env;
 	private static Zomtasia game;
+	public static AssetHandler assets;
+	public static ModelBuilder modelBuilder;
+	public static InputMultiplexer multiplexer;
+	
 	public static Controls controls;
 	public static MenuControls controlsMenu;
-	public static AssetHandler assets;
+	
 	private static ArrayList<ModelInstance> models = new ArrayList<ModelInstance>();
-	public static ModelBuilder modelBuilder;
-	public static float lasttime = 0;
-	public String debug = "";
-	int count;
+	private static int count;
+	
 	public static TerrainShader terrainShader;
 	public static WaterShader waterShader;
 	public static TreeShader treeShader;
 	public SkyShader skyShader;
-	public static boolean cameraCreated = false;
-	public boolean once = true;
+	
 	public static Flora testFlora;
-	Texture grass;
 	float progress;
+	
 	public static Vector3 xAxis = new Vector3(1,0,0);
 	public static Vector3 yAxis = new Vector3(0,1,0);
 	public static Vector3 zAxis = new Vector3(0,0,1);
-	ModelBatch shadowBatch;
-	public static TerrainChunk current = null;
+	
 	private Vector3 position = new Vector3();
+	
 	//WORLD CLASSES
+	
 	public static Terrain terrain = new Terrain();
-    public static Array<GameObject> instances = new Array<GameObject>();
-	public static InputMultiplexer multiplexer;
+    public static Array<GameObject> instances = new Array<GameObject>();	
+    
 	@Override
 	public void create() {
 		@SuppressWarnings("unused")
@@ -101,8 +100,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		treeShader = new TreeShader();
 		treeShader.init();
 		ui = new UI();
-		grass = new Texture("terrain/terrain.png");
-		setGame(this);
+		Zomtasia.game = this;
 		controls = new Controls(this);
 		controlsMenu = new MenuControls(this);
         env = new Environment();
@@ -113,15 +111,18 @@ public class Zomtasia extends Game implements ApplicationListener {
 		assets.getAssetManager().finishLoading();
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
+		
 		//ABSOLUTE 0,0,0 BOX=========================================
-		model = modelBuilder.createBox(.02f, .02f, .02f, 
+		Model model = modelBuilder.createBox(.02f, .02f, .02f, 
            new Material(ColorAttribute.createDiffuse(Color.RED)),
            Usage.Position | Usage.Normal);
 		newModelInstance(new ModelInstance(model));
 		//===========================================================
+		
 		Gdx.graphics.setContinuousRendering(true);
 		Gdx.graphics.setVSync(true);
-		Gdx.input.setCursorCatched(true);
+		Gdx.input.setCursorCatched(false);
+		
 		setScreen(splash);
 		Skybox.render();
 		terrain.create();
@@ -142,9 +143,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 		else if(assets.getAssetManager().update() && this.screen.equals(player)) {
 			controls.checkInput();
 			super.render();
-			if(cameraCreated == false){
-				cameraCreated = true;
-			}
 	  	    Console.setLine9("POSITION: X:" + (double) Math.round(player.getLocation().getX() * 100) / 100
 	  	    		+ " Y:" + (double) Math.round(player.getLocation().getY() * 100) / 100
 	  	    		+ " Z:" + (double) Math.round(player.getLocation().getZ() * 100) / 100);
@@ -174,7 +172,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		Zomtasia.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getTerrain(), terrainShader);
 	        	}
 	        }
@@ -190,7 +187,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		Zomtasia.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getWater(), waterShader);
 	        	}
 	        }
@@ -206,7 +202,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 			count = 0;
 	        for(int x = 0; x < terrain.getTerrainChunkLength(); x++){
 	        	for(int y = 0; y < terrain.getTerrainChunkWidth(); y++){
-	        		Zomtasia.current = terrain.getTerrainChunk(x, y);
 	        		modelBatch.render(terrain.getTerrainChunk(x, y).getSky(), skyShader);
 	        	}
 	        }
@@ -235,7 +230,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 			modelBatch.end();
 			//=========================================
 	        Console.render();
-	        debug = "";
 	        Console.setLine2("Models being rendered:" + count);
 			Zomtasia.cam.update();	       
 		//LOADING LOOP =========================================================================================================
@@ -248,7 +242,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public void dispose() {
 		super.dispose();
 		modelBatch.dispose();
-		model.dispose();
 		skyShader.dispose();
 		terrainShader.dispose();
 		waterShader.dispose();
@@ -274,10 +267,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 
 	public static Zomtasia getGame() {
 		return game;
-	}
-
-	public static void setGame(Zomtasia game) {
-		Zomtasia.game = game;
 	}
 	public AssetManager getAssets(){
 		return assets.getAssetManager();
