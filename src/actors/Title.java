@@ -1,5 +1,8 @@
 package actors;
 
+import Zomtasia.Zomtasia;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,13 +22,20 @@ public class Title extends Actor{
 		this.addListener(new InputListener() {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {				
-				if(keycode == Input.Keys.ENTER) {					
-					//MoveByAction mba = new MoveByAction();
-					//mba.setAmount(100f, 0f);
-					//mba.setDuration(5f);
-					//Title.this.addAction(mba);
+				if(keycode == Input.Keys.RIGHT) {					
+					MoveByAction mba = new MoveByAction();
+					mba.setAmount(100f, 0f);
+					mba.setDuration(5f);
+					Title.this.addAction(mba);
+					return true;
 				}
-				return true;
+				else if(keycode == Input.Keys.ENTER){
+					Zomtasia.getGame().setScreen(Zomtasia.getGame().player);
+					Gdx.input.setInputProcessor(Zomtasia.controls);
+					System.out.println("SCREEN CHANGED");
+					return true;
+				}
+				return false;
 			}
 		});
 	}

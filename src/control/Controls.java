@@ -249,9 +249,6 @@ public class Controls extends InputAdapter implements InputProcessor {
 				strafeRight = false;
 				return false;
 			case Input.Keys.ENTER:
-				if(game.getScreen().equals(Zomtasia.splash)){
-					game.setScreen(Zomtasia.player);
-				}
 				return false;
 			case Input.Keys.E:
 				if(Gdx.input.isCursorCatched()){

@@ -126,23 +126,20 @@ public class Zomtasia extends Game implements ApplicationListener {
 		Skybox.render();
 		terrain.create();
 		testFlora = new Flora();
-		last = Time.getTime();
-		delta = Time.getTime();
+		multiplexer = new InputMultiplexer(ui.getStage(),controlsMenu);
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
 	public void render() {	
+		Console.setLine1("FPS:" + Gdx.graphics.getFramesPerSecond());
 		//MAIN MENU LOOP============================================================================================================
 		if(assets.getAssetManager().update() && this.screen.equals(splash)) {
-			multiplexer = new InputMultiplexer(ui.getStage(), controlsMenu);
-		    Gdx.input.setInputProcessor(multiplexer);
-			ui.render(delta);
+			ui.render(Gdx.graphics.getDeltaTime());
 		}
 		
 		//GAME LOOP=================================================================================================================
 		else if(assets.getAssetManager().update() && this.screen.equals(player)) {
-			multiplexer = new InputMultiplexer(ui.getStage(), controls);
-		    Gdx.input.setInputProcessor(multiplexer);
 			controls.checkInput();
 			super.render();
 			if(cameraCreated == false){
