@@ -1,4 +1,4 @@
-package world;
+package server;
 
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;

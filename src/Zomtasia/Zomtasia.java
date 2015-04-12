@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import screens.Console;
 import screens.Player;
 import screens.SplashScreen;
+import server.Time;
 import world.Flora;
 import world.Skybox;
 import world.Terrain;
 import world.TerrainChunk;
-import world.Time;
 import Shaders.SkyShader;
 import Shaders.TerrainShader;
 import Shaders.TreeShader;
@@ -41,6 +41,7 @@ import control.Controls;
 import control.MenuControls;
 import entities.AssetHandler;
 import entities.GameObject;
+import entities.Zombie;
 
 public class Zomtasia extends Game implements ApplicationListener {
 	public static String VERSION = "0.01 Pre-Alpha";
@@ -78,6 +79,8 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static Vector3 zAxis = new Vector3(0,0,1);
 	
 	private Vector3 position = new Vector3();
+	
+	private Zombie zombie;
 	
 	//WORLD CLASSES
 	
@@ -129,6 +132,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		testFlora = new Flora();
 		multiplexer = new InputMultiplexer(ui.getStage(),controlsMenu);
 		Gdx.input.setInputProcessor(multiplexer);
+		zombie = new Zombie(assets.getModel("zombie@walk06"),0,0,0);
 	}
 
 	@Override
@@ -217,8 +221,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 			Gdx.gl.glBlendFunc(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_ALPHA);
 			for(GameObject renderTree:testFlora.getTrees()){
 				if(isVisible(renderTree)){
-					renderTree.transform.setToTranslation(renderTree.getLocation().getPosition());
-					Console.setLine3("TREE LOCATION:" + renderTree.getLocation().getX() + "," + renderTree.getLocation().getY() + "," + renderTree.getLocation().getZ());
+					renderTree.render();
 					if(Gdx.input.isCursorCatched()){
 						modelBatch.render(renderTree,treeShader);
 					}else{
@@ -226,6 +229,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 					}
 					count++;
 				}
+				modelBatch.render(zombie,env);
 			}
 			modelBatch.end();
 			//=========================================

@@ -58,10 +58,10 @@ public class GameObject extends ModelInstance{
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		this.scaleZ = scaleZ;
-		super.transform.setToRotation(Zomtasia.Zomtasia.yAxis, yaw);
-		super.transform.setToRotation(Zomtasia.Zomtasia.xAxis, pitch);
-		super.transform.setToRotation(Zomtasia.Zomtasia.zAxis, roll);
-		super.transform.scale(scaleX, scaleY, scaleZ);
+		this.transform.setToRotation(Zomtasia.Zomtasia.yAxis, yaw);
+		this.transform.setToRotation(Zomtasia.Zomtasia.xAxis, pitch);
+		this.transform.setToRotation(Zomtasia.Zomtasia.zAxis, roll);
+		this.transform.scale(scaleX, scaleY, scaleZ);
         calculateBoundingBox(bounds);
         bounds.getCenter(center);
         bounds.getDimensions(dimensions);
@@ -139,5 +139,12 @@ public class GameObject extends ModelInstance{
 	}
 	public void setMeta(String meta){
 		this.meta = meta;
+	}
+	public void render() {
+		this.transform.setToScaling(scaleX, scaleY, scaleZ);
+		this.transform.setToRotation(Zomtasia.Zomtasia.yAxis, yaw);
+		this.transform.setToRotation(Zomtasia.Zomtasia.xAxis, pitch);
+		this.transform.setToRotation(Zomtasia.Zomtasia.zAxis, roll);
+		this.transform.setToTranslation(this.getLocation().getPosition());
 	}
 }

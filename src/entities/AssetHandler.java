@@ -29,6 +29,7 @@ public class AssetHandler {
 		assets.load("terrain/trees/tree11.g3dj", Model.class);
 		assets.load("terrain/trees/tree12.g3dj", Model.class);
 		assets.load("terrain/trees/tree13.g3dj", Model.class);
+		assets.load("mobs/zombie/Zombie@walk06.g3dj", Model.class);
 		assets.finishLoading();
 		storeModel(assets.get("cars/police/City_Police_Car_LOD1.g3dj", Model.class), "policeCar");
 		storeModel(assets.get("terrain/trees/tree1.g3dj", Model.class), "tree1");
@@ -44,6 +45,7 @@ public class AssetHandler {
 		storeModel(assets.get("terrain/trees/tree11.g3dj", Model.class), "tree11");
 		storeModel(assets.get("terrain/trees/tree12.g3dj", Model.class), "tree12");
 		storeModel(assets.get("terrain/trees/tree13.g3dj", Model.class), "tree13");
+		storeModel(assets.get("mobs/zombie/Zombie@walk06.g3dj", Model.class), "zombie@walk06");
 	}
 	public AssetManager getAssetManager(){
 		return assets;

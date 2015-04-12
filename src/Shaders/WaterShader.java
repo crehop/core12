@@ -1,7 +1,7 @@
 package Shaders;
 
+import server.Time;
 import world.TerrainChunk;
-import world.Time;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
