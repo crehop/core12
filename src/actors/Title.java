@@ -19,12 +19,11 @@ public class Title extends Actor{
 		this.addListener(new InputListener() {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {				
-				if(keycode == Input.Keys.RIGHT) {					
-					MoveByAction mba = new MoveByAction();
-					mba.setAmount(100f, 0f);
-					mba.setDuration(5f);
-					
-					Title.this.addAction(mba);
+				if(keycode == Input.Keys.ENTER) {					
+					//MoveByAction mba = new MoveByAction();
+					//mba.setAmount(100f, 0f);
+					//mba.setDuration(5f);
+					//Title.this.addAction(mba);
 				}
 				return true;
 			}
@@ -34,7 +33,7 @@ public class Title extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		batch.draw(sprite, 0, 0);
+		batch.draw(sprite, getX(), getY());
 	}
 	@Override
 	public void act(float delta) {
@@ -42,7 +41,6 @@ public class Title extends Actor{
 	}
 	@Override
 	protected void positionChanged() {
-		System.out.println("triggered," + getX() + "," + getY());
 		sprite.setPosition(getX(), getY());
 		super.positionChanged();
 	}

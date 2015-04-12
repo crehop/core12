@@ -195,10 +195,8 @@ public class Controls extends InputAdapter implements InputProcessor {
 				}
 				return false;
 			case Input.Keys.ESCAPE:
-				if(Gdx.input.isCursorCatched()){
-					exitKey = true;
-				}
-				return false;
+				game.dispose();
+				return true;
 			case Input.Keys.UP:
 				if(Gdx.input.isCursorCatched()){
 					testForward = true;

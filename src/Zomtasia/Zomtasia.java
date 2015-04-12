@@ -40,6 +40,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import control.Controls;
+import control.MenuControls;
 import entities.AssetHandler;
 import entities.GameObject;
 
@@ -58,6 +59,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static Environment env;
 	private static Zomtasia game;
 	public static Controls controls;
+	public static MenuControls controlsMenu;
 	public static AssetHandler assets;
 	private static ArrayList<ModelInstance> models = new ArrayList<ModelInstance>();
 	public static ModelBuilder modelBuilder;
@@ -83,9 +85,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 	public static Terrain terrain = new Terrain();
     public static Array<GameObject> instances = new Array<GameObject>();
 	public static InputMultiplexer multiplexer;
-	//DELTA
-	public static float last;
-	public static float delta;
 	@Override
 	public void create() {
 		@SuppressWarnings("unused")
@@ -105,6 +104,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 		grass = new Texture("terrain/terrain.png");
 		setGame(this);
 		controls = new Controls(this);
+		controlsMenu = new MenuControls(this);
         env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
         env.add(new DirectionalLight().set(1f, 1f, 1f, -18f, -11.8f, -22.2f));
@@ -128,21 +128,21 @@ public class Zomtasia extends Game implements ApplicationListener {
 		testFlora = new Flora();
 		last = Time.getTime();
 		delta = Time.getTime();
-		multiplexer = new InputMultiplexer(ui.getStage(), controls);
-	    Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
-	public void render() {
-		last = delta;
-		delta = Time.getTime() - last;		
+	public void render() {	
 		//MAIN MENU LOOP============================================================================================================
 		if(assets.getAssetManager().update() && this.screen.equals(splash)) {
+			multiplexer = new InputMultiplexer(ui.getStage(), controlsMenu);
+		    Gdx.input.setInputProcessor(multiplexer);
 			ui.render(delta);
 		}
 		
 		//GAME LOOP=================================================================================================================
 		else if(assets.getAssetManager().update() && this.screen.equals(player)) {
+			multiplexer = new InputMultiplexer(ui.getStage(), controls);
+		    Gdx.input.setInputProcessor(multiplexer);
 			controls.checkInput();
 			super.render();
 			if(cameraCreated == false){
@@ -256,9 +256,6 @@ public class Zomtasia extends Game implements ApplicationListener {
 		terrainShader.dispose();
 		waterShader.dispose();
 		assets.assets.dispose();
-        for(ModelInstance model:models){
-        	model.model.dispose();
-        }
         ui.dispose();
 	}
 
