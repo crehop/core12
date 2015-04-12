@@ -17,8 +17,7 @@ public class Title extends Actor{
 	Sprite sprite = new Sprite(new Texture("screens/start.png"));
 	public Title() {
 		setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
-		System.out.println("" + sprite.getX() + "," + sprite.getY() + "," + sprite.getWidth() + "," + sprite.getHeight());
-		setTouchable(Touchable.enabled);
+		setTouchable(Touchable.disabled);
 		this.addListener(new InputListener() {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {				

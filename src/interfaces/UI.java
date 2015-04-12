@@ -1,5 +1,6 @@
 package interfaces;
 
+import actors.Button;
 import actors.Title;
 
 import com.badlogic.gdx.Gdx;
@@ -22,6 +23,7 @@ public class UI{
 		batch = new SpriteBatch();
 	    titleStage = new Stage(new ScreenViewport());
 	    titleStage.addActor(title);
+	    titleStage.addActor(new Button(1,50,50));
 	    titleStage.setKeyboardFocus(title);
 	}
 
