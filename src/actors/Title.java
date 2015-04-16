@@ -21,26 +21,6 @@ public class Title extends Actor{
 		setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
 		setTouchable(Touchable.disabled);
 		sprite.scale(1.5f);
-		setTouchable(Touchable.disabled);
-		this.addListener(new InputListener() {
-			@Override
-			public boolean keyDown(InputEvent event, int keycode) {				
-				if(keycode == Input.Keys.RIGHT) {					
-					MoveByAction mba = new MoveByAction();
-					mba.setAmount(100f, 0f);
-					mba.setDuration(5f);
-					Title.this.addAction(mba);
-					return true;
-				}
-				else if(keycode == Input.Keys.ENTER){
-					Zomtasia.getGame().setScreen(Zomtasia.getGame().player);
-					Gdx.input.setInputProcessor(Zomtasia.controls);
-					Gdx.input.setCursorCatched(true);
-					return true;
-				}
-				return false;
-			}
-		});
 	}
 	
 	@Override

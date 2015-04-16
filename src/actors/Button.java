@@ -1,26 +1,70 @@
 package actors;
 
+import Zomtasia.Zomtasia;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Button extends Actor{
 	String text;
-	Sprite buttonUp = new Sprite(new Texture("screens/startButtonUp.png"));
-	Sprite buttonDown = new Sprite(new Texture("screens/startButtonDown.png"));
+	Sprite buttonUp;
+	Sprite buttonDown;
+	boolean down;
 
-	public Button(int scale, int x, int y) {
+	public Button(int scale, int x, int y, String upTextureLocation, String downTextureLocation) {
+		buttonUp = new Sprite(new Texture(upTextureLocation));
+		buttonDown = new Sprite(new Texture(downTextureLocation));
 		this.setX(x - buttonUp.getWidth()/2);
 		this.setY(y - buttonUp.getHeight()/2);
 		buttonUp.scale(scale);
-		setBounds(buttonUp.getX(), buttonUp.getY(), buttonUp.getWidth(), buttonUp.getHeight());
+		buttonDown.scale(scale);
+		setBounds(buttonUp.getX(), buttonUp.getY(), buttonUp.getWidth() * scale, buttonUp.getHeight() * scale);
+		this.setTouchable(Touchable.enabled);
+		this.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				down = true;
+				return super.touchDown(event, x, y, pointer, button);
+			}
 
+			@Override
+			public void touchDragged(InputEvent event, float x, float y,
+					int pointer) {
+				// TODO Auto-generated method stub
+				super.touchDragged(event, x, y, pointer);
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				down = false;
+				Zomtasia.getGame().setScreen(Zomtasia.getGame().player);
+				Gdx.input.setInputProcessor(Zomtasia.controls);
+				Gdx.input.setCursorCatched(true);
+				// TODO Auto-generated method stub
+				super.touchUp(event, x, y, pointer, button);
+			}
+
+		});
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		buttonUp.draw(batch);
+		if(down) {
+			buttonDown.draw(batch);
+		}else {
+			buttonUp.draw(batch);
+		}
 	}
 	@Override
 	public void act(float delta) {
