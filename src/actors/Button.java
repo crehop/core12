@@ -17,7 +17,7 @@ public class Button extends Actor{
 	Sprite buttonDown;
 	boolean down;
 
-	public Button(int scale, int x, int y, String upTextureLocation, String downTextureLocation) {
+	public Button(int scale, int x, int y, String upTextureLocation, String downTextureLocation , final int function) {
 		buttonUp = new Sprite(new Texture(upTextureLocation));
 		buttonDown = new Sprite(new Texture(downTextureLocation));
 		this.setX(x - buttonUp.getWidth()/2);
@@ -33,22 +33,11 @@ public class Button extends Actor{
 				down = true;
 				return super.touchDown(event, x, y, pointer, button);
 			}
-
-			@Override
-			public void touchDragged(InputEvent event, float x, float y,
-					int pointer) {
-				// TODO Auto-generated method stub
-				super.touchDragged(event, x, y, pointer);
-			}
-
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				down = false;
-				Zomtasia.getGame();
-				Zomtasia.getGame().setScreen(Zomtasia.player);
-				Gdx.input.setInputProcessor(Zomtasia.controls);
-				Gdx.input.setCursorCatched(true);
+				ButtonFunctions.function(function);
 				// TODO Auto-generated method stub
 				super.touchUp(event, x, y, pointer, button);
 			}
