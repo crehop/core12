@@ -3,15 +3,12 @@ package actors;
 import Zomtasia.Zomtasia;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Button extends Actor{
@@ -48,7 +45,8 @@ public class Button extends Actor{
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				down = false;
-				Zomtasia.getGame().setScreen(Zomtasia.getGame().player);
+				Zomtasia.getGame();
+				Zomtasia.getGame().setScreen(Zomtasia.player);
 				Gdx.input.setInputProcessor(Zomtasia.controls);
 				Gdx.input.setCursorCatched(true);
 				// TODO Auto-generated method stub

@@ -11,7 +11,6 @@ import server.Time;
 import world.Flora;
 import world.Skybox;
 import world.Terrain;
-import world.TerrainChunk;
 import Shaders.SkyShader;
 import Shaders.TerrainShader;
 import Shaders.TreeShader;
