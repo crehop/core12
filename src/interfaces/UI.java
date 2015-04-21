@@ -22,7 +22,8 @@ public class UI{
 		batch = new SpriteBatch();
 	    titleStage = new Stage(new ScreenViewport());
 	    titleStage.addActor(title);
-	    titleStage.addActor(new Button(1,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/4,"buttons/startButtonUp.png","buttons/startButtonDown.png", 1));
+	    titleStage.addActor(new Button(0.5f,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/4,"buttons/startButtonUp.png","buttons/startButtonDown.png", 1));
+	    titleStage.addActor(new Button(0.5f,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/6,"buttons/button.png","buttons/buttonDown.png", 2));
 	    titleStage.setKeyboardFocus(title);
 	}
 
