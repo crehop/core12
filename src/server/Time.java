@@ -1,5 +1,7 @@
 package server;
 
+import Zomtasia.Zomtasia;
+
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -14,7 +16,7 @@ public class Time {
             public void run() {
                 if(isPaused()){
                 	
-                }else{
+                }else if(Zomtasia.getGame().getScreen().equals(Zomtasia.player)){
                     time += 0.01;
                 }
             }
