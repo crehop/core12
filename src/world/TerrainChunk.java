@@ -27,9 +27,9 @@ public class TerrainChunk {
 	private ModelInstance sky;
 	private int xLoc = 0;
 	private int yLoc = 0;
-	private float waterHeight = -0.65529412f;
-	private float skyHeight = 10.39529412f;
-	private float landHeight = -20.0f;
+	private float waterHeight = -2.25529412f;
+	private float skyHeight = 25.39529412f;
+	private float landHeight = -12.0f;
 	Material material;
 	private Mesh mesh;
 	Random rand = new Random();
