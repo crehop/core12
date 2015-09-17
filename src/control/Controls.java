@@ -29,12 +29,19 @@ public class Controls extends InputAdapter implements InputProcessor {
 	private boolean speedUpCam;
 	private boolean speedDownCam;
 	private boolean menu;
+	@SuppressWarnings("unused")
 	private boolean testForward;
+	@SuppressWarnings("unused")
 	private boolean testBack;
+	@SuppressWarnings("unused")
 	private boolean testLeft;
+	@SuppressWarnings("unused")
 	private boolean testRight;
+	@SuppressWarnings("unused")
 	private boolean testUp;
+	@SuppressWarnings("unused")
 	private boolean testDown;
+	@SuppressWarnings("unused")
 	private Location current;
 	private Zomtasia game;
 	private Material mat;
@@ -118,37 +125,6 @@ public class Controls extends InputAdapter implements InputProcessor {
 		}
 		else{
 			movementSpeed = defaultMovementSpeed;
-		}
-		if(menu){
-			Zomtasia.testFlora.createTree(count,Zomtasia.player.getLocation().getX(), Zomtasia.player.getLocation().getY(), Zomtasia.player.getLocation().getZ());
-			count++;
-			if(count > 13){
-				count = 0;
-			}
-		}
-		if(testForward){
-			current = Zomtasia.testFlora.lastMoved.getLocation();
-			Zomtasia.testFlora.lastMoved.setLocation(current.getX(), current.getY(), current.getZ() + movementSpeed);
-		}
-		if(testBack){
-			current = Zomtasia.testFlora.lastMoved.getLocation();
-			Zomtasia.testFlora.lastMoved.setLocation(current.getX(), current.getY(), current.getZ() - movementSpeed);
-		}
-		if(testLeft){
-			current = Zomtasia.testFlora.lastMoved.getLocation();
-			Zomtasia.testFlora.lastMoved.setLocation(current.getX() + movementSpeed, current.getY(), current.getZ());
-		}
-		if(testRight){
-			current = Zomtasia.testFlora.lastMoved.getLocation();
-			Zomtasia.testFlora.lastMoved.setLocation(current.getX() - movementSpeed, current.getY(), current.getZ());
-		}
-		if(testUp){
-			current = Zomtasia.testFlora.lastMoved.getLocation();
-			Zomtasia.testFlora.lastMoved.setLocation(current.getX(), current.getY() + movementSpeed, current.getZ());
-		}
-		if(testDown){
-			current = Zomtasia.testFlora.lastMoved.getLocation();
-			Zomtasia.testFlora.lastMoved.setLocation(current.getX(), current.getY() - movementSpeed, current.getZ());
 		}
 	}
 	@Override
