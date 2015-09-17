@@ -136,7 +136,7 @@ public class Zomtasia extends Game implements ApplicationListener {
 			}
 	        modelBatch.end();
 			//=========================================
-			
+			Console.render();
 			//Effects and movement==================================
 			modelBatch.begin(cam);
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
